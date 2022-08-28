@@ -107,6 +107,7 @@
                   border-gray-200
                   placeholder-gray-400
                   text-sm
+                  outline-none
                 "
                 type="text"
                 autofocus

@@ -15,7 +15,7 @@
           "
         >
           <img
-            src="https://pixabay.com/get/gd630f2da836cb02441186bc5308a94ef5fd4984e3a8754747836267e974f4818643e8d4e2dd3aee300311db203bee4b7be9d90f05764cbb7f9de5aca8c6259f2_1920.jpg"
+            src="https://miro.medium.com/max/1080/1*jWx9suY2k3Ifq4B8A_vz9g.jpeg"
             alt="profile"
             class="w-8 h-8 rounded-lg flex-shrink-0 object-cover"
           />
@@ -118,7 +118,7 @@
           "
         >
           <img
-            src="https://pixabay.com/get/gd630f2da836cb02441186bc5308a94ef5fd4984e3a8754747836267e974f4818643e8d4e2dd3aee300311db203bee4b7be9d90f05764cbb7f9de5aca8c6259f2_1920.jpg"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQopEztCTlDuKPFkQVgFBKsJuxp8Ogd-RI1nA&usqp=CAU"
             alt="profile"
             class="w-full h-full rounded-lg flex-shrink-0 object-cover"
           />
@@ -137,7 +137,7 @@
           "
         >
           <img
-            src="https://pixabay.com/get/g52fb85d9c76b59f799033a4679e43f4614b85959519a49a9e03bc3940dc537ec8a2ef999eb1719b518a331b071b396ad_1920.jpg"
+            src="https://www.worldphoto.org/sites/default/files/139813_158163_0_%20%C2%A9%20Noel%20Guevara%2C%20Philippines%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg"
             alt="profile"
             class="w-full h-full rounded-lg flex-shrink-0 object-cover"
           />
@@ -157,7 +157,7 @@
           "
         >
           <img
-            src="https://pixabay.com/get/g8a10c69967e3cb9ad4c7a3c0e562ea6e89df60cf822d53c5371a320dbb765730ba643db032d9f90f9eeeca9040b9145353ab958dbf0d86fa9e442d08a6e9c487_1920.jpg"
+            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fHBvcnRyYWl0fGVufDB8fDB8fA%3D%3D&w=1000&q=80"
             alt="profile"
             class="w-full h-full rounded-lg flex-shrink-0 object-cover"
           />

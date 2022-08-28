@@ -1,6 +1,7 @@
 <script setup>
 import Nav from "@/components/Nav.vue";
 import SideBar from "@/components/SideBar.vue";
+import RightBar from "@/components/RightBar.vue";
 import Feed from "@/components/Feed.vue";
 </script>
 
@@ -11,6 +12,7 @@ import Feed from "@/components/Feed.vue";
       <div class="flex bg-gray-50">
         <SideBar />
         <Feed />
+        <RightBar />
       </div>
     </div>
   </main>
