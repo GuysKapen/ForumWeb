@@ -5,6 +5,6 @@ import HomeView from "@/views/HomeView.vue";
 
 <template>
   <div>
-    <HomeView />
+    <router-view />
   </div>
 </template>
