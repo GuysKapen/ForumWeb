@@ -86,7 +86,7 @@ export default {
                     email: this.email,
                     password: this.password,
                 });
-                this.$router.push("/new");
+                this.$router.push("/");
             } catch (error) {
                 this.error = error;
             }

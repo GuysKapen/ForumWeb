@@ -13,6 +13,7 @@
   "dependencies": {
     "@tinymce/tinymce-vue": "^4.0.7",
     "pinia": "^2.0.17",
+    "pinia-plugin-persistedstate": "^2.1.1",
     "tinymce": "^6.1.2",
     "vue": "^3.2.37",
     "vue-router": "^4.1.3"

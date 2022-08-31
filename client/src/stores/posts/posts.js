@@ -5,10 +5,10 @@ import { useAuthStore } from "@/stores/auth/auth";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
-export const useAlbumStore = defineStore({
+export const usePostStore = defineStore({
     id: "post",
     state: () => ({
-        albums: null,
+        posts: null,
     }),
     actions: {
         async getPost(id) {
@@ -17,8 +17,8 @@ export const useAlbumStore = defineStore({
         },
         async getPostsData() {
             const authStore = useAuthStore()
-            const res = await axios.get(`${serverUrl}/users/${authStore.user._id}/albums`, { params: { token: authStore.token } })
-            this.albums = res.data
+            const res = await axios.get(`${serverUrl}/users/${authStore.user._id}/posts`, { params: { token: authStore.token } })
+            this.posts = res.data
             return res.data
         },
     },

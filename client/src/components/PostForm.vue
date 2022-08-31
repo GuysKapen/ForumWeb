@@ -29,7 +29,7 @@
         </div>
 
         <div class="ml-2 mt-8 py-3 sm:px-6 text-center inline-block">
-            <button type="submit" @click="createPost()" class="
+            <button type="submit" class="
             inline-flex
             justify-center
             py-2
@@ -112,7 +112,6 @@
                   body: this.body,
                   owner: authStore.user._id,
               };
-              console.log(newModel);
   
                 try {
                     axios
@@ -124,7 +123,7 @@
                             },
                         })
                         .then((res) => {
-                            console.log(res);
+                            this.$router.push("/")
                         });
                 } catch (error) {
                     console.error("create post", error);
