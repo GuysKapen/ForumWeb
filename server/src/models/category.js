@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
-
+var slugify = require('slugify')
 const Schema = mongoose.Schema;
 const CategorySchema = new Schema({
   name: {
@@ -13,9 +13,13 @@ const CategorySchema = new Schema({
   }
 });
 
+CategorySchema.pre('validate', function (next) {
+  this.slug = slugify(this.name)
+  next()
+});
+
 CategorySchema.plugin(mongoosePaginate);
 
-// module.exports = mongoose.model('Category', CategorySchema);
 const Category = mongoose.model("Category", CategorySchema)
 
 export default Category

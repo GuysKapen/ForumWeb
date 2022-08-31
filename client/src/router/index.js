@@ -3,6 +3,9 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import NewPostView from '../views/NewPostView.vue'
 
+import NewCategoryView from '../views/admin/category/NewCategoryView.vue'
+import CategoryView from '../views/admin/category/CategoryView.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -28,6 +31,28 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      children: [
+        {
+          path: 'category',
+          name: 'category',
+          children: [
+            {
+              path: '',
+              name: 'index',
+              component: CategoryView
+            },
+            {
+              path: 'new',
+              name: 'new',
+              component: NewCategoryView
+            }
+          ]
+        }
+      ]
     },
   ]
 })

@@ -42,7 +42,7 @@ exports.authenticate = function (req, res) {
               token: token,
               user: { _id, email }
             });
-            
+
           } else {
             response.sendUnauthorized(res, 'Authentication failed.');
           }
@@ -61,6 +61,28 @@ exports.verifyToken = function (req, res, next) {
       } else {
         User.findById(decoded.id, function (err, user) {
           if (err) res.send(err);
+          req.currentUser = user;
+          next();
+        });
+      }
+    });
+  } else {
+    response.sendUnauthorized(res, 'No token provided.');
+  }
+};
+
+
+exports.verifyTokenAdmin = function (req, res, next) {
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+  if (token) {
+    jwt.verify(token, privateKey, function (err, decoded) {
+      if (err) {
+        response.sendUnauthorized(res, 'Failed to authenticate token.');
+      } else {
+        User.findById(decoded.id, function (err, user) {
+          if (err) res.send(err);
+          if (user.role != "admin") response.sendUnauthorized(res, 'Failed to authenticate token.');
           req.currentUser = user;
           next();
         });
