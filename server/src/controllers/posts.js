@@ -3,6 +3,8 @@ import response from '../helpers/response';
 import request from '../helpers/request';
 import pagination from '../helpers/pagination';
 
+import _ from 'underscore';
+
 const Post = mongoose.model('Post');
 
 exports.list = function (req, res) {
@@ -19,7 +21,8 @@ exports.create = function (req, res) {
   const user = req.locals.user;
   if (!req.currentUser.canEdit(user)) return response.sendForbidden(res);
 
-  const item = new Post(req.body);
+  const attrs = _.pick(req.body, "title", "body", "category")
+  const item = new Post(attrs);
   item.owner = user;
   item.save(function (err, item) {
     if (err) return response.sendBadRequest(res, err);
@@ -41,7 +44,8 @@ exports.read = function (req, res) {
 };
 
 exports.update = function (req, res) {
-  Post.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, function (err, item) {
+  const attrs = _.pick(req.body, "title", "body", "category")
+  Post.findOneAndUpdate({ _id: req.params.id }, attrs, { new: true }, function (err, item) {
     if (err) return response.sendBadRequest(res, err);
     if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);
     res.json(item);

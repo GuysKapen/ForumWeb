@@ -33,7 +33,7 @@
           flex-shrink-0
           border border-indigo-200
         ">
-        <span class="text-xs text-indigo-600">Accounting</span>
+        <span class="text-xs text-indigo-600">{{post.category ? post.category.name : "Uncategoried"}}</span>
       </div>
     </div>
     <div class="mt-4">

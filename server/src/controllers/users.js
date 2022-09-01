@@ -3,6 +3,8 @@ import response from '../helpers/response';
 import request from '../helpers/request';
 import pagination from '../helpers/pagination';
 
+import _, { map } from 'underscore';
+
 const User = mongoose.model('User');
 
 exports.list = function(req, res) {
@@ -23,7 +25,8 @@ exports.read = function(req, res) {
 };
 
 exports.create = function(req, res) {
-  const newUser = new User(req.body);
+  const attrs = _.pick(req.body, "name", "email", "lastname", "firstname", "password", "image")
+  const newUser = new User(attrs);
   newUser.role = 'user';
   newUser.save(function(err, user) {
     if (err) return response.sendBadRequest(res, err);
@@ -32,7 +35,7 @@ exports.create = function(req, res) {
 };
 
 exports.update = function(req, res) {
-  const user = req.body;
+  const user = _.pick(req.body, "name", "email", "lastname", "firstname", "password", "image")
   delete user.role;
   if (!req.currentUser.canEdit({ _id: req.params.id })) return response.sendForbidden(res);
   User.findOneAndUpdate({ _id: req.params.id }, user, { new: true, runValidators: true }, function(err, user) {

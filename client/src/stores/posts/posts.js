@@ -16,8 +16,7 @@ export const usePostStore = defineStore({
             return res.data
         },
         async getPostsData() {
-            const authStore = useAuthStore()
-            const res = await axios.get(`${serverUrl}/users/${authStore.user._id}/posts`, { params: { token: authStore.token } })
+            const res = await axios.get(`${serverUrl}/posts`)
             this.posts = res.data
             return res.data
         },
