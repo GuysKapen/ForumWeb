@@ -157,7 +157,6 @@ export default {
                 owner: authStore.user._id,
             };
 
-            console.log("model", newModel);
 
             try {
                 axios

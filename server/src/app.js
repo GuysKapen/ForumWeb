@@ -10,6 +10,7 @@ import User from './models/user';
 import Item from './models/item';
 import Pin from './models/post';
 import Category from './models/category';
+import Profile from './models/profile';
 
 import config from 'config';
 import db from './db/db';

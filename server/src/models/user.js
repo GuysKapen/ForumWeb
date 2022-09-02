@@ -43,7 +43,11 @@ const UserSchema = new Schema({
   posts: [{
     type: Schema.Types.ObjectId,
     ref: 'Post'
-  }]
+  }],
+  profile: {
+    type: Schema.Types.ObjectId,
+    ref: "Profile"
+  }
 });
 
 UserSchema.set('toJSON', {

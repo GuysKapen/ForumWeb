@@ -11,6 +11,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.2",
     "@tinymce/tinymce-vue": "^4.0.7",
     "pinia": "^2.0.17",
     "pinia-plugin-persistedstate": "^2.1.1",

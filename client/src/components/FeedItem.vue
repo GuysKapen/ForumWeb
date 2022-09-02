@@ -1,6 +1,10 @@
+<script setup>
+import { imgUrlFor } from '../utils/utils';
+const serverUrl = import.meta.env.VITE_SERVER_URL;
+</script>
 <template>
   <div class="bg-white px-8 pt-8 py-16 rounded-xl mt-6 relative">
-    <h3 class="text-gray-800 font-black text-xl">{{post.title}}</h3>
+    <h3 class="text-gray-800 font-black text-xl">{{ post.title }}</h3>
     <div class="flex items-center justify-between mt-4">
       <div class="flex items-center">
         <div class="
@@ -12,7 +16,7 @@
             flex-shrink-0
             border border-gray-100
           ">
-          <img src="https://miro.medium.com/max/1080/1*jWx9suY2k3Ifq4B8A_vz9g.jpeg" alt="profile"
+          <img :src="imgUrlFor(serverUrl, post.owner.profile.cover)" alt="profile"
             class="w-8 h-8 rounded-lg flex-shrink-0 object-cover" />
         </div>
 
@@ -33,7 +37,7 @@
           flex-shrink-0
           border border-indigo-200
         ">
-        <span class="text-xs text-indigo-600">{{post.category ? post.category.name : "Uncategoried"}}</span>
+        <span class="text-xs text-indigo-600">{{ post.category ? post.category.name : "Uncategoried" }}</span>
       </div>
     </div>
     <div class="mt-4">

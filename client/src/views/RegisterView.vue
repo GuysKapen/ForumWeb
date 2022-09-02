@@ -1,14 +1,15 @@
 <script setup>
 import Nav from "@/components/Nav.vue";
-import SideBar from "@/components/SideBar.vue";
-import LoginForm from "@/components/LoginForm.vue";
+import RegisterForm from "@/components/RegisterForm.vue";
+
 </script>
 <template>
   <main>
     <div>
       <Nav />
       <div class="flex bg-gray-50">
-        <LoginForm />
+        <RegisterForm />
+
       </div>
     </div>
   </main>

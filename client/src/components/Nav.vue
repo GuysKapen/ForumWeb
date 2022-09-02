@@ -86,8 +86,8 @@
             <div
               class="
                 flex
-                px-4
-                py-2
+                pl-2
+                pr-4
                 items-center
                 bg-gray-50
                 border-gray-200 border
@@ -104,11 +104,16 @@
                   rounded-lg
                   font-medium
                   bg-gray-50
-                  border-gray-200
+                  border-none
+                  focus:outline-none
+                  focus:border-none
+                  shadow-none
+                  focus:shadow-none
                   placeholder-gray-400
                   text-sm
                   outline-none
                 "
+                style="box-shadow: none !important"
                 type="text"
                 autofocus
                 placeholder="Type to search"

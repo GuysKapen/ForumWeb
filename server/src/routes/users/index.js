@@ -5,12 +5,14 @@ import auth from '../../controllers/auth';
 import items from './items';
 import posts from './posts';
 import uploads from './uploads';
+import profiles from './profiles';
 
-const routes  = express.Router();
+const routes = express.Router();
 
 routes.use('/:userId/items', users.loadUser, items);
 routes.use('/:userId/posts', users.loadUser, posts);
 routes.use('/:userId/uploads', users.loadUser, uploads);
+routes.use('/:userId/profiles', users.loadUser, profiles);
 
 routes.route('/:id')
   .all(auth.verifyToken)

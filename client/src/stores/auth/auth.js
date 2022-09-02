@@ -17,7 +17,6 @@ export const useAuthStore = defineStore({
                 // Sign in here
                 const res = await axios.post("http://localhost:9000/authenticate", { email: email, password: password })
                 this.user = res.data["user"]
-                console.log("this.user", this.user);
                 this.token = res.data["token"]
 
                 return Promise.resolve("Success")
@@ -36,10 +35,14 @@ export const useAuthStore = defineStore({
             }
         },
 
-        async signup(_, { username, password, email }) {
+        async signup({ name, password, email }) {
             try {
+                const res = await axios.post("http://localhost:9000/users", { name: name, email: email, password: password })
+                this.user = res.data["user"]
 
-                return Promise.resolve()
+                await this.login({ email, password });
+
+                return Promise.resolve("Success")
             } catch (error) {
                 console.log(error);
                 return Promise.reject(error)
