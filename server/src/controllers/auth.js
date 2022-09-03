@@ -34,13 +34,13 @@ exports.authenticate = function (req, res) {
               expiresIn: tokenExpireInSeconds
             });
 
-            const { _id, email, profile } = user;
+            const { _id, name, email, profile } = user;
 
             res.json({
               success: true,
               message: 'Token created.',
               token: token,
-              user: { _id, email, profile }
+              user: { _id, name, email, profile }
             });
 
           } else {
@@ -53,7 +53,6 @@ exports.authenticate = function (req, res) {
 
 exports.verifyToken = function (req, res, next) {
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
-  console.log("token", token);
   if (token) {
     jwt.verify(token, privateKey, function (err, decoded) {
       if (err) {

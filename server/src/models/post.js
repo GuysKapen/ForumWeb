@@ -24,7 +24,7 @@ const PostSchema = new Schema({
     ref: 'User',
     required: true
   },
-  commnets: [{
+  comments: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment',
   }]

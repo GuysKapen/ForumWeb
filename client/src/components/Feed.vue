@@ -20,7 +20,9 @@ import FeedItem from "@/components/FeedItem.vue";
         </button>
       </router-link>
     </div>
-    <FeedItem v-for="(post, idx) in posts" :key="idx" :post="post" />
+    <div class="space-y-6 mt-6">
+      <FeedItem v-for="(post, idx) in posts" :key="idx" :post="post" />
+    </div>
   </div>
 </template>
 

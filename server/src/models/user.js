@@ -47,7 +47,11 @@ const UserSchema = new Schema({
   profile: {
     type: Schema.Types.ObjectId,
     ref: "Profile"
-  }
+  },
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comment',
+  }]
 });
 
 UserSchema.set('toJSON', {

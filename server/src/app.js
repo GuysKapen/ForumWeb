@@ -6,11 +6,13 @@ import morgan from 'morgan';
 import jwt from 'jsonwebtoken';
 import fileUpload from 'express-fileupload'
 
+// For register schema model
 import User from './models/user';
 import Item from './models/item';
-import Pin from './models/post';
+import Post from './models/post';
 import Category from './models/category';
 import Profile from './models/profile';
+import Comment from './models/comment';
 
 import config from 'config';
 import db from './db/db';

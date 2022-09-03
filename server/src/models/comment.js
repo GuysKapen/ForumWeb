@@ -11,6 +11,14 @@ const CommentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  commentableId: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
+  commentableType: {
+    type: String,
+    required: true
   }
 });
 

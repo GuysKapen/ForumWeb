@@ -1,10 +1,11 @@
 <script setup>
 import { imgUrlFor } from '../utils/utils';
 import CommentItem from "@/components/CommentItem.vue";
+import CommentForm from './CommentForm.vue';
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
 <template>
-  <div class="bg-white px-8 pt-8 py-16 rounded-xl relative">
+  <div class="bg-white px-8 pt-8 py-16 relative">
     <h3 class="text-gray-800 font-black text-xl">{{ post.title }}</h3>
     <div class="flex items-center justify-between mt-4">
       <div class="flex items-center">
@@ -71,7 +72,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
         </div>
 
         <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
-          <button type="button" class="
+          <button type="button" @click="toggleAddComment()" class="
               px-4
               flex
               items-center
@@ -80,9 +81,9 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
               h-8
               justify-center
               relative
-            ">
+            " :class="addingComment ? 'text-indigo-500' : ''">
             <span class="material-icons text-base relative mt-1"> chat </span>
-            <span class="text-sm ml-4"> Add comment </span>
+            <span class="text-sm ml-4"> Comment </span>
           </button>
         </div>
       </div>
@@ -153,6 +154,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
     </div>
     <div class="mt-12">
+      <CommentForm v-if="addingComment" :parent-id="post._id" :parent-type="'post'" />
       <CommentItem />
       <CommentItem />
       <CommentItem />
@@ -163,6 +165,14 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 <script>
 export default {
   props: ['post'],
+  data: () => ({
+    addingComment: false,
+  }),
+  methods: {
+    toggleAddComment() {
+      this.addingComment = !this.addingComment
+    },
+  },
 };
 </script>
 
