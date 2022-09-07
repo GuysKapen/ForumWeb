@@ -30,7 +30,7 @@ const PostSchema = new Schema({
   }],
   answers: [{
     type: Schema.Types.ObjectId,
-    ref: "Post"
+    ref: "Comment"
   }]
 });
 

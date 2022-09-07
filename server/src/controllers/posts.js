@@ -6,6 +6,7 @@ import pagination from '../helpers/pagination';
 import _ from 'underscore';
 
 const Post = mongoose.model('Post');
+const Answer = mongoose.model('Comment');
 
 exports.list = function (req, res) {
   if (!req.currentUser.canRead(req.locals.user)) return response.sendForbidden(res);
@@ -78,3 +79,37 @@ exports.related = function (req, res) {
       res.json(items);
     })
 }
+
+exports.answer = function (req, res) {
+  const user = req.locals.user;
+  if (!req.currentUser.canEdit(user)) return response.sendForbidden(res);
+  const { comment, parent, parentType } = _.pick(req.body, "comment", "parent", "parentType")
+
+  let parentModel
+  if (parentType === 'post') {
+    parentModel = mongoose.model("Post")
+  } else {
+    return response.sendBadRequest(res, "Invalid request")
+  }
+
+  parentModel.findById(parent, function (err, commentable) {
+    if (err) res.send(err)
+
+    const item = new Answer({ comment: comment, commentableType: parentType, commentableId: parent });
+    item.owner = user._id;
+    item.save(function (err, item) {
+      if (err) return response.sendBadRequest(res, err);
+
+      // Save comment on commentable
+      commentable.answers.push(item._id);
+      commentable.save(function (err, _) {
+        if (err) return response.sendBadRequest(res, err);
+        user.answers.push(item._id);
+        user.save(function (err, _) {
+          if (err) return response.sendBadRequest(res, err);
+          response.sendCreated(res, item);
+        });
+      });
+    });
+  })
+};

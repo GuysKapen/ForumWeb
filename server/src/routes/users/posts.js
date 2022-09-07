@@ -19,4 +19,7 @@ routes.route('/:id')
 routes.route('/:id/related')
   .get(posts.related)
 
+routes.route('/:id/answer')
+  .post(posts.answer)
+
 module.exports = routes;

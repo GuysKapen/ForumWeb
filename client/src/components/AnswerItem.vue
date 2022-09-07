@@ -7,7 +7,6 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
 <template>
   <div class="bg-white px-8 pt-8 py-16 relative">
-    <h3 class="text-gray-800 font-black text-xl">{{ post.title }}</h3>
     <div class="flex items-center justify-between mt-4">
       <div class="flex items-center">
         <div class="
@@ -24,27 +23,13 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
         </div>
 
         <div class="ml-3 text-sm">
-          <p class="text-gray-500">{{ post.owner.name }}</p>
+          <p class="text-gray-500 capitalize">{{ post.owner.name }}</p>
           <span class="text-gray-300 text-sm">6 days ago</span>
         </div>
       </div>
-      <div class="
-          bg-indigo-100
-          rounded-xl
-          flex
-          items-center
-          justify-center
-          ml-4
-          px-4
-          py-1
-          flex-shrink-0
-          border border-indigo-200
-        ">
-        <span class="text-xs text-indigo-600">{{ post.category ? post.category.name : "Uncategoried" }}</span>
-      </div>
     </div>
     <div class="mt-4">
-      <div class="text-gray-700 text-sm" v-html="post.body"></div>
+      <div class="text-gray-700 text-sm" v-html="post.comment"></div>
     </div>
     <div class="flex justify-between mt-4">
       <div class="flex">
