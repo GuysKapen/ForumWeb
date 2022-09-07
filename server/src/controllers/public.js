@@ -15,6 +15,32 @@ exports.categories = function (req, res) {
 
 exports.posts = function (req, res) {
   Post.find({}).populate("category").populate({
+    path: "comments", populate: {
+      path: "owner",
+      populate: {
+        path: "profile"
+      }
+    }
+  }).populate({
+    path: "owner",
+    populate: {
+      path: "profile"
+    }
+  }).exec(function (err, docs) {
+    if (err) return response.sendNotFound(res);
+    res.json(docs);
+  })
+};
+
+exports.post = function (req, res) {
+  Post.findById(req.params.id).populate("category").populate({
+    path: "comments", populate: {
+      path: "owner",
+      populate: {
+        path: "profile"
+      }
+    }
+  }).populate({
     path: "owner",
     populate: {
       path: "profile"

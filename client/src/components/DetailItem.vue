@@ -2,6 +2,7 @@
 import { imgUrlFor } from '../utils/utils';
 import CommentItem from "@/components/CommentItem.vue";
 import CommentForm from './CommentForm.vue';
+
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
 <template>
@@ -23,7 +24,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
         </div>
 
         <div class="ml-3 text-sm">
-          <p class="text-gray-500">Elisabeth May</p>
+          <p class="text-gray-500">{{ post.owner.name }}</p>
           <span class="text-gray-300 text-sm">6 days ago</span>
         </div>
       </div>
@@ -154,10 +155,8 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
     </div>
     <div class="mt-12">
-      <CommentForm v-if="addingComment" :parent-id="post._id" :parent-type="'post'" />
-      <CommentItem />
-      <CommentItem />
-      <CommentItem />
+      <CommentForm v-if="addingComment" @addedComment="addedComment" :parent-id="post._id" :parent-type="'post'" />
+      <CommentItem v-for="(comment, idx) in post.comments" :key="idx" :comment="comment" />
     </div>
   </div>
 </template>
@@ -172,6 +171,11 @@ export default {
     toggleAddComment() {
       this.addingComment = !this.addingComment
     },
+
+    addedComment(comment) {
+      this.post.comments.push(comment)
+      this.addingComment = false;
+    }
   },
 };
 </script>

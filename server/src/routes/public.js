@@ -10,4 +10,8 @@ routes.route('/categories')
 routes.route('/posts')
   .get(publicC.posts)
 
+
+routes.route('/posts/:id')
+  .get(publicC.post)
+
 module.exports = routes;

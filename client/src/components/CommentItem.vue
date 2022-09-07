@@ -15,12 +15,12 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             flex-shrink-0
             border border-gray-100
           ">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD8r54g86MEGRzywLkkTTu8CVFuhz3XdIGGA&usqp=CAU"
-            alt="profile" class="w-6 h-6 rounded-full flex-shrink-0 object-cover" />
+          <img :src="imgUrlFor(serverUrl, comment.owner.profile.cover)" alt="profile"
+            class="w-6 h-6 rounded-full flex-shrink-0 object-cover" />
         </div>
 
         <div class="ml-3 text-sm">
-          <p class="text-gray-500">Elisabeth May</p>
+          <p class="text-gray-500 capitalize">{{ comment.owner.name }}</p>
         </div>
       </div>
       <div class="
@@ -39,9 +39,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
       </div>
     </div>
     <div class="mt-4">
-      <div class="text-gray-700 text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi mollitia libero
-        obcaecati quae ullam aperiam a ipsum doloremque fugiat, quibusdam dolorum dolore illum eveniet laborum aut
-        facilis. Beatae, illo nostrum.</div>
+      <div class="text-gray-700 text-sm">{{ comment.comment }}</div>
     </div>
     <div class="flex justify-between mt-4">
       <div class="flex justify-between space-x-6 mt-4">
@@ -55,7 +53,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 <script>
 export default {
-  props: ['post'],
+  props: ['comment'],
 };
 </script>
 

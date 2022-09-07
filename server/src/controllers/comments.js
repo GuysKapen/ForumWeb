@@ -31,19 +31,21 @@ exports.create = function (req, res) {
 
   parentModel.findById(parent, function (err, commentable) {
     if (err) res.send(err)
-    
+
     const item = new Comment({ comment: comment, commentableType: parentType, commentableId: parent });
     item.owner = user._id;
     item.save(function (err, item) {
       if (err) return response.sendBadRequest(res, err);
 
       // Save comment on commentable
-      commentable.comments.push(item);
-
-      user.comments.push(item);
-      user.save(function (err, user) {
+      commentable.comments.push(item._id);
+      commentable.save(function (err, _) {
         if (err) return response.sendBadRequest(res, err);
-        response.sendCreated(res, item);
+        user.comments.push(item._id);
+        user.save(function (err, _) {
+          if (err) return response.sendBadRequest(res, err);
+          response.sendCreated(res, item);
+        });
       });
     });
   })

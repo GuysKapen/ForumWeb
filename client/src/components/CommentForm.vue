@@ -67,7 +67,7 @@ export default {
                             },
                         })
                         .then((res) => {
-                            console.log(res);
+                            this.$emit("addedComment", res.data)
                         });
                 } catch (error) {
                     console.error("Add comment", error);
