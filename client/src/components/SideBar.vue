@@ -1,5 +1,5 @@
 <template>
-  <div class="w-3/12 pr-8">
+  <div class="w-3/12 flex-shrink-0 pr-8">
     <div class="overflow-hidden pl-6 bg-gray-50 pt-6 tabs-panel shadow-md border-r border-gray-100">
       <div class="px-4 py-5 space-y-6 sm:p-6">
         <h3 class="text-base font-medium text-gray-900">Setup your course</h3>

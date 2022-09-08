@@ -7,10 +7,25 @@ import HashLoader from "@/components/HashLoader.vue";
 <template>
   <div class="flex-grow">
     <div class="flex-grow py-8 px-6" v-if="post != null">
-      <DetailItem :post="post" />
-      <div v-if="addingAnswer">
-        <AnswerForm @addedAnswer="addedAnswer" :parent-id="post._id" :parent-type="'post'" />
+      <div class="bg-white flex justify-between mb-8 items-center px-4 py-2 rounded-xl">
+        <p class="text-gray-400 text-sm">Add answer</p>
+        <button class="
+          bg-indigo-600
+          flex
+          items-center
+          w-8
+          h-8
+          justify-center
+          p-1
+          rounded-xl
+        " @click="toggleAddAnswer()">
+          <span class="material-icons text-white text-sm">add</span>
+        </button>
       </div>
+      <div v-if="addingAnswer" class="mb-8">
+        <AnswerForm @addedAnswer="addedAnswer" @cancelAnswer="toggleAddAnswer" :parent-id="post._id" :parent-type="'post'" />
+      </div>
+      <DetailItem :post="post" />
       <div class="mt-8">
         <div class="border-b" v-for="(post, idx) in post.answers" :key="idx">
           <AnswerItem :post="post" />
@@ -45,6 +60,9 @@ export default {
   },
 
   methods: {
+    toggleAddAnswer() {
+      this.addingAnswer = !this.addingAnswer
+    },
     addedAnswer(answer) {
       this.post.answers.push(answer)
     }

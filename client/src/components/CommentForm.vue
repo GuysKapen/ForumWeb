@@ -13,10 +13,17 @@
                     v-model="comment" rows="6"></textarea>
             </div>
 
-            <button type="submit"
-                class="flex justify-end py-2 px-8 ml-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Submit
-            </button>
+            <div class="flex justify-end space-x-6">
+                <button
+                @click="this.$emit('cancelComment')"
+                    class="flex justify-end py-2 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="flex justify-end py-2 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Submit
+                </button>
+            </div>
         </form>
     </div>
 
