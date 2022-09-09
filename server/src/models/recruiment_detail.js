@@ -4,11 +4,11 @@ var slugify = require('slugify')
 const Schema = mongoose.Schema;
 const RecruitmentDetailSchema = new Schema({
   quantity: {
-    type: Int,
+    type: Number,
     required: true
   },
   salary: {
-    type: Float,
+    type: Number,
     required: true
   },
   recruitment: {

@@ -14,6 +14,12 @@ import Category from './models/category';
 import Profile from './models/profile';
 import Comment from './models/comment';
 
+import Company from './models/company';
+import Field from './models/field';
+import Skill from './models/skill';
+import Recruitment from './models/recruitment';
+import RecruitmentDetail from './models/recruiment_detail';
+
 import config from 'config';
 import db from './db/db';
 import routes from './routes';

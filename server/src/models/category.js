@@ -14,7 +14,7 @@ const CategorySchema = new Schema({
 });
 
 CategorySchema.pre('validate', function (next) {
-  this.slug = slugify(this.name)
+  this.slug = slugify(this.name, { lower: true })
   next()
 });
 

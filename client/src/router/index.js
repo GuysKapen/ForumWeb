@@ -6,8 +6,17 @@ import RegisterView from '../views/RegisterView.vue'
 import NewPostView from '../views/NewPostView.vue'
 import ProfileView from '../views/ProfileView.vue'
 
-import NewCategoryView from '../views/admin/category/NewCategoryView.vue'
-import CategoryView from '../views/admin/category/CategoryView.vue'
+import NewCategoryView from '../views/admin/category/NewView.vue'
+import CategoryView from '../views/admin/category/View.vue'
+
+import NewCompanyView from '@/views/admin/company/NewView.vue'
+import CompanyView from '@/views/admin/company/View.vue'
+
+// import NewFieldView from '@/views/admin/field/NewView.vue'
+// import FieldView from '@/views/admin/field/View.vue'
+
+import NewSkillView from '@/views/admin/skill/NewView.vue'
+import SkillView from '@/views/admin/skill/View.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,6 +76,54 @@ const router = createRouter({
               path: 'new',
               name: 'new',
               component: NewCategoryView
+            }
+          ]
+        },
+        {
+          path: 'company',
+          name: 'company',
+          children: [
+            {
+              path: '',
+              name: 'index',
+              component: CompanyView
+            },
+            {
+              path: 'new',
+              name: 'new',
+              component: NewCompanyView
+            }
+          ]
+        },
+        {
+          path: 'field',
+          name: 'field',
+          children: [
+            {
+              path: '',
+              name: 'index',
+              component: FieldView
+            },
+            {
+              path: 'new',
+              name: 'new',
+              component: NewSkillView
+            }
+          ]
+        },
+        {
+          path: 'skill',
+          name: 'skill',
+          children: [
+            {
+              path: '',
+              name: 'index',
+              component: SkillView
+            },
+            {
+              path: 'new',
+              name: 'new',
+              component: NewSkillView
             }
           ]
         }

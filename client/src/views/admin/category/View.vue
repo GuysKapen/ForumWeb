@@ -1,7 +1,7 @@
 <script setup>
 import Nav from "@/components/Nav.vue";
 import SideBar from "@/components/AdminSideBar.vue";
-import CategoryItem from "@/components/CategoryItem.vue";
+import CategoryItem from "@/components/AdminCategoryItem.vue";
 </script>
     
     <template>
