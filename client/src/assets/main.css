@@ -51,3 +51,7 @@ body {
     border-color: transparent;
     background-color: currentcolor;
 }
+
+.vuejs3-datepicker__content {
+    font-size: 0.75rem;
+}

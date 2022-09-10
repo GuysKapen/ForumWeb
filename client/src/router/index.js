@@ -18,6 +18,9 @@ import FieldView from '@/views/admin/field/View.vue'
 import NewSkillView from '@/views/admin/skill/NewView.vue'
 import SkillView from '@/views/admin/skill/View.vue'
 
+import NewRecruitmentView from '@/views/admin/recruitment/NewView.vue'
+import RecruitmentView from '@/views/admin/recruitment/View.vue'
+
 import AdminView from '@/views/admin/View.vue'
 
 const router = createRouter({
@@ -105,6 +108,16 @@ const router = createRouter({
           path: 'skill/new',
           name: 'skill-new',
           component: NewSkillView
+        },
+        {
+          path: 'recruitment',
+          name: 'recruitment-index',
+          component: RecruitmentView
+        },
+        {
+          path: 'recruitment/new',
+          name: 'recruitment-new',
+          component: NewRecruitmentView
         }
       ]
     },

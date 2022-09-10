@@ -10,6 +10,13 @@ routes.route('/categories')
 routes.route('/posts')
   .get(publicC.posts)
 
+routes.route('/companies')
+  .get(publicC.companies)
+routes.route('/skills')
+  .get(publicC.skills)
+routes.route('/fields')
+  .get(publicC.fields)
+
 
 routes.route('/posts/:id')
   .get(publicC.post)

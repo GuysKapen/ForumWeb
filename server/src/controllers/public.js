@@ -5,9 +5,33 @@ import pagination from '../helpers/pagination';
 
 const Category = mongoose.model('Category');
 const Post = mongoose.model('Post');
+const Company = mongoose.model('Company');
+const Field = mongoose.model('Field');
+const Skill = mongoose.model('Skill');
 
 exports.categories = function (req, res) {
   Category.find({}).exec(function (err, docs) {
+    if (err) return response.sendNotFound(res);
+    res.json(docs);
+  })
+};
+
+exports.companies = function (req, res) {
+  Company.find({}).exec(function (err, docs) {
+    if (err) return response.sendNotFound(res);
+    res.json(docs);
+  })
+};
+
+exports.skills = function (req, res) {
+  Skill.find({}).exec(function (err, docs) {
+    if (err) return response.sendNotFound(res);
+    res.json(docs);
+  })
+};
+
+exports.fields = function (req, res) {
+  Field.find({}).exec(function (err, docs) {
     if (err) return response.sendNotFound(res);
     res.json(docs);
   })
