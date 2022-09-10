@@ -12,11 +12,13 @@ import CategoryView from '../views/admin/category/View.vue'
 import NewCompanyView from '@/views/admin/company/NewView.vue'
 import CompanyView from '@/views/admin/company/View.vue'
 
-// import NewFieldView from '@/views/admin/field/NewView.vue'
-// import FieldView from '@/views/admin/field/View.vue'
+import NewFieldView from '@/views/admin/field/NewView.vue'
+import FieldView from '@/views/admin/field/View.vue'
 
 import NewSkillView from '@/views/admin/skill/NewView.vue'
 import SkillView from '@/views/admin/skill/View.vue'
+
+import AdminView from '@/views/admin/View.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -62,70 +64,47 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'admin',
+      component: AdminView,
       children: [
         {
           path: 'category',
-          name: 'category',
-          children: [
-            {
-              path: '',
-              name: 'index',
-              component: CategoryView
-            },
-            {
-              path: 'new',
-              name: 'new',
-              component: NewCategoryView
-            }
-          ]
+          name: 'category-index',
+          component: CategoryView
+        },
+        {
+          path: 'category/new',
+          name: 'category-new',
+          component: NewCategoryView
         },
         {
           path: 'company',
-          name: 'company',
-          children: [
-            {
-              path: '',
-              name: 'index',
-              component: CompanyView
-            },
-            {
-              path: 'new',
-              name: 'new',
-              component: NewCompanyView
-            }
-          ]
+          name: 'company-index',
+          component: CompanyView
+        },
+        {
+          path: 'company/new',
+          name: 'company-new',
+          component: NewCompanyView
         },
         {
           path: 'field',
-          name: 'field',
-          children: [
-            {
-              path: '',
-              name: 'index',
-              component: FieldView
-            },
-            {
-              path: 'new',
-              name: 'new',
-              component: NewSkillView
-            }
-          ]
+          name: 'field-index',
+          component: FieldView
+        },
+        {
+          path: 'field/new',
+          name: 'field-new',
+          component: NewFieldView
         },
         {
           path: 'skill',
-          name: 'skill',
-          children: [
-            {
-              path: '',
-              name: 'index',
-              component: SkillView
-            },
-            {
-              path: 'new',
-              name: 'new',
-              component: NewSkillView
-            }
-          ]
+          name: 'skill-index',
+          component: SkillView
+        },
+        {
+          path: 'skill/new',
+          name: 'skill-new',
+          component: NewSkillView
         }
       ]
     },

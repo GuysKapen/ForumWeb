@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "export NODE_ENV=dev NODE_CONFIG_DIR=./src/config/ && nodemon -w src --exec \"babel-node src/app.js --presets @babel/preset-env\"",
+    "startw": "SET NODE_ENV=dev&& SET NODE_CONFIG_DIR=./src/config/&& nodemon -w src --exec \"babel-node src/app.js --presets @babel/preset-env\"",
     "test": "export NODE_ENV=test NODE_CONFIG_DIR=./src/config/ && mocha --timeout 10000 --compilers js:babel-core/register ./src/test/*.js ",
     "populatedb": "babel-node --presets @babel/preset-env ./node_modules/pow-mongodb-fixtures/bin/mongofixtures node-express-skeleton-dev ./src/test/fixtures",
     "seed": "node src/db/seed.js"
