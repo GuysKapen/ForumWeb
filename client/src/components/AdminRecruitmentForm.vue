@@ -15,10 +15,10 @@
                     <div class="mb-4 px-2 w-full">
                         <div class="field">
                             <div class="control">
-                                <label class="block font-semibold text-sm" for="name">Category name</label>
+                                <label class="block font-semibold text-sm" for="name">Recruitment name</label>
                                 <input id="name" name="name" v-model="name"
                                     class="string w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
-                                    type="text" autofocus placeholder="Category name..." />
+                                    type="text" autofocus placeholder="Recruitment name..." />
                             </div>
                         </div>
                     </div>
@@ -51,8 +51,7 @@
                                         <select v-model="selectedCompanyId" id="select-company" name="company"
                                             placeholder="Select company..." autocomplete="off"
                                             class="block w-full rounded-sm cursor-pointer focus:outline-none">
-                                            <option v-for="(model, idx) in companies" :key="idx"
-                                                :value="model._id">
+                                            <option v-for="(model, idx) in companies" :key="idx" :value="model._id">
                                                 {{ model.name }}</option>
                                         </select>
                                     </div>
@@ -65,20 +64,19 @@
 
                         <div class="field">
                             <div class="control">
-                                <label class="block font-semibold text-sm mt-2 w-4/12" for="input1">Field</label>
+                                <label class="block font-semibold text-sm mt-2 w-4/12" for="input1">Fields</label>
                                 <div class="my-2">
 
                                     <div class="relative flex w-full">
-                                        <select v-model="selectedFieldId" id="select-field" name="field"
-                                            placeholder="Select categories..." autocomplete="off"
+                                        <select v-model="selectedFieldIds" id="select-field" name="field" multiple
+                                            placeholder="Select fields..." autocomplete="off"
                                             class="block w-full rounded-sm cursor-pointer focus:outline-none">
-                                            <option v-for="(model, idx) in fields" :key="idx"
-                                                :value="model._id">
+                                            <option v-for="(model, idx) in fields" :key="idx" :value="model._id">
                                                 {{ model.name }}</option>
                                         </select>
                                     </div>
 
-                                    <span class="text-xs italic">The field of the post</span>
+                                    <span class="text-xs italic">The fields of the post</span>
                                 </div>
                             </div>
 
@@ -91,11 +89,9 @@
 
                                     <div class="relative flex w-full">
                                         <select v-model="selectedSkillIds" id="select-skills" name="skill"
-                                            placeholder="Select skills..." autocomplete="off"
-                                            multiple
+                                            placeholder="Select skills..." autocomplete="off" multiple
                                             class="block w-full rounded-sm cursor-pointer focus:outline-none">
-                                            <option v-for="(model, idx) in skills" :key="idx"
-                                                :value="model._id">
+                                            <option v-for="(model, idx) in skills" :key="idx" :value="model._id">
                                                 {{ model.name }}</option>
                                         </select>
                                     </div>
@@ -152,7 +148,9 @@ export default {
             this.fields = res.data;
         })
     },
-    data: () => ({ name: "", startDate: new Date(), endDate: new Date(), companies: [], selectedCompanyId: null, fields: [], selectedFieldId: null, skills: [], selectedSkillIds: [] }),
+    data: () => ({
+        name: "", startDate: new Date(), endDate: new Date(), companies: [], selectedCompanyId: null, fields: [], selectedFieldIds: [], skills: [], selectedSkillIds: []
+    }),
     components: {
         Datepicker
     },
@@ -181,7 +179,6 @@ export default {
     },
     methods: {
         async add() {
-
             const authStore = useAuthStore();
 
             this.error = "";
@@ -191,11 +188,16 @@ export default {
             }
             const newModel = {
                 name: this.name,
+                startDate: this.startDate,
+                endDate: this.endDate,
+                company: this.selectedCompanyId,
+                fields: this.selectedFieldIds,
+                skills: this.selectedSkillIds
             };
 
             try {
                 axios
-                    .post(`${serverUrl}/categories`, newModel, {
+                    .post(`${serverUrl}/users/${authStore.user._id}/recruitments`, newModel, {
                         headers: {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${authStore.token}`,
@@ -206,7 +208,7 @@ export default {
                         this.$router.push("/")
                     });
             } catch (error) {
-                console.error("Add category", error);
+                console.error("Add recruitment", error);
             }
         },
     },

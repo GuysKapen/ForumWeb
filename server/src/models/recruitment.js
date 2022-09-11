@@ -29,15 +29,20 @@ const RecruitmentSchema = new Schema({
     ref: 'Company',
     required: true
   },
-  field: {
+  fields: [{
     type: Schema.Types.ObjectId,
     ref: 'Field',
     required: true
-  },
+  }],
   skills: [{
     type: Schema.Types.ObjectId,
     ref: 'Skill',
   }],
+});
+
+RecruitmentSchema.pre('validate', function (next) {
+  this.slug = slugify(this.name, { lower: true })
+  next()
 });
 
 RecruitmentSchema.plugin(mongoosePaginate);

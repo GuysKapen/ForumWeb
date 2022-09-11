@@ -55,7 +55,11 @@ const UserSchema = new Schema({
   answers: [{
     type: Schema.Types.ObjectId,
     ref: 'Comment',
-  }]
+  }],
+  recruitments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Recruitment'
+  }],
 });
 
 UserSchema.set('toJSON', {
