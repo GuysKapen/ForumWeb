@@ -138,7 +138,7 @@
             <div class="hidden sm:block sm:ml-6 mx-auto flex-grow">
               <div class="block space-x-4 w-max mx-auto">
                 <a
-                  href=""
+                  href="/"
                   class="
                     inline-block
                     py-4
@@ -192,7 +192,7 @@
                 >
 
                 <a
-                  href=""
+                  href="/admin"
                   class="
                     inline-block
                     py-4

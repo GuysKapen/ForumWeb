@@ -27,8 +27,10 @@
               </div>
             </div>
           </router-link>
-          <div class="flex items-start tab-panel">
-            <div class="
+
+          <div class="flex items-start tab-panel active">
+            <router-link tag="div" class-active="active" class="tab-panel flex items-start" to="/admin/company" exact>
+              <div class="
                 bg-white
                 rounded-lg
                 flex
@@ -40,15 +42,18 @@
                 flex-shrink-0
                 border border-gray-100
               ">
-              <span class="material-icons text-gray-300 text-sm">forum</span>
-            </div>
+                <span class="material-icons text-gray-300 text-sm">add_home_work</span>
+              </div>
 
-            <div class="ml-3 text-sm">
-              <p class="text-gray-500">Posts</p>
-            </div>
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Companies</p>
+              </div>
+            </router-link>
           </div>
-          <div class="flex items-start tab-panel">
-            <div class="
+
+          <div class="flex items-start tab-panel active">
+            <router-link tag="div" class-active="active" class="flex items-start tab-panel" to="/admin/field" exact>
+              <div class="
                 bg-white
                 rounded-lg
                 flex
@@ -60,15 +65,19 @@
                 flex-shrink-0
                 border border-gray-100
               ">
-              <span class="material-icons text-gray-300 text-sm">feed</span>
-            </div>
+                <span class="material-icons text-gray-300 text-sm">cases</span>
+              </div>
 
-            <div class="ml-3 text-sm">
-              <p class="text-gray-500">Your trends</p>
-            </div>
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Fields</p>
+              </div>
+            </router-link>
           </div>
-          <div class="flex items-start tab-panel">
-            <div class="
+
+
+          <div class="flex items-start tab-panel active">
+            <router-link tag="div" class-active="active" class="flex items-start" to="/admin/skill" exact>
+              <div class="
                 bg-white
                 rounded-lg
                 flex
@@ -80,13 +89,108 @@
                 flex-shrink-0
                 border border-gray-100
               ">
-              <span class="material-icons text-gray-300 text-sm">save</span>
-            </div>
+                <span class="material-icons text-gray-300 text-sm">mediation</span>
+              </div>
 
-            <div class="ml-3 text-sm">
-              <p class="text-gray-500">Saved</p>
-            </div>
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Skill</p>
+              </div>
+            </router-link>
           </div>
+
+          <div class="flex items-start tab-panel active">
+            <router-link tag="div" class-active="active" class="flex item-starts" to="/admin/recruitment" exact>
+              <div class="
+                bg-white
+                rounded-lg
+                flex
+                items-center
+                justify-center
+                ml-2
+                w-6
+                h-6
+                flex-shrink-0
+                border border-gray-100
+              ">
+                <span class="material-icons text-gray-300 text-sm">card_membership</span>
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Recruitment</p>
+              </div>
+            </router-link>
+          </div>
+
+
+          <div class="flex items-start tab-panel">
+            <router-link to="/admin/category" class="flex items-start">
+              <div class="
+                bg-white
+                rounded-lg
+                flex
+                items-center
+                justify-center
+                ml-2
+                w-6
+                h-6
+                flex-shrink-0
+                border border-gray-100
+              ">
+                <span class="material-icons text-gray-300 text-sm">forum</span>
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Posts</p>
+              </div>
+            </router-link>
+          </div>
+
+          <div class="flex items-start tab-panel">
+            <router-link to="/admin/" class="flex items-start">
+              <div class="
+                bg-white
+                rounded-lg
+                flex
+                items-center
+                justify-center
+                ml-2
+                w-6
+                h-6
+                flex-shrink-0
+                border border-gray-100
+              ">
+                <span class="material-icons text-gray-300 text-sm">feed</span>
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Your trends</p>
+              </div>
+            </router-link>
+          </div>
+
+          <div class="flex items-start tab-panel">
+            <router-link to="/admin/" class="flex items-start">
+              <div class="
+                bg-white
+                rounded-lg
+                flex
+                items-center
+                justify-center
+                ml-2
+                w-6
+                h-6
+                flex-shrink-0
+                border border-gray-100
+              ">
+                <span class="material-icons text-gray-300 text-sm">save</span>
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Saved</p>
+              </div>
+            </router-link>
+          </div>
+
         </div>
       </div>
 
