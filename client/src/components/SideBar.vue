@@ -4,9 +4,10 @@
       <div class="px-4 py-5 space-y-6 sm:p-6">
         <h3 class="text-base font-medium text-gray-900">Setup your course</h3>
         <div class="mt-4 space-y-6">
-          <div class="flex items-start tab-panel active">
-            <div
-              class="
+
+            <div class="flex items-start tab-panel active">
+          <router-link to="/" class="flex items-start">
+              <div class="
                 bg-white
                 rounded-lg
                 flex
@@ -17,18 +18,39 @@
                 h-6
                 flex-shrink-0
                 border border-gray-100
-              "
-            >
-              <span class="material-icons text-gray-300 text-sm">home</span>
-            </div>
+              ">
+                <span class="material-icons text-gray-300 text-sm">home</span>
+              </div>
 
-            <div class="ml-3 text-sm">
-              <p class="text-gray-500">Home</p>
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Home</p>
+              </div>
+          </router-link>
             </div>
+          <div class="flex items-start tab-panel">
+            <router-link to="/recruitments" class="flex items-start">
+              <div class="
+                bg-white
+                rounded-lg
+                flex
+                items-center
+                justify-center
+                ml-4
+                w-6
+                h-6
+                flex-shrink-0
+                border border-gray-100
+              ">
+                <span class="material-icons text-gray-300 text-sm">feed</span>
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Recruitments</p>
+              </div>
+            </router-link>
           </div>
           <div class="flex items-start tab-panel">
-            <div
-              class="
+            <div class="
                 bg-white
                 rounded-lg
                 flex
@@ -39,30 +61,7 @@
                 h-6
                 flex-shrink-0
                 border border-gray-100
-              "
-            >
-              <span class="material-icons text-gray-300 text-sm">feed</span>
-            </div>
-
-            <div class="ml-3 text-sm">
-              <p class="text-gray-500">Your trends</p>
-            </div>
-          </div>
-          <div class="flex items-start tab-panel">
-            <div
-              class="
-                bg-white
-                rounded-lg
-                flex
-                items-center
-                justify-center
-                ml-4
-                w-6
-                h-6
-                flex-shrink-0
-                border border-gray-100
-              "
-            >
+              ">
               <span class="material-icons text-gray-300 text-sm">save</span>
             </div>
 
@@ -77,8 +76,7 @@
         <div class="mt-4 space-y-6">
           <div class="flex items-center justify-between tab-panel active">
             <div class="flex items-center">
-              <div
-                class="
+              <div class="
                   bg-gray-100
                   rounded-lg
                   flex
@@ -89,17 +87,14 @@
                   h-6
                   flex-shrink-0
                   border border-gray-100
-                "
-              >
-                <span
-                  class="
+                ">
+                <span class="
                     w-[6px]
                     h-[6px]
                     rounded-full
                     bg-indigo-600
                     border border-gray-200
-                  "
-                ></span>
+                  "></span>
               </div>
 
               <div class="ml-3 text-sm">
@@ -107,8 +102,7 @@
                 <span class="text-gray-300 text-sm">Elisabeth May</span>
               </div>
             </div>
-            <div
-              class="
+            <div class="
                 bg-gray-100
                 rounded-lg
                 flex
@@ -119,16 +113,14 @@
                 h-6
                 flex-shrink-0
                 border border-gray-100
-              "
-            >
+              ">
               <span class="text-xs text-indigo-600">1</span>
             </div>
           </div>
 
           <div class="flex items-center justify-between tab-panel active">
             <div class="flex items-center">
-              <div
-                class="
+              <div class="
                   bg-gray-100
                   rounded-lg
                   flex
@@ -139,17 +131,14 @@
                   h-6
                   flex-shrink-0
                   border border-gray-100
-                "
-              >
-                <span
-                  class="
+                ">
+                <span class="
                     w-[6px]
                     h-[6px]
                     rounded-full
                     bg-indigo-600
                     border border-gray-200
-                  "
-                ></span>
+                  "></span>
               </div>
 
               <div class="ml-3 text-sm">
@@ -157,8 +146,7 @@
                 <span class="text-gray-300 text-sm">Elisabeth May</span>
               </div>
             </div>
-            <div
-              class="
+            <div class="
                 bg-gray-100
                 rounded-lg
                 flex
@@ -169,16 +157,14 @@
                 h-6
                 flex-shrink-0
                 border border-gray-100
-              "
-            >
+              ">
               <span class="text-xs text-indigo-600">1</span>
             </div>
           </div>
 
           <div class="flex items-center justify-between tab-panel active">
             <div class="flex items-center">
-              <div
-                class="
+              <div class="
                   bg-gray-100
                   rounded-lg
                   flex
@@ -189,17 +175,14 @@
                   h-6
                   flex-shrink-0
                   border border-gray-100
-                "
-              >
-                <span
-                  class="
+                ">
+                <span class="
                     w-[6px]
                     h-[6px]
                     rounded-full
                     bg-indigo-600
                     border border-gray-200
-                  "
-                ></span>
+                  "></span>
               </div>
 
               <div class="ml-3 text-sm">
@@ -207,8 +190,7 @@
                 <span class="text-gray-300 text-sm">Elisabeth May</span>
               </div>
             </div>
-            <div
-              class="
+            <div class="
                 bg-gray-100
                 rounded-lg
                 flex
@@ -219,8 +201,7 @@
                 h-6
                 flex-shrink-0
                 border border-gray-100
-              "
-            >
+              ">
               <span class="text-xs text-indigo-600">1</span>
             </div>
           </div>
@@ -233,8 +214,7 @@
 
         <div class="mt-4 space-y-6">
           <div class="flex items-start tab-panel active">
-            <div
-              class="
+            <div class="
                 bg-white
                 rounded-lg
                 flex
@@ -245,8 +225,7 @@
                 h-6
                 flex-shrink-0
                 border border-gray-100
-              "
-            >
+              ">
               <span class="material-icons text-gray-300 text-sm">home</span>
             </div>
 
@@ -255,8 +234,7 @@
             </div>
           </div>
           <div class="flex items-start tab-panel">
-            <div
-              class="
+            <div class="
                 bg-white
                 rounded-lg
                 flex
@@ -267,8 +245,7 @@
                 h-6
                 flex-shrink-0
                 border border-gray-100
-              "
-            >
+              ">
               <span class="material-icons text-gray-300 text-sm">feed</span>
             </div>
 
@@ -277,8 +254,7 @@
             </div>
           </div>
           <div class="flex items-start tab-panel">
-            <div
-              class="
+            <div class="
                 bg-white
                 rounded-lg
                 flex
@@ -289,8 +265,7 @@
                 h-6
                 flex-shrink-0
                 border border-gray-100
-              "
-            >
+              ">
               <span class="material-icons text-gray-300 text-sm">save</span>
             </div>
 
@@ -301,9 +276,7 @@
         </div>
       </div>
       <div class="px-4 py-3 sm:px-6 text-center w-full">
-        <button
-          type="submit"
-          class="
+        <button type="submit" class="
             inline-flex
             justify-center
             py-2
@@ -321,8 +294,7 @@
             focus:ring-2
             focus:ring-offset-2
             focus:ring-indigo-500
-          "
-        >
+          ">
           Save
         </button>
       </div>

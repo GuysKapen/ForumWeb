@@ -11,6 +11,13 @@ const RecruitmentSchema = new Schema({
     type: String,
     required: true
   },
+  content: {
+    type: String,
+    required: true
+  },
+  file: {
+    type: String,
+  },
   startDate: {
     type: Date,
     required: true

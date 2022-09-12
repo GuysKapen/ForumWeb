@@ -8,6 +8,7 @@ const Post = mongoose.model('Post');
 const Company = mongoose.model('Company');
 const Field = mongoose.model('Field');
 const Skill = mongoose.model('Skill');
+const Recruitment = mongoose.model('Recruitment');
 
 exports.categories = function (req, res) {
   Category.find({}).exec(function (err, docs) {
@@ -83,4 +84,16 @@ exports.post = function (req, res) {
       if (err) return response.sendNotFound(res);
       res.json(docs);
     })
+};
+
+exports.recruitments = function (req, res) {
+  Recruitment.find({})    .populate({
+      path: "owner",
+      populate: {
+        path: "profile"
+      }
+    }).exec(function (err, docs) {
+    if (err) return response.sendNotFound(res);
+    res.json(docs);
+  })
 };

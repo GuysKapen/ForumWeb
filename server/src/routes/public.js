@@ -16,7 +16,8 @@ routes.route('/skills')
   .get(publicC.skills)
 routes.route('/fields')
   .get(publicC.fields)
-
+routes.route('/recruitments')
+  .get(publicC.recruitments)
 
 routes.route('/posts/:id')
   .get(publicC.post)

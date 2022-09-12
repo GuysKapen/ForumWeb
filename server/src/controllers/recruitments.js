@@ -22,7 +22,7 @@ exports.create = function (req, res) {
   const user = req.locals.user;
   if (!req.currentUser.canEdit(user)) return response.sendForbidden(res);
 
-  const attrs = _.pick(req.body, "name", "startDate", "endDate", "company", "fields", "skills")
+  const attrs = _.pick(req.body, "name", "startDate", "endDate", "company", "fields", "skills", "content", "file")
   const item = new Recruitment(attrs);
   item.owner = user._id;
   item.save(function (err, item) {
@@ -45,7 +45,7 @@ exports.read = function (req, res) {
 };
 
 exports.update = function (req, res) {
-  const attrs = _.pick(req.body, "name", "startDate", "endDate", "company", "fields", "skills")
+  const attrs = _.pick(req.body, "name", "startDate", "endDate", "company", "fields", "skills", "content", "file")
   Recruitment.findOneAndUpdate({ _id: req.params.id }, attrs, { new: true }, function (err, item) {
     if (err) return response.sendBadRequest(res, err);
     if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);

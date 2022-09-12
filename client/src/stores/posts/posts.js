@@ -9,6 +9,7 @@ export const usePostStore = defineStore({
     id: "post",
     state: () => ({
         posts: null,
+        recruitments: []
     }),
     actions: {
         async getPost(id) {
@@ -19,6 +20,11 @@ export const usePostStore = defineStore({
         async getPostsData() {
             const res = await axios.get(`${serverUrl}/posts`)
             this.posts = res.data
+            return res.data
+        },
+        async getRecruitmentsData() {
+            const res = await axios.get(`${serverUrl}/recruitments`)
+            this.recruitments = res.data
             return res.data
         },
     },

@@ -6,7 +6,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 <template>
   <div class="bg-white px-8 pt-8 py-16 rounded-xl relative">
     <router-link tag="div" class="hover:text-indigo-600" class-active="active" :to="`/posts/${post._id}`" exact>
-      <h3 class="text-gray-800 hover:text-indigo-600 font-black text-xl">{{ post.title }}</h3>
+      <h3 class="text-gray-800 hover:text-indigo-600 font-black text-xl">{{ post.name }}</h3>
     </router-link>
     <div class="flex items-center justify-between mt-4">
       <div class="flex items-center">
@@ -44,7 +44,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
       </div>
     </div>
     <div class="mt-4 prose lg:prose-xl">
-      <div class="text-gray-700 text-sm" v-html="post.body"></div>
+      <div class="text-gray-700 text-sm" v-html="post.content"></div>
     </div>
     <div class="flex justify-between mt-4">
       <div class="flex">
@@ -85,6 +85,22 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             ">
             <span class="material-icons text-base relative mt-1"> chat </span>
             <span class="text-sm ml-4"> Comment </span>
+          </button>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
+          <button type="button" class="
+              px-4
+              flex
+              items-center
+              text-gray-400
+              hover:text-indigo-500
+              h-8
+              justify-center
+              relative
+            ">
+            <span class="material-icons text-base relative mt-1"> download </span>
+            <span class="text-sm ml-4"> Download </span>
           </button>
         </div>
       </div>
@@ -164,4 +180,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>
