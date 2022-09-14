@@ -17,11 +17,39 @@ exports.categories = function (req, res) {
   })
 };
 
-exports.companies = function (req, res) {
-  Company.find({}).exec(function (err, docs) {
+exports.companies = async function (req, res) {
+
+
+  Company.find({}).exec(async function (err, docs) {
+    const results = []
+    for (let index = 0; index < docs.length; index++) {
+      const doc = docs[index];
+
+      const count = (await Recruitment.aggregate([
+        {
+          "$match": {
+            "company": new mongoose.Types.ObjectId(doc._id)
+          }
+        },
+        {
+          "$group": {
+            "_id": "$company",
+            "total": {
+              "$sum": 1
+            }
+          }
+        }
+      ]))[0]
+
+      results.push(Object.assign({}, doc.toObject(), {'recruitmentCount': (count?.['total'] || 0)}))
+    }
+
     if (err) return response.sendNotFound(res);
-    res.json(docs);
+    res.json(results);
   })
+
+
+
 };
 
 exports.skills = function (req, res) {

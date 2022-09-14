@@ -45,7 +45,7 @@
                 flex-shrink-0
                 border border-gray-100
               ">
-                  <span class="text-xs text-indigo-600">1</span>
+                  <span class="text-xs text-indigo-600">{{company.recruitmentCount}}</span>
                 </div>
               </div>
             </router-link>
@@ -57,7 +57,7 @@
         <h3 class="text-base font-medium text-gray-900">Fields recruitments</h3>
         <div class="mt-4 space-y-6">
           <div class="tab-panel group" v-for="(field, idx) in fields" :key="idx">
-            <router-link :to="{ name: 'recruitments', query: {'fields[]': field.slug} }">
+            <router-link :to="{ name: 'recruitments', query: {'fields': field.slug} }">
               <div class="flex items-center justify-between">
                 <div class="flex items-center">
                   <div class="
