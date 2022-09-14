@@ -34,7 +34,7 @@ const router = createRouter({
     },
     {
       path: '/recruitments',
-      name: 'recruitment',
+      name: 'recruitments',
       component: RecruitmentsView
     },
     {

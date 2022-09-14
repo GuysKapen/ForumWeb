@@ -86,14 +86,25 @@ exports.post = function (req, res) {
     })
 };
 
-exports.recruitments = function (req, res) {
-  Recruitment.find({})    .populate({
+exports.recruitments = async function (req, res) {
+  let query = {};
+
+  const queryRefs = [{ name: "company", model: "Company" }, { name: "skills", model: "Skill" }, { name: "fields", model: "Field" }];
+  for (const ref of queryRefs) {
+    if (ref["name"] in req.query) {
+      query = await Recruitment.findByRef(ref['model'], ref['name'], query, req.query[ref['name']])
+    }
+  }
+
+  Recruitment.find(query)
+    .populate({
       path: "owner",
       populate: {
         path: "profile"
       }
-    }).exec(function (err, docs) {
-    if (err) return response.sendNotFound(res);
-    res.json(docs);
-  })
+    })
+    .exec(function (err, docs) {
+      if (err) return response.sendNotFound(res);
+      res.json(docs);
+    })
 };

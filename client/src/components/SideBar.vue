@@ -2,11 +2,11 @@
   <div class="w-3/12 flex-shrink-0 pr-8">
     <div class="overflow-hidden pl-6 bg-gray-50 pt-6 tabs-panel shadow-md border-r border-gray-100">
       <div class="px-4 py-5 space-y-6 sm:p-6">
-        <h3 class="text-base font-medium text-gray-900">Setup your course</h3>
+        <h3 class="text-base font-medium text-gray-900">Setup your feeds</h3>
         <div class="mt-4 space-y-6">
 
-            <div class="flex items-start tab-panel active">
-          <router-link to="/" class="flex items-start">
+          <div class="flex items-start tab-panel active">
+            <router-link to="/" class="flex items-start">
               <div class="
                 bg-white
                 rounded-lg
@@ -25,8 +25,8 @@
               <div class="ml-3 text-sm">
                 <p class="text-gray-500">Home</p>
               </div>
-          </router-link>
-            </div>
+            </router-link>
+          </div>
           <div class="flex items-start tab-panel">
             <router-link to="/recruitments" class="flex items-start">
               <div class="
@@ -72,7 +72,7 @@
         </div>
       </div>
       <div class="px-4 py-5 space-y-6 sm:p-6">
-        <h3 class="text-base font-medium text-gray-900">Current course</h3>
+        <h3 class="text-base font-medium text-gray-900">Current recruitments</h3>
         <div class="mt-4 space-y-6">
           <div class="flex items-center justify-between tab-panel active">
             <div class="flex items-center">
@@ -209,7 +209,7 @@
       </div>
       <div class="px-4 py-5 space-y-6 sm:p-6">
         <h3 class="text-base font-medium text-gray-900">
-          Organize your course
+          Organize your feeds
         </h3>
 
         <div class="mt-4 space-y-6">

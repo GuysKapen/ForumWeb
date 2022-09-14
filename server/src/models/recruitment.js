@@ -54,6 +54,26 @@ RecruitmentSchema.pre('validate', function (next) {
 
 RecruitmentSchema.plugin(mongoosePaginate);
 
+RecruitmentSchema.statics.findByRef = async function (refModelName, refName, queryParams, company) {
+  const Model = mongoose.model(refModelName);
+  const docs = await Model.find({ 'slug': company }).exec();
+  if (docs != null && docs.length != 0) {
+    const merge = {};
+    for (const doc of docs) {
+      Object.assign(merge, queryParams, {
+        [refName]: {
+          $in: [
+            doc._id
+          ]
+        }
+      });
+    }
+
+    return merge;
+  }
+  return queryParams
+}
+
 const Recruitment = mongoose.model("Recruitment", RecruitmentSchema)
 
 export default Recruitment
