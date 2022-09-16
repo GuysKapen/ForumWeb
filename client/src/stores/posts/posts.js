@@ -13,8 +13,7 @@ export const usePostStore = defineStore({
     }),
     actions: {
         async getPost(id) {
-            const authStore = useAuthStore()
-            const res = await axios.get(`${serverUrl}/posts/${id}`, { params: { token: this.token } })
+            const res = await axios.get(`${serverUrl}/posts/${id}`)
             return res.data
         },
         async getPostsData() {
@@ -25,6 +24,10 @@ export const usePostStore = defineStore({
         async getRecruitmentsData(params) {
             const res = await axios.get(`${serverUrl}/recruitments`, { params: params })
             this.recruitments = res.data
+            return res.data
+        },
+        async getRecruitment(id) {
+            const res = await axios.get(`${serverUrl}/recruitments/${id}`)
             return res.data
         },
     },

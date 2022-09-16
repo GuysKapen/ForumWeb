@@ -5,7 +5,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
 <template>
   <div class="bg-white px-8 pt-8 py-16 rounded-xl relative">
-    <router-link tag="div" class="hover:text-indigo-600" class-active="active" :to="`/posts/${post._id}`" exact>
+    <router-link tag="div" class="hover:text-indigo-600" class-active="active" :to="`/recruitments/${post._id}`" exact>
       <h3 class="text-gray-800 hover:text-indigo-600 font-black text-xl">{{ post.name }}</h3>
     </router-link>
     <div class="flex items-center justify-between mt-4">

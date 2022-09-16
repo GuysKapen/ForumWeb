@@ -29,4 +29,7 @@ routes.route('/detail-fields')
 routes.route('/posts/:id')
   .get(publicC.post)
 
+routes.route('/recruitments/:id')
+  .get(publicC.recruitment)
+
 module.exports = routes;

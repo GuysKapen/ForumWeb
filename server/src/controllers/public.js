@@ -168,3 +168,16 @@ exports.recruitments = async function (req, res) {
       res.json(docs);
     })
 };
+
+exports.recruitment = function (req, res) {
+  Recruitment.findById(req.params.id).populate("company")
+    .populate({
+      path: "owner",
+      populate: {
+        path: "profile"
+      }
+    }).exec(function (err, docs) {
+      if (err) return response.sendNotFound(res);
+      res.json(docs);
+    })
+};
