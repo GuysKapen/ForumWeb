@@ -19,6 +19,13 @@ routes.route('/fields')
 routes.route('/recruitments')
   .get(publicC.recruitments)
 
+routes.route('/detail-companies')
+  .get(publicC.detailCompanies)
+routes.route('/detail-skills')
+  .get(publicC.detailSkills)
+routes.route('/detail-fields')
+  .get(publicC.detailFields)
+
 routes.route('/posts/:id')
   .get(publicC.post)
 

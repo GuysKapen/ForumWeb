@@ -17,38 +17,30 @@ exports.categories = function (req, res) {
   })
 };
 
-exports.companies = async function (req, res) {
+exports.companies = function (req, res) {
+  Skill.find({}).exec(function (err, docs) {
+    if (err) return response.sendNotFound(res);
+    res.json(docs);
+  })
+};
 
+exports.detailCompanies = async function (req, res) {
 
   Company.find({}).exec(async function (err, docs) {
     const results = []
     for (let index = 0; index < docs.length; index++) {
       const doc = docs[index];
 
-      const count = (await Recruitment.aggregate([
-        {
-          "$match": {
-            "company": new mongoose.Types.ObjectId(doc._id)
-          }
-        },
-        {
-          "$group": {
-            "_id": "$company",
-            "total": {
-              "$sum": 1
-            }
-          }
-        }
-      ]))[0]
+      const count = await Recruitment.find({
+        "company": new mongoose.Types.ObjectId(doc._id)
+      }).count().exec()
 
-      results.push(Object.assign({}, doc.toObject(), {'recruitmentCount': (count?.['total'] || 0)}))
+      results.push(Object.assign({}, doc.toObject(), { 'recruitmentCount': count }))
     }
 
     if (err) return response.sendNotFound(res);
     res.json(results);
   })
-
-
 
 };
 
@@ -59,10 +51,50 @@ exports.skills = function (req, res) {
   })
 };
 
+exports.detailSkills = function (req, res) {
+  Skill.find({}).exec(async function (err, docs) {
+    const results = []
+    for (let index = 0; index < docs.length; index++) {
+      const doc = docs[index];
+
+      const count = await Recruitment.find({
+        $expr: {
+          $in: [new mongoose.Types.ObjectId(doc._id), "$skills"]
+        }
+      }).count().exec()
+
+      results.push(Object.assign({}, doc.toObject(), { 'recruitmentCount': count }))
+    }
+
+    if (err) return response.sendNotFound(res);
+    res.json(results);
+  })
+};
+
 exports.fields = function (req, res) {
   Field.find({}).exec(function (err, docs) {
     if (err) return response.sendNotFound(res);
     res.json(docs);
+  })
+};
+
+exports.detailFields = function (req, res) {
+  Field.find({}).exec(async function (err, docs) {
+    const results = []
+    for (let index = 0; index < docs.length; index++) {
+      const doc = docs[index];
+
+      const count = await Recruitment.find({
+        $expr: {
+          $in: [new mongoose.Types.ObjectId(doc._id), "$fields"]
+        }
+      }).count().exec()
+
+      results.push(Object.assign({}, doc.toObject(), { 'recruitmentCount': count }))
+    }
+
+    if (err) return response.sendNotFound(res);
+    res.json(results);
   })
 };
 

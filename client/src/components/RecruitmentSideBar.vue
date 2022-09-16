@@ -97,7 +97,7 @@
                 flex-shrink-0
                 border border-gray-100
               ">
-                  <span class="text-xs text-indigo-600">1</span>
+                  <span class="text-xs text-indigo-600">{{field.recruitmentCount}}</span>
                 </div>
               </div>
             </router-link>
@@ -149,7 +149,7 @@
                 flex-shrink-0
                 border border-gray-100
               ">
-                  <span class="text-xs text-indigo-600">1</span>
+                  <span class="text-xs text-indigo-600">{{skill.recruitmentCount}}</span>
                 </div>
               </div>
             </router-link>
@@ -186,21 +186,21 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { useAuthStore } from '../stores/auth/auth'
+// eslint-disable-next-line prettier/prettier
+import axios from "axios";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export default {
   data: () => ({ companies: [], skills: [], fields: [] }),
   mounted() {
-    axios.get(`${serverUrl}/companies`).then(res => {
+    axios.get(`${serverUrl}/detail-companies`).then(res => {
       this.companies = res.data;
     })
-    axios.get(`${serverUrl}/skills`).then(res => {
+    axios.get(`${serverUrl}/detail-skills`).then(res => {
       this.skills = res.data;
     })
-    axios.get(`${serverUrl}/fields`).then(res => {
+    axios.get(`${serverUrl}/detail-fields`).then(res => {
       this.fields = res.data;
     })
   },
