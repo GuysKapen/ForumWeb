@@ -1,7 +1,6 @@
 import fs from 'fs'
 import { v4 as uuidv4 } from 'uuid';
-import express from 'express';
-const routes = express.Router({ mergeParams: true });
+const sep = require('path').sep
 
 exports.uploadImage = function (req, res) {
     try {
@@ -15,9 +14,9 @@ exports.uploadImage = function (req, res) {
             let avatar = req.files.image;
             var fileExt = avatar.name.split('.').pop();
             const name = `${uuidv4()}.${fileExt}`;
-            const parent = `./uploads/media/${req.params.userId}/images`
-            const oldPath = `${parent}/${avatar.name}`
-            const newPath = `${parent}/${name}`
+            const parent = `.${sep}uploads${sep}media${sep}${req.params.userId}${sep}images`
+            const oldPath = `${parent}${sep}${avatar.name}`
+            const newPath = `${parent}${sep}${name}`
 
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
             avatar.mv(oldPath, function () {
@@ -53,9 +52,9 @@ exports.uploadFile = function (req, res) {
             let file = req.files.file;
             var fileExt = file.name.split('.').pop();
             const name = `${uuidv4()}.${fileExt}`;
-            const parent = `./uploads/media/${req.params.userId}/files`
-            const oldPath = `${parent}/${file.name}`
-            const newPath = `${parent}/${name}`
+            const parent = `.${sep}uploads${sep}media${sep}${req.params.userId}${sep}files`
+            const oldPath = `${parent}${sep}${file.name}`
+            const newPath = `${parent}${sep}${name}`
 
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
             file.mv(oldPath, function () {

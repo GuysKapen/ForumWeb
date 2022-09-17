@@ -60,6 +60,10 @@ const UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Recruitment'
   }],
+  applies: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Apply'
+  }],
 });
 
 UserSchema.set('toJSON', {
