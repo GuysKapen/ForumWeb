@@ -44,7 +44,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
       </div>
     </div>
     <div class="mt-4 prose lg:prose-xl">
-      <div class="text-gray-700 text-sm" v-html="post.content"></div>
+      <div class="text-gray-700 text-sm" v-html="truncatedContent"></div>
     </div>
     <div class="flex justify-between mt-4">
       <div class="flex">
@@ -176,6 +176,26 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 <script>
 export default {
   props: ['post'],
+  methods: {
+    truncate(value, length) {
+      if (!value) return "";
+      value = value.toString();
+      if (value.length > length) {
+        return value.substring(0, length) + " ...";
+      } else {
+        return value;
+      }
+    }
+  },
+  computed: {
+    strippedContent() {
+      let regex = /(<([^>]+)>)/gi;
+      return this.post.content.replace(regex, "");
+    },
+    truncatedContent() {
+      return this.truncate(this.post.content, 250)
+    }
+  }
 };
 </script>
 

@@ -18,7 +18,7 @@ exports.categories = function (req, res) {
 };
 
 exports.companies = function (req, res) {
-  Skill.find({}).exec(function (err, docs) {
+  Company.find({}).exec(function (err, docs) {
     if (err) return response.sendNotFound(res);
     res.json(docs);
   })
