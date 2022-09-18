@@ -30,5 +30,9 @@ export const usePostStore = defineStore({
             const res = await axios.get(`${serverUrl}/recruitments/${id}`)
             return res.data
         },
+        async getTopRecruitmentsData(params) {
+            const res = await axios.get(`${serverUrl}/top-recruitments`, { params: params })
+            return res.data
+        },
     },
 });

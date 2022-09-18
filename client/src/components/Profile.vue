@@ -335,7 +335,6 @@ export default {
 
         async updateProfile() {
             const token = this.token
-            console.log("Update profile", token);
             try {
                 let res;
                 if (this.image != null) {
@@ -348,7 +347,6 @@ export default {
                             'x-access-token': token,
                         }
                     })
-                    console.log("Res1", res);
                     this.cover = res.data.data.name
                 }
 
@@ -359,7 +357,6 @@ export default {
                         'x-access-token': token,
                     }
                 });
-                console.log("Res2", res);
             } catch (error) {
                 console.log('err', error);
             }

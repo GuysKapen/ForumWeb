@@ -26,21 +26,16 @@ exports.companies = function (req, res) {
 
 exports.detailCompanies = async function (req, res) {
 
-  Company.find({}).exec(async function (err, docs) {
-    const results = []
-    for (let index = 0; index < docs.length; index++) {
-      const doc = docs[index];
+  let results = await Recruitment.aggregate([
+    { "$group": { _id: "$company", count: { $sum: 1 } } },
+    { "$project": { company: '$_id', count: 1, _id: 0 } }
+  ]).exec()
 
-      const count = await Recruitment.find({
-        "company": new mongoose.Types.ObjectId(doc._id)
-      }).count().exec()
 
-      results.push(Object.assign({}, doc.toObject(), { 'recruitmentCount': count }))
-    }
-
+  Company.populate(results, { path: "company" }, function (err, docs) {
     if (err) return response.sendNotFound(res);
-    res.json(results);
-  })
+    res.json(docs)
+  });
 
 };
 
@@ -51,24 +46,27 @@ exports.skills = function (req, res) {
   })
 };
 
-exports.detailSkills = function (req, res) {
-  Skill.find({}).exec(async function (err, docs) {
-    const results = []
-    for (let index = 0; index < docs.length; index++) {
-      const doc = docs[index];
-
-      const count = await Recruitment.find({
-        $expr: {
-          $in: [new mongoose.Types.ObjectId(doc._id), "$skills"]
+exports.detailSkills = async function (req, res) {
+  let results = (await Recruitment.aggregate([
+    { $unwind: "$skills" },
+    { $group: { "_id": "$skills", "count": { $sum: 1 } } },
+    {
+      $group: {
+        "_id": null, "skill_details": {
+          $push: {
+            "skill": "$_id",
+            "count": "$count"
+          }
         }
-      }).count().exec()
+      }
+    },
+    { $project: { "_id": 0, "skill_details": 1 } }
+  ]).exec())[0]["skill_details"]
 
-      results.push(Object.assign({}, doc.toObject(), { 'recruitmentCount': count }))
-    }
-
+  Skill.populate(results, { path: "skill" }, function (err, docs) {
     if (err) return response.sendNotFound(res);
-    res.json(results);
-  })
+    res.json(docs)
+  });
 };
 
 exports.fields = function (req, res) {
@@ -78,24 +76,27 @@ exports.fields = function (req, res) {
   })
 };
 
-exports.detailFields = function (req, res) {
-  Field.find({}).exec(async function (err, docs) {
-    const results = []
-    for (let index = 0; index < docs.length; index++) {
-      const doc = docs[index];
-
-      const count = await Recruitment.find({
-        $expr: {
-          $in: [new mongoose.Types.ObjectId(doc._id), "$fields"]
+exports.detailFields = async function (req, res) {
+  let results = (await Recruitment.aggregate([
+    { $unwind: "$fields" },
+    { $group: { "_id": "$fields", "count": { $sum: 1 } } },
+    {
+      $group: {
+        "_id": null, "field_details": {
+          $push: {
+            "field": "$_id",
+            "count": "$count"
+          }
         }
-      }).count().exec()
+      }
+    },
+    { $project: { "_id": 0, "field_details": 1 } }
+  ]).exec())[0]["field_details"]
 
-      results.push(Object.assign({}, doc.toObject(), { 'recruitmentCount': count }))
-    }
-
+  Field.populate(results, { path: "field" }, function (err, docs) {
     if (err) return response.sendNotFound(res);
-    res.json(results);
-  })
+    res.json(docs)
+  });
 };
 
 exports.posts = function (req, res) {
@@ -165,6 +166,25 @@ exports.recruitments = async function (req, res) {
     })
     .exec(function (err, docs) {
       if (err) return response.sendNotFound(res);
+      res.json(docs);
+    })
+};
+
+exports.topRecruitments = async function (req, res) {
+  let query = {};
+
+  Recruitment.find(query)
+    .populate({
+      path: "owner",
+      populate: {
+        path: "profile"
+      }
+    })
+    .sort({_id: 'asc'})
+    .limit(6)
+    .exec(function (err, docs) {
+      if (err) return response.sendNotFound(res);
+      console.log("docs", docs);
       res.json(docs);
     })
 };

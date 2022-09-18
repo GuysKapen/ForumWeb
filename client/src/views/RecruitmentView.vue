@@ -1,7 +1,7 @@
 <script setup>
 import Nav from "@/components/Nav.vue";
 import SideBar from "@/components/RecruitmentSideBar.vue";
-import RightBar from "@/components/RightBar.vue";
+import RightBar from "@/components/RecruitmentRightBar.vue";
 import Trend from "@/components/Recruitments.vue";
 </script>
 

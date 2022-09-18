@@ -4,8 +4,8 @@
       <div class="px-4 py-5 space-y-6 sm:p-6">
         <h3 class="text-base font-medium text-gray-900">Current recruitments</h3>
         <div class="mt-4 space-y-6">
-          <div class="tab-panel group" v-for="(company, idx) in companies" :key="idx">
-            <router-link :to="{ name: 'recruitments', query: {'company': company.slug} }">
+          <div class="tab-panel group" v-for="(obj, idx) in companies" :key="idx">
+            <router-link :to="{ name: 'recruitments', query: {'company': obj.company.slug} }">
               <div class="flex items-center justify-between">
                 <div class="flex items-center">
                   <div class="
@@ -30,7 +30,7 @@
                   </div>
 
                   <div class="ml-3 text-sm">
-                    <p class="text-gray-500 group-hover:text-indigo-600">{{company.name}}</p>
+                    <p class="text-gray-500 group-hover:text-indigo-600">{{obj.company.name}}</p>
                   </div>
                 </div>
                 <div class="
@@ -45,7 +45,7 @@
                 flex-shrink-0
                 border border-gray-100
               ">
-                  <span class="text-xs text-indigo-600">{{company.recruitmentCount}}</span>
+                  <span class="text-xs text-indigo-600">{{obj.count}}</span>
                 </div>
               </div>
             </router-link>
@@ -56,8 +56,8 @@
       <div class="px-4 py-5 space-y-6 sm:p-6">
         <h3 class="text-base font-medium text-gray-900">Fields recruitments</h3>
         <div class="mt-4 space-y-6">
-          <div class="tab-panel group" v-for="(field, idx) in fields" :key="idx">
-            <router-link :to="{ name: 'recruitments', query: {'fields': field.slug} }">
+          <div class="tab-panel group" v-for="(obj, idx) in fields" :key="idx">
+            <router-link :to="{ name: 'recruitments', query: {'fields': obj.field.slug} }">
               <div class="flex items-center justify-between">
                 <div class="flex items-center">
                   <div class="
@@ -82,7 +82,7 @@
                   </div>
 
                   <div class="ml-3 text-sm">
-                    <p class="text-gray-500 group-hover:text-indigo-600">{{field.name}}</p>
+                    <p class="text-gray-500 group-hover:text-indigo-600">{{obj.field.name}}</p>
                   </div>
                 </div>
                 <div class="
@@ -97,7 +97,7 @@
                 flex-shrink-0
                 border border-gray-100
               ">
-                  <span class="text-xs text-indigo-600">{{field.recruitmentCount}}</span>
+                  <span class="text-xs text-indigo-600">{{obj.count}}</span>
                 </div>
               </div>
             </router-link>
@@ -108,8 +108,8 @@
       <div class="px-4 py-5 space-y-6 sm:p-6">
         <h3 class="text-base font-medium text-gray-900">Skills recruitments</h3>
         <div class="mt-4 space-y-6">
-          <div class="tab-panel group" v-for="(skill, idx) in skills" :key="idx">
-            <router-link :to="{ name: 'recruitments', query: {'skills[]': skill.slug} }">
+          <div class="tab-panel group" v-for="(job, idx) in skills" :key="idx">
+            <router-link :to="{ name: 'recruitments', query: {'skills[]': job.skill.slug} }">
               <div class="flex items-center justify-between">
                 <div class="flex items-center">
                   <div class="
@@ -134,7 +134,7 @@
                   </div>
 
                   <div class="ml-3 text-sm">
-                    <p class="text-gray-500 group-hover:text-indigo-600">{{skill.name}}</p>
+                    <p class="text-gray-500 group-hover:text-indigo-600">{{job.skill.name}}</p>
                   </div>
                 </div>
                 <div class="
@@ -149,7 +149,7 @@
                 flex-shrink-0
                 border border-gray-100
               ">
-                  <span class="text-xs text-indigo-600">{{skill.recruitmentCount}}</span>
+                  <span class="text-xs text-indigo-600">{{job.count}}</span>
                 </div>
               </div>
             </router-link>

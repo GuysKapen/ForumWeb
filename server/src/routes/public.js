@@ -32,4 +32,7 @@ routes.route('/posts/:id')
 routes.route('/recruitments/:id')
   .get(publicC.recruitment)
 
+routes.route('/top-recruitments')
+  .get(publicC.topRecruitments)
+
 module.exports = routes;
