@@ -12,7 +12,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 </script>
 <template>
-  <div>
+  <div class="flex-grow">
     <div class="flex-grow flex px-8 py-12" v-if="recruitment != null">
       <div class="flex-grow pr-8">
         <div class="flex justify-between items-center">
@@ -165,7 +165,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
         </div>
       </div>
     </div>
-    <div v-else class="w-full flex justify-center h-full pt-32">
+    <div v-else class="w-full flex justify-center pt-32">
       <HashLoader />
     </div>
   </div>

@@ -169,7 +169,7 @@
                     hover:text-gray-600 hover:border-gray-300
                     dark:text-gray-400 dark:hover:text-gray-300
                   "
-                  >Courses</a
+                  >Recruitments</a
                 >
 
                 <a
@@ -188,7 +188,7 @@
                     hover:text-gray-600 hover:border-gray-300
                     dark:text-gray-400 dark:hover:text-gray-300
                   "
-                  >Author</a
+                  >Recruiter</a
                 >
 
                 <a

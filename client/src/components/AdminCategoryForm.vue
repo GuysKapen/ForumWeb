@@ -80,7 +80,7 @@
                           },
                       })
                       .then((res) => {
-                          this.$router.push("/")
+                          this.$router.push({name: "category-index"})
                       });
               } catch (error) {
                   console.error("Add category", error);

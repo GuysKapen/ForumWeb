@@ -92,7 +92,7 @@
                           },
                       })
                       .then((res) => {
-                          this.$router.push("/")
+                          this.$router.push({name: "company-index"})
                       });
               } catch (error) {
                   console.error("Add model", error);

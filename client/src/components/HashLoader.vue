@@ -43,7 +43,7 @@ export default {
     border-radius: 20px;
     right: 0;
     animation: loading-1 2s infinite;
-    background: linear-gradient(rgb(132, 216, 199), rgb(83, 209, 184));
+    background: linear-gradient(#4338ca, #4338ca);
 }
 
 .loader-inner-1 {

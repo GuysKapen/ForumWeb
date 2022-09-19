@@ -80,7 +80,7 @@
                           },
                       })
                       .then((res) => {
-                          this.$router.push("/")
+                          this.$router.push({name: "skill-index"})
                       });
               } catch (error) {
                   console.error("Add model", error);

@@ -291,7 +291,7 @@ export default {
                         },
                     })
                     .then((res) => {
-                        this.$router.push("/")
+                          this.$router.push({name: "recruitment-index"})
                     });
             } catch (error) {
                 console.error("Add recruitment", error);
