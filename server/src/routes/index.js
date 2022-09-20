@@ -6,6 +6,7 @@ import categories from './categories';
 import companies from './companies';
 import skills from './skills';
 import fields from './fields';
+import posts from './posts';
 import publicRoute from './public';
 import response from '../helpers/response';
 
@@ -20,6 +21,7 @@ routes.use('/categories', categories);
 routes.use('/companies', companies);
 routes.use('/skills', skills);
 routes.use('/fields', fields);
+routes.use('/posts', posts);
 
 routes.get('/', (req, res) => {
   res.status(200).json({ message: 'Ok' });

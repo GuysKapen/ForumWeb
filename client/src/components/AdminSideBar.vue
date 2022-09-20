@@ -5,7 +5,7 @@
       <div class="py-5 space-y-6 sm:p-6">
         <div class="mt-4 space-y-6">
 
-          <router-link tag="div" class-active="active" to="/admin/category" exact>
+          <router-link tag="div" class-active="active" :to="{name: 'category-index'}" exact>
             <div class="flex items-start tab-panel active">
               <div class="
                 bg-white
@@ -29,7 +29,7 @@
           </router-link>
 
           <div class="flex items-start tab-panel active">
-            <router-link tag="div" class-active="active" class="tab-panel flex items-start" to="/admin/company" exact>
+            <router-link tag="div" class-active="active" class="tab-panel flex items-start" :to="{name: 'company-index'}" exact>
               <div class="
                 bg-white
                 rounded-lg
@@ -52,7 +52,7 @@
           </div>
 
           <div class="flex items-start tab-panel active">
-            <router-link tag="div" class-active="active" class="flex items-start tab-panel" to="/admin/field" exact>
+            <router-link tag="div" class-active="active" class="flex items-start tab-panel" :to="{name: 'field-index'}" exact>
               <div class="
                 bg-white
                 rounded-lg
@@ -76,7 +76,7 @@
 
 
           <div class="flex items-start tab-panel active">
-            <router-link tag="div" class-active="active" class="flex items-start" to="/admin/skill" exact>
+            <router-link tag="div" class-active="active" class="flex items-start" :to="{name: 'skill-index'}" exact>
               <div class="
                 bg-white
                 rounded-lg
@@ -99,7 +99,7 @@
           </div>
 
           <div class="flex items-start tab-panel active">
-            <router-link tag="div" class-active="active" class="flex item-starts" to="/admin/recruitment" exact>
+            <router-link tag="div" class-active="active" class="flex item-starts" :to="{name: 'recruitment-index'}" exact>
               <div class="
                 bg-white
                 rounded-lg
@@ -123,7 +123,7 @@
 
 
           <div class="flex items-start tab-panel">
-            <router-link to="/admin/category" class="flex items-start">
+            <router-link :to="{name: 'post-index'}" class="flex items-start">
               <div class="
                 bg-white
                 rounded-lg

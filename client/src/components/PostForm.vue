@@ -33,9 +33,9 @@
 
         <div class="flex-grow-1 w-4/12 pt-12 ml-6 shadow-md px-6 py-4">
             <div class="field">
-                <div class="control flex flex-wrap mt-2 justify-start">
+                <div class="control flex flex-col flex-wrap mt-2 justify-start">
                     <label class="block font-semibold text-sm mt-2 w-4/12" for="input1">Categories</label>
-                    <div class="ml-4">
+                    <div class="mt-2">
 
                         <div class="relative flex w-full">
                             <select v-model="selectedCategoryId" id="select-category" name="category" placeholder="Select categories..."

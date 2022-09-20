@@ -22,6 +22,9 @@ import SkillView from '@/views/admin/skill/View.vue'
 import NewRecruitmentView from '@/views/admin/recruitment/NewView.vue'
 import RecruitmentView from '@/views/admin/recruitment/View.vue'
 
+import AdminNewPostView from '@/views/admin/post/NewView.vue'
+import PostView from '@/views/admin/post/View.vue'
+
 import AdminView from '@/views/admin/View.vue'
 
 const router = createRouter({
@@ -84,54 +87,64 @@ const router = createRouter({
       component: AdminView,
       children: [
         {
-          path: 'category',
+          path: 'categories',
           name: 'category-index',
           component: CategoryView
         },
         {
-          path: 'category/new',
+          path: 'categories/new',
           name: 'category-new',
           component: NewCategoryView
         },
         {
-          path: 'company',
+          path: 'companies',
           name: 'company-index',
           component: CompanyView
         },
         {
-          path: 'company/new',
+          path: 'companies/new',
           name: 'company-new',
           component: NewCompanyView
         },
         {
-          path: 'field',
+          path: 'fields',
           name: 'field-index',
           component: FieldView
         },
         {
-          path: 'field/new',
+          path: 'fields/new',
           name: 'field-new',
           component: NewFieldView
         },
         {
-          path: 'skill',
+          path: 'skills',
           name: 'skill-index',
           component: SkillView
         },
         {
-          path: 'skill/new',
+          path: 'skills/new',
           name: 'skill-new',
           component: NewSkillView
         },
         {
-          path: 'recruitment',
+          path: 'recruitments',
           name: 'recruitment-index',
           component: RecruitmentView
         },
         {
-          path: 'recruitment/new',
+          path: 'recruitments/new',
           name: 'recruitment-new',
           component: NewRecruitmentView
+        },
+        {
+          path: 'posts',
+          name: 'post-index',
+          component: PostView 
+        },
+        {
+          path: 'posts/new',
+          name: 'post-new',
+          component: AdminNewPostView
         }
       ]
     },
