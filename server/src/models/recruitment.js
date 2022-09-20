@@ -45,6 +45,10 @@ const RecruitmentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Skill',
   }],
+  applies: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Apply',
+  }],
 });
 
 RecruitmentSchema.pre('validate', function (next) {

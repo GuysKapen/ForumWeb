@@ -38,6 +38,7 @@ exports.create = function (req, res) {
 
 exports.read = function (req, res) {
   Post.findById(req.params.id, function (err, item) {
+    console.log("err", err);
     if (err) return response.sendNotFound(res);
     if (!req.currentUser.canRead(item)) return response.sendForbidden(res);
     res.json(item);

@@ -180,7 +180,7 @@ exports.topRecruitments = async function (req, res) {
         path: "profile"
       }
     })
-    .sort({_id: 'asc'})
+    .sort({ _id: 'asc' })
     .limit(6)
     .exec(function (err, docs) {
       if (err) return response.sendNotFound(res);
@@ -196,7 +196,14 @@ exports.recruitment = function (req, res) {
       populate: {
         path: "profile"
       }
-    }).exec(function (err, docs) {
+    })
+    .populate({
+      path: "applies",
+      populate: {
+        path: "owner"
+      }
+    })
+    .exec(function (err, docs) {
       if (err) return response.sendNotFound(res);
       res.json(docs);
     })

@@ -230,6 +230,7 @@ export default {
       const newModel = {
         phone: this.phone,
         cv: this.cv,
+        recruitment: this.recruitment._id
       };
 
       try {

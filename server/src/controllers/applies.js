@@ -4,6 +4,7 @@ import request from '../helpers/request';
 import pagination from '../helpers/pagination';
 
 import _ from 'underscore';
+import Recruitment from '../models/recruitment';
 
 const Apply = mongoose.model('Apply');
 
@@ -21,18 +22,31 @@ exports.create = function (req, res) {
   const user = req.locals.user;
   if (!req.currentUser.canEdit(user)) return response.sendForbidden(res);
 
-  const attrs = _.pick(req.body, "phone", "cv")
+  const attrs = _.pick(req.body, "phone", "cv", "recruitment")
   const item = new Apply(attrs);
   item.owner = user._id;
-  item.save(function (err, item) {
-    console.log("err", err)
-    if (err) return response.sendBadRequest(res, err);
 
-    user.applies.push(item);
-    user.save(function (err, user) {
+  Recruitment.findById(attrs["recruitment"], function (err, recruitment) {
+    if (err) res.send(err)
+
+    item.save(function (err, item) {
       if (err) return response.sendBadRequest(res, err);
-      response.sendCreated(res, item);
+
+      // Save to recruitments
+      recruitment.applies.push(item)
+      recruitment.save(function (err, recruitment) {
+        if (err) return response.sendBadRequest(res, err);
+
+        // Save to users
+        user.applies.push(item);
+        user.save(function (err, user) {
+          if (err) return response.sendBadRequest(res, err);
+          response.sendCreated(res, item);
+        });
+
+      });
     });
+
   });
 };
 
@@ -45,7 +59,7 @@ exports.read = function (req, res) {
 };
 
 exports.update = function (req, res) {
-  const attrs = _.pick(req.body, "phone", "cv")
+  const attrs = _.pick(req.body, "phone", "cv", "recruitment")
   Apply.findOneAndUpdate({ _id: req.params.id }, attrs, { new: true }, function (err, item) {
     if (err) return response.sendBadRequest(res, err);
     if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);

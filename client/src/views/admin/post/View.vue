@@ -71,6 +71,12 @@ import moment from 'moment';
                                                             Active
                                                         </span>
                                                     </td>
+                                                    <td class="text-sm text-center font-medium text-indigo-800 px-6">
+                                                        <router-link :to="{name: 'answer-of-post', params: {'postId': post._id}}"
+                                                            class="text-indigo-600 hover:text-indigo-800">
+                                                            {{post.answers.length}}
+                                                        </router-link>
+                                                    </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {{moment(new Date( parseInt( post._id.substring(0, 8), 16 ) *
                                                         1000 )).format('DD/MM/YYYYY')}}

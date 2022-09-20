@@ -21,9 +21,14 @@ import SkillView from '@/views/admin/skill/View.vue'
 
 import NewRecruitmentView from '@/views/admin/recruitment/NewView.vue'
 import RecruitmentView from '@/views/admin/recruitment/View.vue'
+import ApplyOfView from '@/views/admin/recruitment/ViewOf.vue'
 
 import AdminNewPostView from '@/views/admin/post/NewView.vue'
 import PostView from '@/views/admin/post/View.vue'
+
+import AdminNewAnswerView from '@/views/admin/answer/NewView.vue'
+import AnswerView from '@/views/admin/answer/View.vue'
+import AnswerOfView from '@/views/admin/answer/ViewOf.vue'
 
 import AdminView from '@/views/admin/View.vue'
 
@@ -137,15 +142,35 @@ const router = createRouter({
           component: NewRecruitmentView
         },
         {
+          path: 'recruitment/:refId',
+          name: 'applies-of-recruitment',
+          component: ApplyOfView
+        },
+        {
           path: 'posts',
           name: 'post-index',
-          component: PostView 
+          component: PostView
         },
         {
           path: 'posts/new',
           name: 'post-new',
           component: AdminNewPostView
-        }
+        },
+        {
+          path: 'answers',
+          name: 'answer-index',
+          component: AnswerView
+        },
+        {
+          path: 'answers/new',
+          name: 'answer-new',
+          component: AdminNewAnswerView
+        },
+        {
+          path: 'answers/:postId',
+          name: 'answer-of-post',
+          component: AnswerOfView
+        },
       ]
     },
   ]
