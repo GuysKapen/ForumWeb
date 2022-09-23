@@ -1,0 +1,164 @@
+<template>
+  <div class="w-3/12 pr-8">
+    <div
+      class="
+        overflow-hidden
+        bg-gray-50
+        pt-6
+        tabs-panel
+        shadow-md
+        border-r border-gray-100
+        min-h-screen
+      "
+    >
+      <div class="py-5 space-y-6 sm:p-6">
+        <div class="mt-4 space-y-6">
+          <div class="flex items-start tab-panel active">
+            <router-link
+              tag="div"
+              class-active="active"
+              class="tab-panel flex items-start"
+              :to="{ name: 'recruiter-dashboard' }"
+              exact
+            >
+              <div
+                class="
+                  bg-white
+                  rounded-lg
+                  flex
+                  items-center
+                  justify-center
+                  ml-2
+                  w-6
+                  h-6
+                  flex-shrink-0
+                  border border-gray-100
+                "
+              >
+                <span class="material-icons text-gray-300 text-sm"
+                  >dashboard</span
+                >
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Dashboard</p>
+              </div>
+            </router-link>
+          </div>
+
+          <div class="flex items-start tab-panel active">
+            <router-link
+              tag="div"
+              class-active="active"
+              class="flex item-starts"
+              :to="{ name: 'recruiter-recruitment-index' }"
+              exact
+            >
+              <div
+                class="
+                  bg-white
+                  rounded-lg
+                  flex
+                  items-center
+                  justify-center
+                  ml-2
+                  w-6
+                  h-6
+                  flex-shrink-0
+                  border border-gray-100
+                "
+              >
+                <span class="material-icons text-gray-300 text-sm"
+                  >card_membership</span
+                >
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Recruitment</p>
+              </div>
+            </router-link>
+          </div>
+
+          <div class="flex items-start tab-panel">
+            <router-link :to="{ name: 'recruiter-post-index' }" class="flex items-start">
+              <div
+                class="
+                  bg-white
+                  rounded-lg
+                  flex
+                  items-center
+                  justify-center
+                  ml-2
+                  w-6
+                  h-6
+                  flex-shrink-0
+                  border border-gray-100
+                "
+              >
+                <span class="material-icons text-gray-300 text-sm">forum</span>
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Posts</p>
+              </div>
+            </router-link>
+          </div>
+
+          <div class="flex items-start tab-panel">
+            <router-link to="/admin/" class="flex items-start">
+              <div
+                class="
+                  bg-white
+                  rounded-lg
+                  flex
+                  items-center
+                  justify-center
+                  ml-2
+                  w-6
+                  h-6
+                  flex-shrink-0
+                  border border-gray-100
+                "
+              >
+                <span class="material-icons text-gray-300 text-sm">feed</span>
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Your trends</p>
+              </div>
+            </router-link>
+          </div>
+
+          <div class="flex items-start tab-panel">
+            <router-link to="/admin/" class="flex items-start">
+              <div
+                class="
+                  bg-white
+                  rounded-lg
+                  flex
+                  items-center
+                  justify-center
+                  ml-2
+                  w-6
+                  h-6
+                  flex-shrink-0
+                  border border-gray-100
+                "
+              >
+                <span class="material-icons text-gray-300 text-sm">save</span>
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Saved</p>
+              </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>

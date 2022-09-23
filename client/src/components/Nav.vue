@@ -173,7 +173,7 @@
                 >
 
                 <a
-                  href=""
+                  href="/recruiter/dashboard"
                   class="
                     inline-block
                     py-4
