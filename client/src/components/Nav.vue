@@ -192,7 +192,7 @@
                 >
 
                 <a
-                  href="/admin"
+                  href="/admin/dashboard"
                   class="
                     inline-block
                     py-4

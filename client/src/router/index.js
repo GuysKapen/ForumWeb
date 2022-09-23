@@ -93,7 +93,7 @@ const router = createRouter({
       component: AdminView,
       children: [
         {
-          path: 'dashbaord',
+          path: 'dashboard',
           name: 'admin-dashboard',
           component: AdminDashboardView
         },
