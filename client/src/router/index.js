@@ -31,6 +31,7 @@ import AnswerView from '@/views/admin/answer/View.vue'
 import AnswerOfView from '@/views/admin/answer/ViewOf.vue'
 
 import AdminView from '@/views/admin/View.vue'
+import AdminDashboardView from '@/views/admin/dashboard/View.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -91,6 +92,11 @@ const router = createRouter({
       name: 'admin',
       component: AdminView,
       children: [
+        {
+          path: 'dashbaord',
+          name: 'admin-dashboard',
+          component: AdminDashboardView
+        },
         {
           path: 'categories',
           name: 'category-index',

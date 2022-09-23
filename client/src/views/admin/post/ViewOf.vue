@@ -15,14 +15,14 @@ import moment from 'moment';
                         <div class="flex justify-between">
                             <div class="flex items-center">
                                 <h2 class="text-xl font-bold leading-7 text-gray-900 sm:text-2xl sm:truncate">
-                                    All categories
+                                    Answers of {{post?.title || ''}}
                                 </h2>
                                 <span
                                     class="inline-flex ml-4 items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-indigo-600 rounded-full">{{
-                                    categories.length }}</span>
+                                    applies.length }}</span>
                             </div>
 
-                            <router-link :to="{name: 'category-new'}"
+                            <router-link :to="{name: 'post-new'}"
                                 class="inline-flex justify-center py-2 px-8 rounded-full border border-transparent shadow-sm text-sm font-black text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 New
                             </router-link>
@@ -37,33 +37,33 @@ import moment from 'moment';
                                             <thead class="bg-gray-50">
                                                 <tr>
                                                     <th scope="col"
-                                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                         No
                                                     </th>
                                                     <th scope="col"
-                                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                                                        Name
+                                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                       Applyer 
                                                     </th>
                                                     <th scope="col"
-                                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                         Status
                                                     </th>
                                                     <th scope="col"
-                                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap tracking-wider">
                                                         Created At
                                                     </th>
                                                     <th scope="col"
-                                                        class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                                        class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                         Action
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white divide-y divide-gray-200">
 
-                                                <tr v-for="(category, idx) in categories" :key="idx">
+                                                <tr v-for="(apply, idx) in applies" :key="idx">
                                                     <td class="text-sm font-medium text-gray-900 px-6">{{ idx + 1 }}
                                                     </td>
-                                                    <td class="text-sm font-medium text-gray-900 px-6">{{ category.name
+                                                    <td class="text-sm font-medium capitalize text-gray-900 px-6">{{ apply.owner.name
                                                     }}</td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
                                                         <span
@@ -72,16 +72,16 @@ import moment from 'moment';
                                                         </span>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {{moment(new Date( parseInt( category._id.substring(0, 8), 16 ) *
+                                                        {{moment(new Date( parseInt( apply._id.substring(0, 8), 16 ) *
                                                         1000 )).format('DD/MM/YYYYY')}}
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <a href="{{ route('admin.language.edit', field._id) }}"
+                                                        <a href="{{ route('admin.language.edit', company._id) }}"
                                                             class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</a>
 
                                                         <button class="text-red-600 hover:text-red-900" type="button"
-                                                            @click="deleteModel(category._id)">
+                                                            @click="deleteModel(apply._id)">
                                                             Delete
                                                         </button>
                                                     </td>
@@ -113,27 +113,29 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export default {
     mounted() {
-        axios.get(`${serverUrl}/categories`).then(res => {
-            this.categories = res.data;
+        axios.get(`${serverUrl}/recruitments/${this.$route.params.refId}`).then(res => {
+            this.recruitment = res.data
+            this.applies = res.data.applies;
         })
     },
     data: () => ({
-        categories: []
+        post: null,
+        applies: []
     }),
     methods: {
         deleteModel(id) {
             const self = this;
             showConfirmPopup(function () {
                 const authStore = useAuthStore()
-                axios.delete(`${serverUrl}/categories/${id}`, {
+                axios.delete(`${serverUrl}/posts/${id}`, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${authStore.token}`,
                         "x-access-token": authStore.token,
                     },
                 }).then(function () {
-                    self.categories = self.categories.filter(item => item._id !== id);
-                    createToast('Success delete category', { type: 'success' })
+                    self.applies = self.applies.filter(item => item._id !== id);
+                    createToast('Success delete post', { type: 'success' })
                 })
             })
         }
