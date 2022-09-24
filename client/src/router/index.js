@@ -42,6 +42,48 @@ import RecruiterRecruitmentView from "@/views/recruiter/recruitment/View.vue";
 import RecruiterView from "@/views/recruiter/View.vue";
 import RecruiterDashboardView from "@/views/recruiter/dashboard/View.vue";
 
+import { useAuthStore } from "@/stores/auth/auth";
+
+import { createToast } from "mosha-vue-toastify";
+
+function isAuth() {
+  const authStore = useAuthStore();
+  if (authStore.token == null || authStore.user == null) {
+    createToast("Please login to continue", { type: "info" });
+    return "/login";
+  }
+  return true;
+}
+
+// Need backend validation as well
+function isAdmin() {
+  const authStore = useAuthStore();
+  console.log(authStore.token, authStore.user);
+  if (
+    authStore.token == null ||
+    authStore.user == null ||
+    authStore.user.role !== "admin"
+  ) {
+    createToast("Please login to admin to continue", { type: "info" });
+    return "/login";
+  }
+  return true;
+}
+
+// Need backend validation as well
+function isRecruiter() {
+  const authStore = useAuthStore();
+  if (
+    authStore.token == null ||
+    authStore.user == null ||
+    (authStore.user.role !== "recruiter" && authStore.user.role !== "admin")
+  ) {
+    createToast("Please login to recruiter account", { type: "info" });
+    return "/login";
+  }
+  return true;
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -100,6 +142,7 @@ const router = createRouter({
       path: "/admin",
       name: "admin",
       component: AdminView,
+      beforeEnter: [isAdmin],
       children: [
         {
           path: "dashboard",
@@ -192,6 +235,7 @@ const router = createRouter({
       path: "/recruiter",
       name: "recruiter",
       component: RecruiterView,
+      beforeEnter: [isRecruiter],
       children: [
         {
           path: "dashboard",

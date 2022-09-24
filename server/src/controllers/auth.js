@@ -34,13 +34,13 @@ exports.authenticate = function (req, res) {
               expiresIn: tokenExpireInSeconds
             });
 
-            const { _id, name, email, profile } = user;
+            const { _id, name, email, profile, role } = user;
 
             res.json({
               success: true,
               message: 'Token created.',
               token: token,
-              user: { _id, name, email, profile }
+              user: { _id, name, email, profile, role }
             });
 
           } else {

@@ -153,8 +153,8 @@
                   >Home</a
                 >
 
-                <a
-                  href=""
+                <router-link
+                  :to="{name: 'login'}"
                   class="
                     inline-block
                     py-4
@@ -169,7 +169,7 @@
                     hover:text-gray-600 hover:border-gray-300
                     dark:text-gray-400 dark:hover:text-gray-300
                   "
-                  >Recruitments</a
+                  >Login</router-link
                 >
 
                 <a
