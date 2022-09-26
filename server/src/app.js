@@ -12,6 +12,7 @@ import Item from './models/item';
 import Post from './models/post';
 import Category from './models/category';
 import Profile from './models/profile';
+import UserDetail from './models/user_detail';
 import Comment from './models/comment';
 
 import Company from './models/company';

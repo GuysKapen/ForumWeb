@@ -22,6 +22,7 @@ sgMail.setApiKey(process.env.MAIL_KEY);
 exports.authenticate = function (req, res) {
   User.findOne({ email: req.body.email })
     .populate("profile")
+    .populate("detail")
     .exec(function (err, user) {
       if (err) throw err;
 
@@ -34,13 +35,13 @@ exports.authenticate = function (req, res) {
               expiresIn: tokenExpireInSeconds
             });
 
-            const { _id, name, email, profile, role } = user;
+            const { _id, name, email, profile, detail, role, firstName, lastName } = user;
 
             res.json({
               success: true,
               message: 'Token created.',
               token: token,
-              user: { _id, name, email, profile, role }
+              user: { _id, name, email, profile, detail, role, firstName, lastName }
             });
 
           } else {

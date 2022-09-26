@@ -1,32 +1,22 @@
-import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
-import bcrypt from 'bcrypt';
+import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
+import bcrypt from "bcrypt";
 
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   name: {
     type: String,
-    maxlength: 50
+    maxlength: 50,
   },
   email: {
     type: String,
     trim: true,
-    index: { unique: true }
-  },
-  lastname: {
-    type: String,
-    maxlength: 50,
-    minlength: 3
-  },
-  firstname: {
-    type: String,
-    maxlength: 50,
-    minlength: 3
+    index: { unique: true },
   },
   role: {
     type: String,
-    enum: ['user', 'admin', 'recruiter'],
-    default: 'user'
+    enum: ["user", "admin", "recruiter"],
+    default: "user",
   },
   password: {
     type: String,
@@ -37,40 +27,53 @@ const UserSchema = new Schema({
     type: String,
     default: "",
   },
-  image: String,
   token: String,
   tokenExp: Number,
-  posts: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Post'
-  }],
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
   profile: {
     type: Schema.Types.ObjectId,
-    ref: "Profile"
+    ref: "Profile",
   },
-  comments: [{
+  detail: {
     type: Schema.Types.ObjectId,
-    ref: 'Comment',
-  }],
-  answers: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Comment',
-  }],
-  recruitments: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Recruitment'
-  }],
-  applies: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Apply'
-  }],
+    ref: "UserDetail",
+  },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
+  answers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
+  recruitments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Recruitment",
+    },
+  ],
+  applies: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Apply",
+    },
+  ],
 });
 
-UserSchema.set('toJSON', {
+UserSchema.set("toJSON", {
   transform: function (doc, ret, options) {
     delete ret.password;
     return ret;
-  }
+  },
 });
 
 // UserSchema.pre('save', function (next) {
@@ -85,20 +88,18 @@ UserSchema.set('toJSON', {
 //   });
 // });
 
-
 UserSchema.statics.findByToken = function (token, cb) {
   let user = this;
 
   jwt.verify(token, secretKey, function (err, decode) {
     user.findOne({ _id: decode, token: token }, function (err, user) {
-      if (err) return cb(err)
-      cb(null, user)
-    })
-  })
-}
+      if (err) return cb(err);
+      cb(null, user);
+    });
+  });
+};
 
-UserSchema
-  .virtual("plainPassword")
+UserSchema.virtual("plainPassword")
   .set(function (plainPassword) {
     // Use normal, not arrow function to access this
     this._password = plainPassword;
@@ -136,19 +137,19 @@ UserSchema.methods = {
   getTokenData: function () {
     return {
       id: this.id,
-      email: this.email
-    }
+      email: this.email,
+    };
   },
   generateToken: function (cb) {
     let user = this;
-    let token = jwt.sign(user._id.toHexString(), secretKey)
-    user.tokenExp = moment().add(1, 'hour').valueOf();
-    user.token = token
+    let token = jwt.sign(user._id.toHexString(), secretKey);
+    user.tokenExp = moment().add(1, "hour").valueOf();
+    user.token = token;
 
     user.save(function (err, user) {
-      if (err) return cb(err)
-      cb(null, user)
-    })
+      if (err) return cb(err);
+      cb(null, user);
+    });
   },
 
   equals: function (user) {
@@ -156,10 +157,12 @@ UserSchema.methods = {
   },
 
   canRead: function (object) {
-    return this.equals(object) ||
+    return (
+      this.equals(object) ||
       (object.owner && object.owner == this.id) ||
       (object._id && object._id == this.id) ||
-      this.role == "admin";
+      this.role == "admin"
+    );
   },
   canEdit: function (object) {
     return this.canRead(object); // can be extended later
@@ -168,6 +171,6 @@ UserSchema.methods = {
 
 UserSchema.plugin(mongoosePaginate);
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model("User", UserSchema);
 // module.exports = User
-export default User
+export default User;

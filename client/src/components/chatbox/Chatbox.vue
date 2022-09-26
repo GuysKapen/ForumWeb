@@ -5,10 +5,9 @@
   >
     <div
       id="chatbox-container"
-      :class="show ? 'opacity-100' : 'opacity-0 h-0'"
+      :class="show ? 'opacity-100 h-112' : 'opacity-0 h-0'"
       class="
         w-96
-        h-112
         hide-scrollbar
         transition-all
         duration-1000

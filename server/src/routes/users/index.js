@@ -8,6 +8,7 @@ import recruitments from './recruitments';
 import comments from './comments';
 import uploads from './uploads';
 import profiles from './profiles';
+import userDetails from './user_details';
 import applies from './applies';
 
 const routes = express.Router();
@@ -18,6 +19,7 @@ routes.use('/:userId/recruitments', users.loadUser, recruitments);
 routes.use('/:userId/comments', users.loadUser, comments);
 routes.use('/:userId/uploads', users.loadUser, uploads);
 routes.use('/:userId/profiles', users.loadUser, profiles);
+routes.use('/:userId/details', users.loadUser, userDetails);
 routes.use('/:userId/applies', users.loadUser, applies);
 
 routes.route('/:id')

@@ -105,8 +105,7 @@
                   font-medium
                   bg-gray-50
                   border-none
-                  focus:outline-none
-                  focus:border-none
+                  focus:outline-none focus:border-none
                   shadow-none
                   focus:shadow-none
                   placeholder-gray-400
@@ -154,7 +153,7 @@
                 >
 
                 <router-link
-                  :to="{name: 'login'}"
+                  :to="{ name: 'login' }"
                   class="
                     inline-block
                     py-4
@@ -255,7 +254,7 @@
                 </span>
               </button>
             </div>
-            <div class="">
+            <div class="" @click="showDropdown = !showDropdown">
               <button
                 type="button"
                 class="
@@ -269,9 +268,7 @@
                   relative
                 "
               >
-                <span class="material-icons text-base relative">
-                  person
-                </span>
+                <span class="material-icons text-base relative"> person </span>
               </button>
             </div>
             <!-- Profile dropdown -->
@@ -291,8 +288,6 @@
                 id="dropdown"
                 class="
                   origin-top-right
-                  opacity-0
-                  scale-0
                   transition-all
                   duration-200
                   absolute
@@ -309,30 +304,51 @@
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
                 tabindex="-1"
+                v-if="showDropdown"
               >
                 <div class="py-1" role="none">
-                  <a
+                  <router-link
+                  :to="{name: 'profile'}"
                     href=""
-                    class="text-gray-700 block px-4 py-2 text-sm"
+                    class="
+                      text-gray-700
+                      block
+                      px-4
+                      py-2
+                      text-sm
+                      hover:text-indigo-700
+                    "
                     role="menuitem"
                     tabindex="-1"
                     id="menu-item-0"
-                    >Account settings</a
+                    >Account settings</router-link
                   >
-                  <a
-                    href=""
-                    class="text-gray-700 block px-4 py-2 text-sm"
+                  <router-link
+                    :to="{name: 'profile'}"
+                    class="
+                      text-gray-700
+                      block
+                      px-4
+                      py-2
+                      text-sm
+                      hover:text-indigo-700
+                    "
                     role="menuitem"
                     tabindex="-1"
                     id="menu-item-1"
-                    >Dashboard</a
+                    >Dashboard</router-link
                   >
-                  <form method="POST" action="" role="none">
-                    @csrf
+                  <form
+                    method="POST"
+                    action=""
+                    role="none"
+                    @submit.prevent="logout"
+                  >
                     <button
                       type="submit"
                       class="
                         text-gray-700
+                        hover:text-indigo-700
                         block
                         w-full
                         text-left
@@ -427,5 +443,21 @@
 </template>
 
 <script>
-export default {};
+import { mapActions } from "pinia";
+import { useAuthStore } from "../stores/auth/auth";
+import { createToast } from "mosha-vue-toastify";
+
+export default {
+  data: () => ({
+    showDropdown: false,
+  }),
+  methods: {
+    ...mapActions(useAuthStore, { _logout: "logout" }),
+    logout() {
+      this._logout();
+      this.showDropdown = false;
+      createToast("Logout succeed", { type: "success" });
+    },
+  },
+};
 </script>
