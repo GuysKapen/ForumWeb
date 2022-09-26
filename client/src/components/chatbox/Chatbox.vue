@@ -5,25 +5,46 @@
   >
     <div
       id="chatbox-container"
-      :class="show ? 'opacity-100 h-auto' : 'opacity-0 h-0'"
-      class="w-96 h-112 transition-all duration-1000 bg-white rounded-sm overflow-hidden mb-4"
+      :class="show ? 'opacity-100' : 'opacity-0 h-0'"
+      class="
+        w-96
+        h-112
+        hide-scrollbar
+        transition-all
+        duration-1000
+        bg-white
+        rounded-sm
+        overflow-hidden
+        mb-4
+      "
     >
-      <div class="h-full overflow-auto flex flex-col m-0">
+      <div class="h-full overflow-auto flex flex-col m-0 font-noto">
         <div class="m-0 overflow-auto flex basis-4/5 flex-shrink flex-grow">
           <div class="h-full m-0 flex flex-col w-full">
             <div
               id="chatbox-conversation-container"
               data-e2e="Conversation__Container"
-              class="overflow-auto flex-grow flex-shrink basis-auto w-full"
+              class="
+                overflow-auto
+                hide-scrollbar
+                flex-grow flex-shrink
+                basis-auto
+                w-full
+              "
             >
-              <ChatboxUserMessage :message="'Hi. Sam.'" />
+              <template v-for="(event, idx) in events">
+                <ChatboxUserMessage
+                  v-if="event['event'] === 'user'"
+                  :message="event['text']"
+                  :key="idx"
+                />
 
-              <ChatboxBotResponse
-                :message="'Good question - I am still trying to figure that out!'"
-              />
-              <ChatboxUserMessage :message="'Did you just arrive here?'" />
-
-              <ChatboxBotResponse :message="'Yeah, We arrived last week.'" />
+                <ChatboxBotResponse
+                  v-if="event['event'] === 'bot'"
+                  :message="event['text']"
+                  :key="idx"
+                />
+              </template>
             </div>
           </div>
         </div>
@@ -142,6 +163,7 @@ import $ from "jquery";
 import { createVNode, render } from "vue";
 import ChatboxUserMessage from "@/components/chatbox/ChatboxUserMessage.vue";
 import ChatboxBotResponse from "@/components/chatbox/ChatboxBotResponse.vue";
+import axios from "axios";
 
 export default {
   data: () => ({
@@ -149,6 +171,13 @@ export default {
     show: false,
   }),
   mounted() {
+    const self = this;
+    // Load messages
+    axios
+      .get("http://localhost:5005/conversations/12/tracker")
+      .then((response) => {
+        this.events = response.data["events"];
+      });
     // Click outside to hide
     $("html").on("click", function () {
       $("#chatbox-container").removeClass("show");
@@ -156,77 +185,6 @@ export default {
     // Prevent click inside element from hide
     $("#chatbox-container").click(function (event) {
       event.stopPropagation();
-    });
-    // Load messages
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:5005/conversations/12/tracker",
-      success: function (response) {
-        for (const event of response["events"]) {
-          if (event["event"] === "user") {
-            // @php
-            //     $html = json_encode(View::make('chatbox._chatbox_user_message')->render());
-            // @endphp
-            // let processed = {!! $html !!};
-            const section = $("#chatbox-conversation-container");
-            processed = processed.replaceAll("--message--", event["text"]);
-            section.append(processed);
-          }
-          if (event["event"] === "bot") {
-            // @php
-            //     $html = json_encode(View::make('chatbox._chatbox_bot_response')->render());
-            // @endphp
-            // let processed = {!! $html !!};
-            const section = $("#chatbox-conversation-container");
-            let btnsHtml = [];
-            // Custom json response
-            if ("custom" in event["data"] && event["data"]["custom"] != null) {
-              let custom = event["data"]["custom"];
-              processed = processed.replaceAll("--message--", custom["text"]);
-              if ("link" in event["data"]["custom"]) {
-                // @php
-                //     $html = json_encode(View::make('chatbox._chatbox_response_btn')->render());
-                // @endphp
-                // let btnHtml = {!! $html !!};
-                // btnHtml = btnHtml.replaceAll("--title--", custom["link"]
-                //     ["title"])
-                // btnHtml = btnHtml.replaceAll("--url--", custom["link"][
-                //     "url"
-                // ])
-                btnsHtml.push(btnHtml);
-              }
-              if ("table" in custom) {
-                let tableData = custom["table"];
-                if ("data" in tableData && tableData["data"].length > 0) {
-                  // Post to chatbox and get result
-                  $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "application/json",
-                    url: "http://localhost:8000/api/render-table",
-                    data: {
-                      table: tableData,
-                    },
-                    success: function (response) {
-                      section.append(response);
-                    },
-                    error: function (error) {
-                      console.log(error);
-                    },
-                  });
-                }
-              }
-            } else {
-              processed = processed.replaceAll("--message--", event["text"]);
-            }
-            processed = processed.replaceAll("--buttons--", btnsHtml.join());
-            section.append(processed);
-          }
-        }
-      },
-      error: function (error) {
-        console.log(error);
-      },
     });
     // Send message
     $("#chatbox-input").on("keydown", function (e) {
@@ -236,19 +194,13 @@ export default {
         // Clear input
         $(this).val("");
         // Insert user message
-        // @php
-        //     $html = json_encode(View::make('chatbox._chatbox_user_message')->render());
-        // @endphp
-        // let processed = {!! $html !!};
-        const section = $("#chatbox-conversation-container");
-        processed = processed.replaceAll("--message--", message);
-        section.append(processed);
+        self.events = [...self.events, { event: "user", text: message }];
         const data = JSON.stringify({
           sender: "12",
           message: message,
         });
         // Post to chatbox and get result
-        sendChatboxMessage(data);
+        self.sendChatboxMessage(data);
       }
     });
     // Payload
@@ -256,6 +208,15 @@ export default {
       let data = $(this).attr("data-payload");
       sendChatboxMessage(data);
     });
+  },
+  watch: {
+    events() {
+      setTimeout(function () {
+        $("#chatbox-conversation-container").scrollTop(
+          $("#chatbox-conversation-container")[0].scrollHeight
+        );
+      }, 0);
+    },
   },
   methods: {
     renderComponent({ el, component, props, appContext }) {
@@ -268,88 +229,15 @@ export default {
         vnode = undefined;
       };
     },
-    sendChatboxMessage() {
+    sendChatboxMessage(data) {
+      const self = this;
       $.ajax({
         type: "POST",
         url: "http://localhost:5005/webhooks/rest/webhook",
         data: data,
         success: function (response) {
           for (const utter of response) {
-            // @php
-            //     $html = json_encode(View::make('chatbox._chatbox_bot_response')->render());
-            // @endphp
-            // let processed = {!! $html !!};
-            const section = $("#chatbox-conversation-container");
-            let btnsHtml = [];
-            if ("custom" in utter) {
-              const custom = utter["custom"];
-              processed = processed.replaceAll("--message--", custom["text"]);
-              if ("link" in custom) {
-                // @php
-                //     $html = json_encode(View::make('chatbox._chatbox_response_btn')->render());
-                // @endphp
-                // let btnHtml = {!! $html !!};
-                btnHtml = btnHtml.replaceAll(
-                  "--title--",
-                  custom["link"]["title"]
-                );
-                btnHtml = btnHtml.replaceAll("--url--", custom["link"]["url"]);
-                btnsHtml.push(btnHtml);
-              }
-              if ("table" in custom) {
-                let tableData = custom["table"];
-                if ("data" in tableData && tableData["data"].length > 0) {
-                  // Post to chatbox and get result
-                  $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "application/json",
-                    url: "http://localhost:8000/api/render-table",
-                    data: {
-                      table: tableData,
-                    },
-                    success: function (response) {
-                      section.append(response);
-                    },
-                    error: function (error) {
-                      console.log(error);
-                    },
-                  });
-                }
-              }
-            } else {
-              processed = processed.replaceAll("--message--", utter["text"]);
-            }
-            // Buttons response
-            if ("buttons" in utter) {
-              for (const btn of utter["buttons"]) {
-                // @php
-                //     $html = json_encode(View::make('chatbox._chatbox_response_btn')->render());
-                // @endphp
-                // let btnHtml = {!! $html !!};
-                btnHtml = btnHtml.replaceAll("--title--", btn["title"]);
-                btnsHtml.push(btnHtml);
-              }
-            }
-            processed = processed.replaceAll("--buttons--", btnsHtml.join());
-            section.append(processed);
-            if ("custom" in utter) {
-              let custom = utter["custom"];
-              // Link
-              if ("redirect" in custom) {
-                // @php
-                //     $loading = json_encode(View::make('chatbox._chatbox_bot_response')->render());
-                // @endphp
-                // let loading = {!! $loading !!};
-                loading = loading.replaceAll("--message--", "");
-                loading = loading.replaceAll("--buttons--", "");
-                loading = loading.replaceAll("--class--", "dot-flashing");
-                section.append(loading);
-                setTimeout(() => {
-                  window.location.replace(custom["redirect"]["url"]);
-                }, 1000);
-              }
-            }
+            self.events = [...self.events, { event: "bot", text: utter["text"] }];
           }
         },
         error: function (error) {

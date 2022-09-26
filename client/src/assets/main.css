@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Muli:300,400,700,900');
 @import url('https://fonts.googleapis.com/css2?family=Jost&family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto Sans');
 @import "jBox.all.css";
 
 @tailwind base;
@@ -9,6 +10,18 @@
 
 .font-mul {
     font-family: "Muli", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.font-noto {
+    font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.h-112 {
+    height: 26rem;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
 }
 
 .max-w-1\/2 {
