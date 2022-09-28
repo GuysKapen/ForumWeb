@@ -153,7 +153,7 @@
                 >
 
                 <router-link
-                  :to="{ name: 'login' }"
+                  :to="{ name: 'recruitments' }"
                   class="
                     inline-block
                     py-4
@@ -168,7 +168,7 @@
                     hover:text-gray-600 hover:border-gray-300
                     dark:text-gray-400 dark:hover:text-gray-300
                   "
-                  >Login</router-link
+                  >Recruitments</router-link
                 >
 
                 <a
@@ -221,7 +221,7 @@
               pr-2
               sm:static sm:inset-auto sm:ml-6 sm:pr-0
             "
-          >
+          v-if="isAuth">
             <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
               <button
                 type="button"
@@ -367,6 +367,11 @@
               </div>
             </div>
           </div>
+          <div v-else>
+            <router-link :to="{name: 'login'}">
+              <button class="px-8 py-3 bg-indigo-600 hover:bg-indigo-800 rounded-full text-xs text-white font-black">Login</button>
+            </router-link>
+          </div>
         </div>
       </div>
 
@@ -459,5 +464,10 @@ export default {
       createToast("Logout succeed", { type: "success" });
     },
   },
+  computed: {
+    isAuth() {
+      return useAuthStore().user != null
+    }
+  }
 };
 </script>

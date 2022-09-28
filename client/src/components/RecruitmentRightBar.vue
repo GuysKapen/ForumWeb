@@ -5,7 +5,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 <template>
   <div class="w-3/12 pl-8">
     <div class="overflow-hidden bg-gray-50 pt-6 tabs-panel shadow-md border-r border-gray-100">
-      <div class="px-4 py-5 space-y-6 sm:p-6">
+      <div class="px-4 py-5 space-y-6 sm:p-6" v-if="user">
         <h3 class="text-base font-medium text-gray-900">Profile</h3>
         <p class="text-sm text-gray-400">Company: <span class="text-gray-600">Fujinet</span></p>
 
@@ -17,8 +17,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
         <p class="text-base text-gray-600 text-center">{{user.name}}</p>
       </div>
 
-
-      <div class="bg-white rounded-lg m-4 py-6 px-4">
+      <div class="bg-white rounded-lg m-4 py-6 px-4" v-if="user">
         <div class="flex items-center">
           <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8 inline-block">
             <button type="button" class="

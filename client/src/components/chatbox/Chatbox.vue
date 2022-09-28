@@ -1,5 +1,6 @@
 <template>
   <div
+    id="chatbox"
     class="fixed bottom-4 right-4 flex flex-col justify-end items-end"
     style="z-index: 999"
   >
@@ -10,7 +11,7 @@
         w-96
         hide-scrollbar
         transition-all
-        duration-1000
+        duration-300
         bg-white
         rounded-sm
         overflow-hidden
@@ -179,10 +180,10 @@ export default {
       });
     // Click outside to hide
     $("html").on("click", function () {
-      $("#chatbox-container").removeClass("show");
+      self.show = false;
     });
     // Prevent click inside element from hide
-    $("#chatbox-container").click(function (event) {
+    $("#chatbox").on("click", function (event) {
       event.stopPropagation();
     });
     // Send message
@@ -236,7 +237,10 @@ export default {
         data: data,
         success: function (response) {
           for (const utter of response) {
-            self.events = [...self.events, { event: "bot", text: utter["text"] }];
+            self.events = [
+              ...self.events,
+              { event: "bot", text: utter["text"] },
+            ];
           }
         },
         error: function (error) {
