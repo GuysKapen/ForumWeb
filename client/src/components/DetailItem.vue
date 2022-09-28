@@ -154,7 +154,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 
     </div>
-    <div class="mt-12">
+    <div class="mt-6">
       <CommentForm v-if="addingComment" @addedComment="addedComment" @cancelComment="toggleAddComment" :parent-id="post._id" :parent-type="'post'" />
       <CommentItem v-for="(comment, idx) in post.comments" :key="idx" :comment="comment" />
     </div>

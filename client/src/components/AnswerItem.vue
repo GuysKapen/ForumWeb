@@ -18,7 +18,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             flex-shrink-0
             border border-gray-100
           ">
-          <img :src="imgUrlFor(serverUrl, post.owner.profile.cover)" alt="profile"
+          <img :src="imgUrlFor(serverUrl, post.owner?.profile?.cover)" alt="profile"
             class="w-8 h-8 rounded-lg flex-shrink-0 object-cover" />
         </div>
 

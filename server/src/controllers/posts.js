@@ -24,7 +24,7 @@ exports.create = function (req, res) {
 
   const attrs = _.pick(req.body, "title", "body", "category")
   const item = new Post(attrs);
-  item.owner = user;
+  item.owner = user._id;
   item.save(function (err, item) {
     if (err) return response.sendBadRequest(res, err);
 

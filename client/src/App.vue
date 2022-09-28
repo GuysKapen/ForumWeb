@@ -1,15 +1,12 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
-// import Chatbox from "@/components/Chatbox.vue";
+import { RouterView } from "vue-router";
+import Chatbox from "@/components/chatbox/Chatbox.vue";
 import 'mosha-vue-toastify/dist/style.css'
-import Chatbox from './components/chatbox/Chatbox.vue'
 </script>
 
 <template>
-  <div>
+  <div class="mb-16">
     <router-view />
-    <chatbox />
-    <!-- <Chatbox /> -->
+    <Chatbox />
   </div>
 </template>

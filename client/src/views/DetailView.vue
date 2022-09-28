@@ -9,7 +9,7 @@ import Detail from "@/components/Detail.vue";
   <main>
     <div>
       <Nav />
-      <div class="flex bg-gray-50">
+      <div class="flex bg-gray-50 w-screen">
         <SideBar />
         <Detail />
       </div>
