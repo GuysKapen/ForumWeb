@@ -1,20 +1,27 @@
-import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate";
 
 const Schema = mongoose.Schema;
 const SaveSchema = new Schema({
-  postedBy: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
+  recruitments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Recruitment",
+    },
+  ],
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  }
+    ref: "User",
+    required: true,
+  },
 });
 
 SaveSchema.plugin(mongoosePaginate);
 
-export default mongoose.model('Save', SaveSchema);
+export default mongoose.model("Save", SaveSchema);

@@ -6,6 +6,9 @@ export const useAuthStore = defineStore({
     state: () => ({
         user: null,
         token: null,
+        // Modal login across app
+        isShowLoginForm: false,
+        authorizedCallback: null
     }),
     actions: {
         async logout() {
@@ -19,9 +22,11 @@ export const useAuthStore = defineStore({
                 this.user = res.data["user"]
                 this.token = res.data["token"]
 
+                this.authorizedCallback?.(null, this.user)
                 return Promise.resolve("Success")
             } catch (error) {
                 console.log(error);
+                this.authorizedCallback?.(error, null)
                 return Promise.reject(error)
             }
         },
@@ -47,6 +52,15 @@ export const useAuthStore = defineStore({
                 console.log(error);
                 return Promise.reject(error)
             }
+        },
+
+        // Modal login
+        showLoginForm(callback) {
+            this.authorizedCallback = callback
+            this.isShowLoginForm = true
+        },
+        hideLoginForm() {
+            this.isShowLoginForm = false
         }
     },
     persist: true

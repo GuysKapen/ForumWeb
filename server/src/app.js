@@ -14,6 +14,7 @@ import Category from './models/category';
 import Profile from './models/profile';
 import UserDetail from './models/user_detail';
 import Comment from './models/comment';
+import Save from './models/save';
 
 import Company from './models/company';
 import Field from './models/field';
