@@ -197,6 +197,7 @@ import { imgUrlFor } from "../utils/utils";
 <script>
 import { useAuthStore } from "@/stores/auth/auth";
 import axios from "axios";
+import { createToast } from 'mosha-vue-toastify';
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export default {
@@ -227,8 +228,8 @@ export default {
               },
             }
           )
-          .then((res) => {
-            console.log("res", res);
+          .then(() => {
+            createToast("Save recruitment succeed!", { type: "success" });
           });
       } catch (error) {
         console.error("Add to save", error);

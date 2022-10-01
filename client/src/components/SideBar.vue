@@ -62,28 +62,6 @@
               </div>
             </router-link>
           </div>
-          <div class="flex items-start tab-panel">
-            <div
-              class="
-                bg-white
-                rounded-lg
-                flex
-                items-center
-                justify-center
-                ml-4
-                w-6
-                h-6
-                flex-shrink-0
-                border border-gray-100
-              "
-            >
-              <span class="material-icons text-gray-300 text-sm">save</span>
-            </div>
-
-            <div class="ml-3 text-sm">
-              <p class="text-gray-500">Saved</p>
-            </div>
-          </div>
         </div>
       </div>
       <div class="px-4 py-5 space-y-6 sm:p-6">
@@ -163,28 +141,31 @@
               <p class="text-gray-500">Your trends</p>
             </div>
           </div>
-          <div class="flex items-start tab-panel">
-            <div
-              class="
-                bg-white
-                rounded-lg
-                flex
-                items-center
-                justify-center
-                ml-4
-                w-6
-                h-6
-                flex-shrink-0
-                border border-gray-100
-              "
-            >
-              <span class="material-icons text-gray-300 text-sm">save</span>
-            </div>
+             <div class="flex items-start tab-panel active">
+            <router-link :to="{name: 'saved'}" class="flex items-start">
+              <div
+                class="
+                  bg-white
+                  rounded-lg
+                  flex
+                  items-center
+                  justify-center
+                  ml-4
+                  w-6
+                  h-6
+                  flex-shrink-0
+                  border border-gray-100
+                "
+              >
+                <span class="material-icons text-gray-300 text-sm">save</span>
+              </div>
 
-            <div class="ml-3 text-sm">
-              <p class="text-gray-500">Saved</p>
-            </div>
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Saved</p>
+              </div>
+            </router-link>
           </div>
+        
         </div>
       </div>
       <div class="px-4 py-3 sm:px-6 text-center w-full">

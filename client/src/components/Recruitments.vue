@@ -18,7 +18,7 @@
       </router-link>
     </div>
     <div class="space-y-6 mt-6">
-      <RecruitmentItem v-for="(post, idx) in recruitments" :key="idx" :post="post" />
+      <RecruitmentItem v-for="(recruitment, idx) in recruitments" :key="idx" :recruitment="recruitment" />
     </div>
   </div>
 </template>

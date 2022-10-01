@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import SavedView from "@/views/SavedView.vue";
 import RecruitmentsView from "../views/RecruitmentView.vue";
 import DetailView from "../views/DetailView.vue";
 import LoginView from "../views/LoginView.vue";
@@ -93,6 +94,12 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: "/saved",
+      name: "saved",
+      component: SavedView,
+      beforeEnter: [isAuth]
+    },
+    {
       path: "/recruitments",
       name: "recruitments",
       component: RecruitmentsView,
@@ -137,7 +144,7 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: ProfileView,
-      beforeEnter: [isAuth]
+      beforeEnter: [isAuth],
     },
     {
       path: "/admin",
