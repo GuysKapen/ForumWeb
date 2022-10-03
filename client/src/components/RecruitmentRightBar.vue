@@ -170,8 +170,8 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             />
           </div>
           <div>
-            <p class="text-sm ml-4 capitalize">{{ recruitment.owner.name }}</p>
-            <p class="text-sm ml-4 capitalize">
+            <p class="text-sm text-gray-800 ml-4 capitalize">{{ recruitment.owner.name }}</p>
+            <p class="text-xs ml-4 capitalize">
               {{ truncate(recruitment.name, 24) }}
             </p>
           </div>

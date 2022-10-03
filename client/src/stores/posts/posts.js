@@ -38,5 +38,11 @@ export const usePostStore = defineStore({
       });
       return res.data;
     },
+    async getTopPostsData(params) {
+      const res = await axios.get(`${serverUrl}/top-posts`, {
+        params: params,
+      });
+      return res.data;
+    },
   },
 });

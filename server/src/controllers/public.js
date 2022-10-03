@@ -151,6 +151,24 @@ exports.posts = async function (req, res) {
     });
 };
 
+exports.topPosts = async function (req, res) {
+  let query = {};
+
+  Post.find(query)
+    .populate({
+      path: "owner",
+      populate: {
+        path: "profile",
+      },
+    })
+    .sort({ _id: "asc" })
+    .limit(6)
+    .exec(function (err, docs) {
+      if (err) return response.sendNotFound(res);
+      res.json(docs);
+    });
+};
+
 exports.post = function (req, res) {
   Post.findById(req.params.id)
     .populate("category")
