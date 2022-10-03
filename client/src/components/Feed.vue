@@ -32,25 +32,44 @@ import FeedItem from "@/components/FeedItem.vue";
 
 <script>
 import { usePostStore } from "@/stores/posts/posts";
+import axios from "axios";
 import { mapState, mapActions } from "pinia";
 
+const serverUrl = import.meta.env.VITE_SERVER_URL
+
 export default {
+  data: () => ({
+    posts: [],
+  }),
   async mounted() {
-    this.getPostsData(this.$route.query);
+    if ("q" in this.$route.query || "search" in this.$route.query) {
+      const res = await axios.get(`${serverUrl}/search/posts`, {
+        params: { name: this.$route.query["q"] || this.$route.query["search"] },
+      });
+      this.posts = res.data;
+    } else {
+      this.posts = await this.getPostsData(this.$route.query);
+    }
   },
   watch: {
-    $route() {
+    async $route() {
       // this will be called any time the route changes
-      this.getPostsData(this.$route.query);
+      if ("q" in this.$route.query || "search" in this.$route.query) {
+        const res = await axios.get(`${serverUrl}/search/posts`, {
+          params: {
+            name: this.$route.query["q"] || this.$route.query["search"],
+          },
+        });
+        this.posts = res.data;
+      } else {
+        this.posts = await this.getPostsData(this.$route.query);
+      }
     },
   },
   methods: {
     ...mapActions(usePostStore, ["getPostsData"]),
   },
   components: { FeedItem },
-  computed: {
-    ...mapState(usePostStore, ["posts"]),
-  },
 };
 </script>
 

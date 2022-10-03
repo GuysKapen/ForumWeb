@@ -97,6 +97,8 @@
               <input
                 id="name"
                 name="name"
+                v-model="name"
+                @keydown.enter="search"
                 class="
                   string
                   w-full
@@ -118,9 +120,13 @@
                 placeholder="Type to search"
               />
               <div
+                @click="search"
                 class="
                   bg-white
                   rounded-lg
+                  cursor-pointer
+                  hover:bg-gray-100
+                  transition-all
                   flex
                   items-center
                   justify-center
@@ -131,7 +137,7 @@
                   border border-gray-100
                 "
               >
-                <span class="material-icons text-gray-500 text-sm">search</span>
+                <span class="material-icons text-gray-500 hover:text-indigo-600 text-sm">search</span>
               </div>
             </div>
             <div class="hidden sm:block sm:ml-6 mx-auto flex-grow">
@@ -221,7 +227,8 @@
               pr-2
               sm:static sm:inset-auto sm:ml-6 sm:pr-0
             "
-          v-if="isAuth">
+            v-if="isAuth"
+          >
             <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
               <button
                 type="button"
@@ -308,7 +315,7 @@
               >
                 <div class="py-1" role="none">
                   <router-link
-                  :to="{name: 'profile'}"
+                    :to="{ name: 'profile' }"
                     href=""
                     class="
                       text-gray-700
@@ -324,7 +331,7 @@
                     >Account settings</router-link
                   >
                   <router-link
-                    :to="{name: 'profile'}"
+                    :to="{ name: 'profile' }"
                     class="
                       text-gray-700
                       block
@@ -368,8 +375,20 @@
             </div>
           </div>
           <div v-else>
-            <router-link :to="{name: 'login'}">
-              <button class="px-8 py-3 bg-indigo-600 hover:bg-indigo-800 rounded-full text-xs text-white font-black">Login</button>
+            <router-link :to="{ name: 'login' }">
+              <button
+                class="
+                  px-8
+                  py-3
+                  bg-indigo-600
+                  hover:bg-indigo-800
+                  rounded-full
+                  text-xs text-white
+                  font-black
+                "
+              >
+                Login
+              </button>
             </router-link>
           </div>
         </div>
@@ -455,6 +474,7 @@ import { createToast } from "mosha-vue-toastify";
 export default {
   data: () => ({
     showDropdown: false,
+    name: "",
   }),
   methods: {
     ...mapActions(useAuthStore, { _logout: "logout" }),
@@ -463,11 +483,14 @@ export default {
       this.showDropdown = false;
       createToast("Logout succeed", { type: "success" });
     },
+    search() {
+      this.$router.replace({ path: "", query: { q: this.name } });
+    },
   },
   computed: {
     isAuth() {
-      return useAuthStore().user != null
-    }
-  }
+      return useAuthStore().user != null;
+    },
+  },
 };
 </script>

@@ -117,9 +117,7 @@ exports.detailFields = async function (req, res) {
 exports.posts = async function (req, res) {
   let query = {};
 
-  const queryRefs = [
-    { name: "category", model: "Category" },
-  ];
+  const queryRefs = [{ name: "category", model: "Category" }];
   for (const ref of queryRefs) {
     if (ref["name"] in req.query) {
       query = await Recruitment.findByRef(
@@ -232,7 +230,6 @@ exports.topRecruitments = async function (req, res) {
     .limit(6)
     .exec(function (err, docs) {
       if (err) return response.sendNotFound(res);
-      console.log("docs", docs);
       res.json(docs);
     });
 };
@@ -250,6 +247,80 @@ exports.recruitment = function (req, res) {
       path: "applies",
       populate: {
         path: "owner",
+      },
+    })
+    .exec(function (err, docs) {
+      if (err) return response.sendNotFound(res);
+      res.json(docs);
+    });
+};
+
+exports.searchRecruitments = async function (req, res) {
+  let query = {};
+
+  const queryRefs = [
+    { name: "company", model: "Company" },
+    { name: "skills", model: "Skill" },
+    { name: "fields", model: "Field" },
+  ];
+  for (const ref of queryRefs) {
+    if (ref["name"] in req.query) {
+      query = await Recruitment.findByRef(
+        ref["model"],
+        ref["name"],
+        query,
+        req.query[ref["name"]]
+      );
+    }
+  }
+
+  query["name"] = { $regex: req.query["name"], $options: "i" };
+
+  Recruitment.find(query)
+    .populate({
+      path: "owner",
+      populate: {
+        path: "profile",
+      },
+    })
+    .exec(function (err, docs) {
+      if (err) return response.sendNotFound(res);
+      res.json(docs);
+    });
+};
+
+exports.searchPosts = async function (req, res) {
+  let query = {};
+
+  const queryRefs = [{ name: "category", model: "Category" }];
+  for (const ref of queryRefs) {
+    if (ref["name"] in req.query) {
+      query = await Recruitment.findByRef(
+        ref["model"],
+        ref["name"],
+        query,
+        req.query[ref["name"]]
+      );
+    }
+  }
+
+  query["title"] = { $regex: req.query["name"], $options: "i" };
+  
+  Post.find(query)
+    .populate("category")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "owner",
+        populate: {
+          path: "profile",
+        },
+      },
+    })
+    .populate({
+      path: "owner",
+      populate: {
+        path: "profile",
       },
     })
     .exec(function (err, docs) {
