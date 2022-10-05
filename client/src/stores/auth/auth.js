@@ -22,7 +22,9 @@ export const useAuthStore = defineStore({
                 this.user = res.data["user"]
                 this.token = res.data["token"]
 
-                this.authorizedCallback?.(null, this.user)
+                if (typeof this.authorizedCallback === 'function') {
+                    this.authorizedCallback?.(null, this.user)
+                }
                 return Promise.resolve("Success")
             } catch (error) {
                 console.log(error);
