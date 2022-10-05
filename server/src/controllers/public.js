@@ -292,7 +292,9 @@ exports.searchRecruitments = async function (req, res) {
     }
   }
 
-  query["name"] = { $regex: req.query["name"], $options: "i" };
+  if (req.query["name"]) {
+    query["name"] = { $regex: req.query["name"], $options: "i" };
+  }
 
   Recruitment.find(query)
     .populate({
@@ -321,9 +323,11 @@ exports.searchPosts = async function (req, res) {
       );
     }
   }
-
-  query["title"] = { $regex: req.query["name"], $options: "i" };
   
+  if (req.query["name"]) {
+    query["title"] = { $regex: req.query["name"], $options: "i" };
+  }
+
   Post.find(query)
     .populate("category")
     .populate({
