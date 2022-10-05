@@ -1,5 +1,6 @@
 <script setup>
 import FeedItem from "@/components/FeedItem.vue";
+import Pagination from "./Pagination.vue";
 </script>
 <template>
   <div class="w-6/12 py-8 px-6">
@@ -27,6 +28,10 @@ import FeedItem from "@/components/FeedItem.vue";
     <div class="space-y-6 mt-6">
       <FeedItem v-for="(post, idx) in posts" :key="idx" :post="post" />
     </div>
+
+    <div v-if="pagesInfo">
+      <Pagination :options="pagesInfo" @onPageChanged="update" />
+    </div>
   </div>
 </template>
 
@@ -35,11 +40,12 @@ import { usePostStore } from "@/stores/posts/posts";
 import axios from "axios";
 import { mapState, mapActions } from "pinia";
 
-const serverUrl = import.meta.env.VITE_SERVER_URL
+const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export default {
   data: () => ({
     posts: [],
+    pagesInfo: null,
   }),
   async mounted() {
     if ("q" in this.$route.query || "search" in this.$route.query) {
@@ -48,11 +54,19 @@ export default {
       });
       this.posts = res.data;
     } else {
-      this.posts = await this.getPostsData(this.$route.query);
+      const { docs, ...pagesInfo } = await this.getPostsData(this.$route.query);
+      this.posts = docs;
+      this.pagesInfo = pagesInfo;
     }
   },
   watch: {
     async $route() {
+      await this.update();
+    },
+  },
+  methods: {
+    ...mapActions(usePostStore, ["getPostsData"]),
+    async update(page = 0) {
       // this will be called any time the route changes
       if ("q" in this.$route.query || "search" in this.$route.query) {
         const res = await axios.get(`${serverUrl}/search/posts`, {
@@ -62,12 +76,13 @@ export default {
         });
         this.posts = res.data;
       } else {
-        this.posts = await this.getPostsData(this.$route.query);
+        const { docs, ...pagesInfo } = await this.getPostsData(
+          Object.assign({}, this.$route.query, { page: page })
+        );
+        this.posts = docs;
+        this.pagesInfo = pagesInfo;
       }
     },
-  },
-  methods: {
-    ...mapActions(usePostStore, ["getPostsData"]),
   },
   components: { FeedItem },
 };

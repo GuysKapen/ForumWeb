@@ -116,6 +116,7 @@ exports.detailFields = async function (req, res) {
 
 exports.posts = async function (req, res) {
   let query = {};
+  const page = req.query["page"] || 1;
 
   const queryRefs = [{ name: "category", model: "Category" }];
   for (const ref of queryRefs) {
@@ -128,27 +129,58 @@ exports.posts = async function (req, res) {
       );
     }
   }
-  Post.find(query)
-    .populate("category")
-    .populate({
-      path: "comments",
-      populate: {
-        path: "owner",
-        populate: {
-          path: "profile",
+
+  Post.paginate(
+    query,
+    {
+      limit: 3,
+      page: page,
+      populate: [
+        { path: "category" },
+        {
+          path: "comments",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
         },
-      },
-    })
-    .populate({
-      path: "owner",
-      populate: {
-        path: "profile",
-      },
-    })
-    .exec(function (err, docs) {
+        {
+          path: "owner",
+          populate: {
+            path: "profile",
+          },
+        },
+      ],
+    },
+    function (err, docs) {
       if (err) return response.sendNotFound(res);
       res.json(docs);
-    });
+    }
+  );
+
+  // Post.find(query)
+  //   .populate("category")
+  //   .populate({
+  //     path: "comments",
+  //     populate: {
+  //       path: "owner",
+  //       populate: {
+  //         path: "profile",
+  //       },
+  //     },
+  //   })
+  //   .populate({
+  //     path: "owner",
+  //     populate: {
+  //       path: "profile",
+  //     },
+  //   })
+  //   .exec(function (err, docs) {
+  //     if (err) return response.sendNotFound(res);
+  //     res.json(docs);
+  //   });
 };
 
 exports.topPosts = async function (req, res) {
@@ -323,7 +355,7 @@ exports.searchPosts = async function (req, res) {
       );
     }
   }
-  
+
   if (req.query["name"]) {
     query["title"] = { $regex: req.query["name"], $options: "i" };
   }
