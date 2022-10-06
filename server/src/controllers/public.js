@@ -117,6 +117,8 @@ exports.detailFields = async function (req, res) {
 exports.posts = async function (req, res) {
   let query = {};
   const page = req.query["page"] || 1;
+  console.log("page", page);
+  const limit = req.query["limit"] || 5;
 
   const queryRefs = [{ name: "category", model: "Category" }];
   for (const ref of queryRefs) {
@@ -133,7 +135,7 @@ exports.posts = async function (req, res) {
   Post.paginate(
     query,
     {
-      limit: 3,
+      limit: limit,
       page: page,
       populate: [
         { path: "category" },
@@ -159,28 +161,6 @@ exports.posts = async function (req, res) {
       res.json(docs);
     }
   );
-
-  // Post.find(query)
-  //   .populate("category")
-  //   .populate({
-  //     path: "comments",
-  //     populate: {
-  //       path: "owner",
-  //       populate: {
-  //         path: "profile",
-  //       },
-  //     },
-  //   })
-  //   .populate({
-  //     path: "owner",
-  //     populate: {
-  //       path: "profile",
-  //     },
-  //   })
-  //   .exec(function (err, docs) {
-  //     if (err) return response.sendNotFound(res);
-  //     res.json(docs);
-  //   });
 };
 
 exports.topPosts = async function (req, res) {
@@ -237,6 +217,9 @@ exports.post = function (req, res) {
 exports.recruitments = async function (req, res) {
   let query = {};
 
+  const page = req.query["page"] || 1;
+  const limit = req.query["limit"] || 5;
+
   const queryRefs = [
     { name: "company", model: "Company" },
     { name: "skills", model: "Skill" },
@@ -253,17 +236,25 @@ exports.recruitments = async function (req, res) {
     }
   }
 
-  Recruitment.find(query)
-    .populate({
-      path: "owner",
-      populate: {
-        path: "profile",
-      },
-    })
-    .exec(function (err, docs) {
+  Recruitment.paginate(
+    query,
+    {
+      limit: limit,
+      page: page,
+      populate: [
+        {
+          path: "owner",
+          populate: {
+            path: "profile",
+          },
+        },
+      ],
+    },
+    function (err, docs) {
       if (err) return response.sendNotFound(res);
       res.json(docs);
-    });
+    }
+  );
 };
 
 exports.topRecruitments = async function (req, res) {
@@ -343,6 +334,8 @@ exports.searchRecruitments = async function (req, res) {
 
 exports.searchPosts = async function (req, res) {
   let query = {};
+  const page = req.query["page"] || 1;
+  const limit = req.query["limit"] || 5;
 
   const queryRefs = [{ name: "category", model: "Category" }];
   for (const ref of queryRefs) {
@@ -360,25 +353,54 @@ exports.searchPosts = async function (req, res) {
     query["title"] = { $regex: req.query["name"], $options: "i" };
   }
 
-  Post.find(query)
-    .populate("category")
-    .populate({
-      path: "comments",
-      populate: {
-        path: "owner",
-        populate: {
-          path: "profile",
+  // Post.find(query)
+  //   .populate("category")
+  //   .populate({
+  //     path: "comments",
+  //     populate: {
+  //       path: "owner",
+  //       populate: {
+  //         path: "profile",
+  //       },
+  //     },
+  //   })
+  //   .populate({
+  //     path: "owner",
+  //     populate: {
+  //       path: "profile",
+  //     },
+  //   })
+  //   .exec(function (err, docs) {
+  //     if (err) return response.sendNotFound(res);
+  //     res.json(docs);
+  //   });
+  Post.paginate(
+    query,
+    {
+      limit: limit,
+      page: page,
+      populate: [
+        { path: "category" },
+        {
+          path: "comments",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
         },
-      },
-    })
-    .populate({
-      path: "owner",
-      populate: {
-        path: "profile",
-      },
-    })
-    .exec(function (err, docs) {
+        {
+          path: "owner",
+          populate: {
+            path: "profile",
+          },
+        },
+      ],
+    },
+    function (err, docs) {
       if (err) return response.sendNotFound(res);
       res.json(docs);
-    });
+    }
+  );
 };

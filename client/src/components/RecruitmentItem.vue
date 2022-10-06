@@ -135,7 +135,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
           </button>
         </div>
       </div>
-      <div class="absolute right-0 w-32 h-32">
+      <div class="absolute right-0 w-32 ">
         <div
           class="
             bg-white

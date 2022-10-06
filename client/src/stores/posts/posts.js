@@ -16,14 +16,16 @@ export const usePostStore = defineStore({
       const res = await axios.get(`${serverUrl}/posts/${id}`);
       return res.data;
     },
-    async getPostsData(params) {
-      const res = await axios.get(`${serverUrl}/posts`, { params: params });
+    async getPostsData(params, limit = 6) {
+      const res = await axios.get(`${serverUrl}/posts`, {
+        params: Object.assign(params, { limit: limit }),
+      });
       this.posts = res.data;
       return res.data;
     },
-    async getRecruitmentsData(params) {
+    async getRecruitmentsData(params, limit = 6) {
       const res = await axios.get(`${serverUrl}/recruitments`, {
-        params: params,
+        params: Object.assign(params, { limit: limit }),
       });
       this.recruitments = res.data;
       return res.data;

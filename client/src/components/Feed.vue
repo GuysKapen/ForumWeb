@@ -29,7 +29,7 @@ import Pagination from "./Pagination.vue";
       <FeedItem v-for="(post, idx) in posts" :key="idx" :post="post" />
     </div>
 
-    <div v-if="pagesInfo">
+    <div v-if="pagesInfo" class="flex justify-end">
       <Pagination :options="pagesInfo" @onPageChanged="update" />
     </div>
   </div>
@@ -44,17 +44,26 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export default {
   data: () => ({
+    perpage: 6,
     posts: [],
     pagesInfo: null,
   }),
   async mounted() {
     if ("q" in this.$route.query || "search" in this.$route.query) {
       const res = await axios.get(`${serverUrl}/search/posts`, {
-        params: { name: this.$route.query["q"] || this.$route.query["search"] },
+        params: {
+          name: this.$route.query["q"] || this.$route.query["search"],
+          limit: this.perpage,
+        },
       });
-      this.posts = res.data;
+      const { docs, ...pagesInfo } = res.data;
+      this.posts = docs;
+      this.pagesInfo = pagesInfo;
     } else {
-      const { docs, ...pagesInfo } = await this.getPostsData(this.$route.query);
+      const { docs, ...pagesInfo } = await this.getPostsData(
+        this.$route.query,
+        this.perpage
+      );
       this.posts = docs;
       this.pagesInfo = pagesInfo;
     }
@@ -72,12 +81,17 @@ export default {
         const res = await axios.get(`${serverUrl}/search/posts`, {
           params: {
             name: this.$route.query["q"] || this.$route.query["search"],
+            page: page,
+            limit: this.perpage,
           },
         });
-        this.posts = res.data;
+        const { docs, ...pagesInfo } = res.data;
+        this.posts = docs;
+        this.pagesInfo = pagesInfo;
       } else {
         const { docs, ...pagesInfo } = await this.getPostsData(
-          Object.assign({}, this.$route.query, { page: page })
+          Object.assign({}, this.$route.query, { page: page }),
+          this.perpage
         );
         this.posts = docs;
         this.pagesInfo = pagesInfo;

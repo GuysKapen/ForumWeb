@@ -33,6 +33,9 @@
         :recruitment="recruitment"
       />
     </div>
+    <div v-if="pagesInfo" class="flex justify-end">
+      <Pagination :options="pagesInfo" @onPageChanged="update" />
+    </div>
   </div>
 </template>
 
@@ -42,42 +45,68 @@ import { mapState, mapActions } from "pinia";
 
 import RecruitmentItem from "@/components/RecruitmentItem.vue";
 import axios from "axios";
+import Pagination from "./Pagination.vue";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export default {
   data: () => ({
     recruitments: [],
+    pagesInfo: null,
+    perpage: 6,
   }),
   async mounted() {
     if ("q" in this.$route.query || "search" in this.$route.query) {
       const res = await axios.get(`${serverUrl}/search/recruitments`, {
-        params: { name: this.$route.query["q"] || this.$route.query["search"] },
+        params: {
+          name: this.$route.query["q"] || this.$route.query["search"],
+          limit: this.perpage,
+        },
       });
-      this.recruitments = res.data;
+      const { docs, ...pagesInfo } = res.data;
+      this.recruitments = docs;
+      this.pagesInfo = pagesInfo;
     } else {
-      this.recruitments = await this.getRecruitmentsData(this.$route.query);
+      const { docs, ...pagesInfo } = await this.getRecruitmentsData(
+        this.$route.query,
+        this.perpage
+      );
+
+      this.recruitments = docs;
+      this.pagesInfo = pagesInfo;
     }
   },
   watch: {
     async $route() {
       // this will be called any time the route changes
-      if ("q" in this.$route.query || "search" in this.$route.query) {
-        const res = await axios.get(`${serverUrl}/search/recruitments`, {
-          params: {
-            name: this.$route.query["q"] || this.$route.query["search"],
-          },
-        });
-        this.recruitments = res.data;
-      } else {
-        this.recruitments = await this.getRecruitmentsData(this.$route.query);
-      }
+      this.update();
     },
   },
   methods: {
     ...mapActions(usePostStore, ["getRecruitmentsData"]),
+    async update(page = 0) {
+      if ("q" in this.$route.query || "search" in this.$route.query) {
+        const res = await axios.get(`${serverUrl}/search/recruitments`, {
+          params: {
+            name: this.$route.query["q"] || this.$route.query["search"],
+            page: page,
+            limit: this.perpage,
+          },
+        });
+        const { docs, ...pagesInfo } = res.data;
+        this.recruitments = docs;
+        this.pagesInfo = pagesInfo;
+      } else {
+        const { docs, ...pagesInfo } = await this.getRecruitmentsData(
+          Object.assign({}, this.$route.query, { page: page }),
+          this.perpage
+        );
+        this.recruitments = docs;
+        this.pagesInfo = pagesInfo;
+      }
+    },
   },
-  components: { RecruitmentItem },
+  components: { RecruitmentItem, Pagination },
 };
 </script>
 
