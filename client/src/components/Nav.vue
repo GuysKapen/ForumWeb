@@ -137,13 +137,25 @@
                   border border-gray-100
                 "
               >
-                <span class="material-icons text-gray-500 hover:text-indigo-600 text-sm">search</span>
+                <span
+                  class="
+                    material-icons
+                    text-gray-500
+                    hover:text-indigo-600
+                    text-sm
+                  "
+                  >search</span
+                >
               </div>
             </div>
             <div class="hidden sm:block sm:ml-6 mx-auto flex-grow">
               <div class="block space-x-4 w-max mx-auto">
-                <a
-                  href="/"
+                <router-link
+                  :class="{
+                    'border-b-2 border-indigo-600':
+                      routePath === '/',
+                  }"
+                  to="/"
                   class="
                     inline-block
                     py-4
@@ -152,14 +164,17 @@
                     font-medium
                     text-center
                     rounded-t-lg
-                    border-b-2
                   "
                   aria-current="page"
-                  >Home</a
+                  >Home</router-link
                 >
 
                 <router-link
                   :to="{ name: 'recruitments' }"
+                  :class="{
+                    'border-b-2 border-indigo-600':
+                      routePath.includes('/recruitments'),
+                  }"
                   class="
                     inline-block
                     py-4
@@ -177,8 +192,12 @@
                   >Recruitments</router-link
                 >
 
-                <a
-                  href="/recruiter/dashboard"
+                <router-link
+                  :to="{ name: 'recruiter-dashboard' }"
+                  :class="{
+                    'border-b-2 border-indigo-600':
+                      routePath.includes('/recruiter'),
+                  }"
                   class="
                     inline-block
                     py-4
@@ -193,11 +212,15 @@
                     hover:text-gray-600 hover:border-gray-300
                     dark:text-gray-400 dark:hover:text-gray-300
                   "
-                  >Recruiter</a
+                  >Recruiter</router-link
                 >
 
-                <a
-                  href="/admin/dashboard"
+                <router-link
+                  :to="{ name: 'admin-dashboard' }"
+                  :class="{
+                    'border-b-2 border-indigo-600':
+                      routePath.includes('/admin'),
+                  }"
                   class="
                     inline-block
                     py-4
@@ -212,7 +235,7 @@
                     hover:text-gray-600 hover:border-gray-300
                     dark:text-gray-400 dark:hover:text-gray-300
                   "
-                  >Admin</a
+                  >Admin</router-link
                 >
               </div>
             </div>
@@ -490,6 +513,9 @@ export default {
   computed: {
     isAuth() {
       return useAuthStore().user != null;
+    },
+    routePath() {
+      return this.$router.currentRoute.value.path;
     },
   },
 };
