@@ -45,7 +45,7 @@ import moment from "moment";
               </div>
 
               <router-link
-                :to="{ name: 'recruitment-new' }"
+                :to="{ name: 'recruiter-recruitment-new' }"
                 class="
                   inline-flex
                   justify-center

@@ -117,7 +117,6 @@ exports.detailFields = async function (req, res) {
 exports.posts = async function (req, res) {
   let query = {};
   const page = req.query["page"] || 1;
-  console.log("page", page);
   const limit = req.query["limit"] || 5;
 
   const queryRefs = [{ name: "category", model: "Category" }];
