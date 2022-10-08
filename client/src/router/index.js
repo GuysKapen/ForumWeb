@@ -59,7 +59,6 @@ function isAuth() {
 // Need backend validation as well
 function isAdmin() {
   const authStore = useAuthStore();
-  console.log(authStore.token, authStore.user);
   if (
     authStore.token == null ||
     authStore.user == null ||
