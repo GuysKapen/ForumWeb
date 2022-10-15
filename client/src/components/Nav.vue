@@ -173,7 +173,7 @@
                   :to="{ name: 'recruitments' }"
                   :class="{
                     'border-b-2 border-indigo-600':
-                      routePath.includes('/recruitments'),
+                      routePath.startsWith('/recruitments'),
                   }"
                   class="
                     inline-block
@@ -196,7 +196,7 @@
                   :to="{ name: 'recruiter-dashboard' }"
                   :class="{
                     'border-b-2 border-indigo-600':
-                      routePath.includes('/recruiter'),
+                      routePath.startsWith('/recruiter'),
                   }"
                   class="
                     inline-block
@@ -219,7 +219,7 @@
                   :to="{ name: 'admin-dashboard' }"
                   :class="{
                     'border-b-2 border-indigo-600':
-                      routePath.includes('/admin'),
+                      routePath.startsWith('/admin'),
                   }"
                   class="
                     inline-block
