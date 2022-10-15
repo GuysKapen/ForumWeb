@@ -124,7 +124,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 export default {
     mounted() {
         axios.get(`${serverUrl}/posts`).then(res => {
-            this.posts = res.data;
+            this.posts = res.data["docs"];
         })
     },
     data: () => ({
