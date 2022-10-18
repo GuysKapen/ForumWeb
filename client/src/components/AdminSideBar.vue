@@ -224,56 +224,7 @@
               </div>
             </router-link>
           </div>
-
-          <div class="flex items-start tab-panel">
-            <router-link to="/admin/" class="flex items-start">
-              <div
-                class="
-                  bg-white
-                  rounded-lg
-                  flex
-                  items-center
-                  justify-center
-                  ml-2
-                  w-6
-                  h-6
-                  flex-shrink-0
-                  border border-gray-100
-                "
-              >
-                <span class="material-icons text-gray-300 text-sm">feed</span>
-              </div>
-
-              <div class="ml-3 text-sm">
-                <p class="text-gray-500">Your trends</p>
-              </div>
-            </router-link>
-          </div>
-
-          <div class="flex items-start tab-panel">
-            <router-link to="/admin/" class="flex items-start">
-              <div
-                class="
-                  bg-white
-                  rounded-lg
-                  flex
-                  items-center
-                  justify-center
-                  ml-2
-                  w-6
-                  h-6
-                  flex-shrink-0
-                  border border-gray-100
-                "
-              >
-                <span class="material-icons text-gray-300 text-sm">save</span>
-              </div>
-
-              <div class="ml-3 text-sm">
-                <p class="text-gray-500">Saved</p>
-              </div>
-            </router-link>
-          </div>
+       
         </div>
       </div>
     </div>

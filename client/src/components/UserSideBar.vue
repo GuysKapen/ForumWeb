@@ -18,7 +18,7 @@
               tag="div"
               class-active="active"
               class="tab-panel flex items-start"
-              :to="{ name: 'recruiter-dashboard' }"
+              :to="{ name: 'profile' }"
               exact
             >
               <div
@@ -51,7 +51,7 @@
               tag="div"
               class-active="active"
               class="flex item-starts"
-              :to="{ name: 'recruiter-recruitment-index' }"
+              :to="{ name: 'user-post-index' }"
               exact
             >
               <div
@@ -74,19 +74,17 @@
               </div>
 
               <div class="ml-3 text-sm">
-                <p class="text-gray-500">Recruitment</p>
+                <p class="text-gray-500">Post</p>
               </div>
             </router-link>
           </div>
-
-
 
           <div class="flex items-start tab-panel active">
             <router-link
               tag="div"
               class-active="active"
               class="flex item-starts"
-              :to="{ name: 'recruiter-applicant-index' }"
+              :to="{ name: 'user-answer-index' }"
               exact
             >
               <div
@@ -104,18 +102,24 @@
                 "
               >
                 <span class="material-icons text-gray-300 text-sm"
-                  >person</span
+                  >card_membership</span
                 >
               </div>
 
               <div class="ml-3 text-sm">
-                <p class="text-gray-500">Applicant</p>
+                <p class="text-gray-500">Answers</p>
               </div>
             </router-link>
           </div>
 
-          <div class="flex items-start tab-panel">
-            <router-link :to="{ name: 'recruiter-post-index' }" class="flex items-start">
+          <div class="flex items-start tab-panel active">
+            <router-link
+              tag="div"
+              class-active="active"
+              class="flex item-starts"
+              :to="{ name: 'user-comment-index' }"
+              exact
+            >
               <div
                 class="
                   bg-white
@@ -130,15 +134,16 @@
                   border border-gray-100
                 "
               >
-                <span class="material-icons text-gray-300 text-sm">forum</span>
+                <span class="material-icons text-gray-300 text-sm"
+                  >card_membership</span
+                >
               </div>
 
               <div class="ml-3 text-sm">
-                <p class="text-gray-500">Posts</p>
+                <p class="text-gray-500">Comments</p>
               </div>
             </router-link>
           </div>
-        
         </div>
       </div>
     </div>
