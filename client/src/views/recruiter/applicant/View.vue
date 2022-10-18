@@ -20,7 +20,7 @@ import moment from "moment";
                     sm:text-2xl sm:truncate
                   "
                 >
-                  All recruitments
+                  All applicants
                 </h2>
                 <span
                   class="

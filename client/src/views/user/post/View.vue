@@ -1,4 +1,6 @@
 <script setup>
+import Nav from "@/components/Nav.vue";
+import SideBar from "@/components/UserSideBar.vue";
 import moment from "moment";
 </script>
     
@@ -20,7 +22,7 @@ import moment from "moment";
                     sm:text-2xl sm:truncate
                   "
                 >
-                  All recruitments
+                  All posts
                 </h2>
                 <span
                   class="
@@ -38,12 +40,12 @@ import moment from "moment";
                     bg-indigo-600
                     rounded-full
                   "
-                  >{{ recruitments.length }}</span
+                  >{{ posts.length }}</span
                 >
               </div>
 
               <router-link
-                :to="{ name: 'recruiter-recruitment-new' }"
+                :to="{ name: 'post-new' }"
                 class="
                   inline-flex
                   justify-center
@@ -101,7 +103,6 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                              whitespace-nowrap
                             "
                           >
                             No
@@ -116,7 +117,6 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                              whitespace-nowrap
                             "
                           >
                             Name
@@ -131,7 +131,6 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                              whitespace-nowrap
                             "
                           >
                             Status
@@ -149,7 +148,7 @@ import moment from "moment";
                               whitespace-nowrap
                             "
                           >
-                            Applicants
+                            Answers
                           </th>
                           <th
                             scope="col"
@@ -160,8 +159,8 @@ import moment from "moment";
                               font-medium
                               text-gray-500
                               uppercase
-                              tracking-wider
                               whitespace-nowrap
+                              tracking-wider
                             "
                           >
                             Created At
@@ -176,7 +175,6 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                              whitespace-nowrap
                             "
                           >
                             Action
@@ -184,15 +182,12 @@ import moment from "moment";
                         </tr>
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
-                        <tr
-                          v-for="(recruitment, idx) in recruitments"
-                          :key="idx"
-                        >
+                        <tr v-for="(post, idx) in posts" :key="idx">
                           <td class="text-sm font-medium text-gray-900 px-6">
                             {{ idx + 1 }}
                           </td>
                           <td class="text-sm font-medium text-gray-900 px-6">
-                            {{ recruitment.name }}
+                            {{ post.title }}
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <span
@@ -220,12 +215,12 @@ import moment from "moment";
                           >
                             <router-link
                               :to="{
-                                name: 'applies-of-recruitment',
-                                params: { refId: recruitment._id },
+                                name: 'answer-of-post',
+                                params: { postId: post._id },
                               }"
                               class="text-indigo-600 hover:text-indigo-800"
                             >
-                              {{ recruitment.applies.length }}
+                              {{ post.answers.length }}
                             </router-link>
                           </td>
                           <td
@@ -239,10 +234,7 @@ import moment from "moment";
                             {{
                               moment(
                                 new Date(
-                                  parseInt(
-                                    recruitment._id.substring(0, 8),
-                                    16
-                                  ) * 1000
+                                  parseInt(post._id.substring(0, 8), 16) * 1000
                                 )
                               ).format("DD/MM/YYYYY")
                             }}
@@ -265,7 +257,7 @@ import moment from "moment";
                             <button
                               class="text-red-600 hover:text-red-900"
                               type="button"
-                              @click="deleteModel(recruitment._id)"
+                              @click="deleteModel(post._id)"
                             >
                               Delete
                             </button>
@@ -297,7 +289,7 @@ export default {
   mounted() {
     const authStore = useAuthStore();
     axios
-      .get(`${serverUrl}/users/${authStore.user._id}/recruitments`, {
+      .get(`${serverUrl}/users/${authStore.user._id}/posts`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authStore.token}`,
@@ -305,11 +297,11 @@ export default {
         },
       })
       .then((res) => {
-        this.recruitments = res.data;
+        this.posts = res.data;
       });
   },
   data: () => ({
-    recruitments: [],
+    posts: [],
   }),
   methods: {
     deleteModel(id) {
@@ -317,7 +309,7 @@ export default {
       showConfirmPopup(function () {
         const authStore = useAuthStore();
         axios
-          .delete(`${serverUrl}/recruitments/${id}`, {
+          .delete(`${serverUrl}/posts/${id}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${authStore.token}`,
@@ -325,10 +317,8 @@ export default {
             },
           })
           .then(function () {
-            self.recruitments = self.recruitments.filter(
-              (item) => item._id !== id
-            );
-            createToast("Success delete recruitment", { type: "success" });
+            self.posts = self.posts.filter((item) => item._id !== id);
+            createToast("Success delete post", { type: "success" });
           });
       });
     },

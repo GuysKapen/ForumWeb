@@ -43,6 +43,11 @@ import RecruiterRecruitmentView from "@/views/recruiter/recruitment/View.vue";
 import RecruiterView from "@/views/recruiter/View.vue";
 import RecruiterDashboardView from "@/views/recruiter/dashboard/View.vue";
 
+import UserView from "@/views/user/View.vue";
+import UserPostView from "@/views/user/post/View.vue";
+import UserAnswerView from "@/views/user/answer/View.vue";
+import UserCommentView from "@/views/user/comment/View.vue";
+
 import { useAuthStore } from "@/stores/auth/auth";
 
 import { createToast } from "mosha-vue-toastify";
@@ -268,6 +273,34 @@ const router = createRouter({
           path: "recruitments/new",
           name: "recruiter-recruitment-new",
           component: RecruiterNewRecruitmentView,
+        },
+        {
+          path: "applicants",
+          name: "recruiter-applicant-index",
+          component: RecruiterPostView,
+        },
+      ],
+    },
+    {
+      path: "/user",
+      name: "user",
+      component: UserView,
+      beforeEnter: [isAuth],
+      children: [
+        {
+          path: "posts",
+          name: "user-post-index",
+          component: UserPostView,
+        },
+        {
+          path: "answers",
+          name: "user-answer-index",
+          component: UserAnswerView,
+        },
+        {
+          path: "comments",
+          name: "user-comment-index",
+          component: UserCommentView,
         },
       ],
     },
