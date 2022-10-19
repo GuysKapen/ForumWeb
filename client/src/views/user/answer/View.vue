@@ -22,7 +22,7 @@ import moment from "moment";
                     sm:text-2xl sm:truncate
                   "
                 >
-                  All posts
+                  All answers
                 </h2>
                 <span
                   class="
@@ -40,7 +40,7 @@ import moment from "moment";
                     bg-indigo-600
                     rounded-full
                   "
-                  >{{ posts.length }}</span
+                  >{{ answers.length }}</span
                 >
               </div>
 
@@ -182,7 +182,7 @@ import moment from "moment";
                         </tr>
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
-                        <tr v-for="(post, idx) in posts" :key="idx">
+                        <tr v-for="(post, idx) in answers" :key="idx">
                           <td class="text-sm font-medium text-gray-900 px-6">
                             {{ idx + 1 }}
                           </td>
@@ -289,7 +289,7 @@ export default {
   mounted() {
     const authStore = useAuthStore();
     axios
-      .get(`${serverUrl}/users/${authStore.user._id}/posts`, {
+      .get(`${serverUrl}/users/${authStore.user._id}/answers`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authStore.token}`,
@@ -297,11 +297,11 @@ export default {
         },
       })
       .then((res) => {
-        this.posts = res.data;
+        this.answers = res.data;
       });
   },
   data: () => ({
-    posts: [],
+    answers: [],
   }),
   methods: {
     deleteModel(id) {
@@ -317,7 +317,7 @@ export default {
             },
           })
           .then(function () {
-            self.posts = self.posts.filter((item) => item._id !== id);
+            self.answers = self.answers.filter((item) => item._id !== id);
             createToast("Success delete post", { type: "success" });
           });
       });

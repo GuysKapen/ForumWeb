@@ -54,10 +54,11 @@ exports.delete = function (req, res) {
 };
 
 exports.loadUser = function (req, res, next) {
-  User.findById(req.params.userId, function (err, user) {
-    if (err) return response.sendNotFound(res);
-    if (!req.locals) req.locals = {};
-    req.locals.user = user;
-    next();
-  });
+  User.findById(req.params.userId).populate("profile")
+    .populate("detail").exec(function (err, user) {
+      if (err) return response.sendNotFound(res);
+      if (!req.locals) req.locals = {};
+      req.locals.user = user;
+      next();
+    });
 };

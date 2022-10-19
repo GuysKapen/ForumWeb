@@ -92,14 +92,15 @@ export default {
                 }
 
                 const newModel = {
-                    comment: this.answer,
+                    answer: this.answer,
+                    post: this.parentId,
                     parentType: this.parentType,
                     parent: this.parentId
                 }
 
                 try {
                     axios
-                        .post(`${serverUrl}/users/${authStore.user._id}/posts/${this.parentId}/answer`, newModel, {
+                        .post(`${serverUrl}/users/${authStore.user._id}/answers`, newModel, {
                             headers: {
                                 "Content-Type": "application/json",
                                 Authorization: `Bearer ${authStore.token}`,
