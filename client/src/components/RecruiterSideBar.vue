@@ -86,7 +86,7 @@
               tag="div"
               class-active="active"
               class="flex item-starts"
-              :to="{ name: 'recruiter-applicant-index' }"
+              :to="{ name: 'recruiter-apply-index' }"
               exact
             >
               <div
@@ -109,7 +109,7 @@
               </div>
 
               <div class="ml-3 text-sm">
-                <p class="text-gray-500">Applicant</p>
+                <p class="text-gray-500">Applies</p>
               </div>
             </router-link>
           </div>

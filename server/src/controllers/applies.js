@@ -10,12 +10,16 @@ const Apply = mongoose.model('Apply');
 
 exports.list = function (req, res) {
   if (!req.currentUser.canRead(req.locals.user)) return response.sendForbidden(res);
-  const query = Object.assign({ owner: req.params.userId }, request.getFilteringOptions(req, ['name']));
-  Apply.paginate(query, request.getRequestOptions(req), function (err, result) {
+  // const query = Object.assign({ owner: req.params.userId }, request.getFilteringOptions(req, ['name']));
+  Apply.find({}).populate("owner").exec(function (err, result) {
     if (err) return response.sendNotFound(res);
-    pagination.setPaginationHeaders(res, result);
-    res.json(result.docs);
-  });
+    res.json(result);
+  })
+  // Apply.paginate({}, request.getRequestOptions(req), function (err, result) {
+  //   if (err) return response.sendNotFound(res);
+  //   pagination.setPaginationHeaders(res, result);
+  //   res.json(result.docs);
+  // });
 };
 
 exports.create = function (req, res) {

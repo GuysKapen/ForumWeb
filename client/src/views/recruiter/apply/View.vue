@@ -38,33 +38,9 @@ import moment from "moment";
                     bg-indigo-600
                     rounded-full
                   "
-                  >{{ recruitments.length }}</span
+                  >{{ applies.length }}</span
                 >
               </div>
-
-              <router-link
-                :to="{ name: 'recruiter-recruitment-new' }"
-                class="
-                  inline-flex
-                  justify-center
-                  py-2
-                  px-8
-                  rounded-full
-                  border border-transparent
-                  shadow-sm
-                  text-sm
-                  font-black
-                  text-white
-                  bg-indigo-600
-                  hover:bg-indigo-700
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-offset-2
-                  focus:ring-indigo-500
-                "
-              >
-                New
-              </router-link>
             </div>
 
             <!-- This example requires Tailwind CSS v2.0+ -->
@@ -119,7 +95,7 @@ import moment from "moment";
                               whitespace-nowrap
                             "
                           >
-                            Name
+                            Applicant
                           </th>
                           <th
                             scope="col"
@@ -141,7 +117,7 @@ import moment from "moment";
                             class="
                               px-6
                               py-3
-                              text-left text-xs
+                              text-center text-xs
                               font-medium
                               text-gray-500
                               uppercase
@@ -149,7 +125,7 @@ import moment from "moment";
                               whitespace-nowrap
                             "
                           >
-                            Applicants
+                            Phone
                           </th>
                           <th
                             scope="col"
@@ -185,14 +161,14 @@ import moment from "moment";
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
                         <tr
-                          v-for="(recruitment, idx) in recruitments"
+                          v-for="(apply, idx) in applies"
                           :key="idx"
                         >
                           <td class="text-sm font-medium text-gray-900 px-6">
                             {{ idx + 1 }}
                           </td>
-                          <td class="text-sm font-medium text-gray-900 px-6">
-                            {{ recruitment.name }}
+                          <td class="text-sm font-medium text-gray-900 px-6 capitalize">
+                            {{ apply.owner.name }}
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
                             <span
@@ -214,19 +190,10 @@ import moment from "moment";
                             class="
                               text-sm text-center
                               font-medium
-                              text-indigo-800
                               px-6
                             "
                           >
-                            <router-link
-                              :to="{
-                                name: 'applies-of-recruitment',
-                                params: { refId: recruitment._id },
-                              }"
-                              class="text-indigo-600 hover:text-indigo-800"
-                            >
-                              {{ recruitment.applies.length }}
-                            </router-link>
+                          {{ apply.phone }}
                           </td>
                           <td
                             class="
@@ -240,7 +207,7 @@ import moment from "moment";
                               moment(
                                 new Date(
                                   parseInt(
-                                    recruitment._id.substring(0, 8),
+                                    apply._id.substring(0, 8),
                                     16
                                   ) * 1000
                                 )
@@ -257,18 +224,10 @@ import moment from "moment";
                             "
                           >
                             <a
-                              href="{{ route('admin.language.edit', company._id) }}"
+                              href="{{ route('admin.language.edit', apply._id) }}"
                               class="text-indigo-600 hover:text-indigo-900 mx-2"
-                              >Edit</a
+                              >Download</a
                             >
-
-                            <button
-                              class="text-red-600 hover:text-red-900"
-                              type="button"
-                              @click="deleteModel(recruitment._id)"
-                            >
-                              Delete
-                            </button>
                           </td>
                         </tr>
                         <!-- More people... -->
@@ -297,7 +256,7 @@ export default {
   mounted() {
     const authStore = useAuthStore();
     axios
-      .get(`${serverUrl}/users/${authStore.user._id}/recruitments`, {
+      .get(`${serverUrl}/users/${authStore.user._id}/applies`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authStore.token}`,
@@ -305,11 +264,11 @@ export default {
         },
       })
       .then((res) => {
-        this.recruitments = res.data;
+        this.applies = res.data;
       });
   },
   data: () => ({
-    recruitments: [],
+    applies: [],
   }),
   methods: {
     deleteModel(id) {
@@ -325,7 +284,7 @@ export default {
             },
           })
           .then(function () {
-            self.recruitments = self.recruitments.filter(
+            self.applies = self.applies.filter(
               (item) => item._id !== id
             );
             createToast("Success delete recruitment", { type: "success" });

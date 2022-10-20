@@ -43,6 +43,8 @@ import RecruiterRecruitmentView from "@/views/recruiter/recruitment/View.vue";
 import RecruiterView from "@/views/recruiter/View.vue";
 import RecruiterDashboardView from "@/views/recruiter/dashboard/View.vue";
 
+import RecruiterApplyView from "@/views/recruiter/apply/View.vue";
+
 import UserView from "@/views/user/View.vue";
 import UserPostView from "@/views/user/post/View.vue";
 import UserAnswerView from "@/views/user/answer/View.vue";
@@ -275,9 +277,9 @@ const router = createRouter({
           component: RecruiterNewRecruitmentView,
         },
         {
-          path: "applicants",
-          name: "recruiter-applicant-index",
-          component: RecruiterPostView,
+          path: "applies",
+          name: "recruiter-apply-index",
+          component: RecruiterApplyView,
         },
       ],
     },
