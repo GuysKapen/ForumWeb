@@ -11,11 +11,12 @@ const Post = mongoose.model('Post');
 exports.list = function (req, res) {
   if (!req.currentUser.canRead(req.locals.user)) return response.sendForbidden(res);
   const query = Object.assign({ owner: req.params.userId }, request.getFilteringOptions(req, ['name']));
-  Answer.paginate(query, request.getRequestOptions(req), function (err, result) {
-    if (err) return response.sendNotFound(res);
-    pagination.setPaginationHeaders(res, result);
-    res.json(result.docs);
-  });
+  Answer.find(query)
+    .populate("post")
+    .exec(function (err, result) {
+      if (err) return response.sendNotFound(res);
+      res.json(result);
+    })
 };
 
 exports.create = function (req, res) {

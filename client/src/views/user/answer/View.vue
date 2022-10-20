@@ -2,6 +2,8 @@
 import Nav from "@/components/Nav.vue";
 import SideBar from "@/components/UserSideBar.vue";
 import moment from "moment";
+
+import { truncate } from '@/utils/utils';
 </script>
     
 <template>
@@ -13,19 +15,16 @@ import moment from "moment";
           <div class="card m-8 shadow-lg rounded-md px-8 pb-8">
             <div class="flex justify-between">
               <div class="flex items-center">
-                <h2
-                  class="
+                <h2 class="
                     text-xl
                     font-bold
                     leading-7
                     text-gray-900
                     sm:text-2xl sm:truncate
-                  "
-                >
+                  ">
                   All answers
                 </h2>
-                <span
-                  class="
+                <span class="
                     inline-flex
                     ml-4
                     items-center
@@ -39,63 +38,31 @@ import moment from "moment";
                     text-red-100
                     bg-indigo-600
                     rounded-full
-                  "
-                  >{{ answers.length }}</span
-                >
+                  ">{{ answers.length }}</span>
               </div>
-
-              <router-link
-                :to="{ name: 'post-new' }"
-                class="
-                  inline-flex
-                  justify-center
-                  py-2
-                  px-8
-                  rounded-full
-                  border border-transparent
-                  shadow-sm
-                  text-sm
-                  font-black
-                  text-white
-                  bg-indigo-600
-                  hover:bg-indigo-700
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-offset-2
-                  focus:ring-indigo-500
-                "
-              >
-                New
-              </router-link>
             </div>
 
             <!-- This example requires Tailwind CSS v2.0+ -->
             <div class="flex flex-col mt-4">
               <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div
-                  class="
+                <div class="
                     py-2
                     align-middle
                     inline-block
                     min-w-full
                     sm:px-6
                     lg:px-8
-                  "
-                >
-                  <div
-                    class="
+                  ">
+                  <div class="
                       shadow
                       overflow-hidden
                       border-b border-gray-200
                       sm:rounded-lg
-                    "
-                  >
+                    ">
                     <table class="min-w-full divide-y divide-gray-200">
                       <thead class="bg-gray-50">
                         <tr>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-left text-xs
@@ -103,13 +70,10 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                            "
-                          >
+                            ">
                             No
                           </th>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-left text-xs
@@ -117,13 +81,10 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                            "
-                          >
+                            ">
                             Name
                           </th>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-left text-xs
@@ -131,28 +92,22 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                            "
-                          >
+                            ">
                             Status
                           </th>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
-                              text-left text-xs
+                              text-center text-xs
                               font-medium
                               text-gray-500
                               uppercase
                               tracking-wider
                               whitespace-nowrap
-                            "
-                          >
+                            ">
                             Answers
                           </th>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-left text-xs
@@ -161,13 +116,10 @@ import moment from "moment";
                               uppercase
                               whitespace-nowrap
                               tracking-wider
-                            "
-                          >
+                            ">
                             Created At
                           </th>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-right text-xs
@@ -175,23 +127,21 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                            "
-                          >
+                            ">
                             Action
                           </th>
                         </tr>
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
-                        <tr v-for="(post, idx) in answers" :key="idx">
+                        <tr v-for="(answer, idx) in answers" :key="idx">
                           <td class="text-sm font-medium text-gray-900 px-6">
                             {{ idx + 1 }}
                           </td>
                           <td class="text-sm font-medium text-gray-900 px-6">
-                            {{ post.title }}
+                            {{ answer.post.title }}
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                              class="
+                            <span class="
                                 px-2
                                 inline-flex
                                 text-xs
@@ -200,65 +150,43 @@ import moment from "moment";
                                 rounded-full
                                 bg-green-100
                                 text-green-800
-                              "
-                            >
+                              ">
                               Active
                             </span>
                           </td>
-                          <td
-                            class="
+                          <td class="
                               text-sm text-center
                               font-medium
-                              text-indigo-800
                               px-6
-                            "
-                          >
-                            <router-link
-                              :to="{
-                                name: 'answer-of-post',
-                                params: { postId: post._id },
-                              }"
-                              class="text-indigo-600 hover:text-indigo-800"
-                            >
-                              {{ post.answers.length }}
-                            </router-link>
+                            ">
+                            <div v-html="truncate(answer.answer, 60)"></div>
                           </td>
-                          <td
-                            class="
+                          <td class="
                               px-6
                               py-4
                               whitespace-nowrap
                               text-sm text-gray-500
-                            "
-                          >
+                            ">
                             {{
-                              moment(
-                                new Date(
-                                  parseInt(post._id.substring(0, 8), 16) * 1000
-                                )
-                              ).format("DD/MM/YYYYY")
+                            moment(
+                            new Date(
+                            parseInt(answer._id.substring(0, 8), 16) * 1000
+                            )
+                            ).format("DD/MM/YYYYY")
                             }}
                           </td>
-                          <td
-                            class="
+                          <td class="
                               px-6
                               py-4
                               whitespace-nowrap
                               text-right text-sm
                               font-medium
-                            "
-                          >
-                            <a
-                              href="{{ route('admin.language.edit', company._id) }}"
-                              class="text-indigo-600 hover:text-indigo-900 mx-2"
-                              >Edit</a
-                            >
+                            ">
+                            <a href="{{ route('admin.language.edit', company._id) }}"
+                              class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</a>
 
-                            <button
-                              class="text-red-600 hover:text-red-900"
-                              type="button"
-                              @click="deleteModel(post._id)"
-                            >
+                            <button class="text-red-600 hover:text-red-900" type="button"
+                              @click="deleteModel(answer._id)">
                               Delete
                             </button>
                           </td>
@@ -309,7 +237,7 @@ export default {
       showConfirmPopup(function () {
         const authStore = useAuthStore();
         axios
-          .delete(`${serverUrl}/posts/${id}`, {
+          .delete(`${serverUrl}/users/${authStore.user._id}/answers/${id}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${authStore.token}`,
@@ -318,7 +246,7 @@ export default {
           })
           .then(function () {
             self.answers = self.answers.filter((item) => item._id !== id);
-            createToast("Success delete post", { type: "success" });
+            createToast("Success delete answer", { type: "success" });
           });
       });
     },

@@ -31,3 +31,13 @@ export const showConfirmPopup = (callback, message = 'Do you really want to dele
 //     return console.log("ksjfksjfskf");
 
 // }
+
+export const truncate = (value, length) => {
+    if (!value) return "";
+    value = value.toString();
+    if (value.length > length) {
+        return value.substring(0, length) + " ...";
+    } else {
+        return value;
+    }
+}
