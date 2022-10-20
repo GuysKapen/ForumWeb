@@ -284,7 +284,7 @@
                 </span>
               </button>
             </div>
-            <div class="" @click="showDropdown = !showDropdown">
+            <div class="z-50" @click="showDropdown = !showDropdown">
               <button
                 type="button"
                 class="
