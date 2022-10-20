@@ -12,14 +12,15 @@ const CommentSchema = new Schema({
     ref: 'User',
     required: true
   },
-  commentableId: {
+  commentable: {
     type: Schema.Types.ObjectId,
-    required: true
+    required: true,
+    refPath: 'commentableType'
   },
   commentableType: {
     type: String,
     required: true
-  }
+  },
 });
 
 CommentSchema.plugin(mongoosePaginate);
