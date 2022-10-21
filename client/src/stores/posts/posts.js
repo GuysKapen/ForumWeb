@@ -16,7 +16,7 @@ export const usePostStore = defineStore({
       const res = await axios.get(`${serverUrl}/posts/${id}`);
       return res.data;
     },
-    async getPostsData(params, limit = 6) {
+    async getPostsData(params = {}, limit = 6) {
       const res = await axios.get(`${serverUrl}/posts`, {
         params: Object.assign(params, { limit: limit }),
       });

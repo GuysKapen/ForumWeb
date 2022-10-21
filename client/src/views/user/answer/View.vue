@@ -182,8 +182,8 @@ import { truncate } from '@/utils/utils';
                               text-right text-sm
                               font-medium
                             ">
-                            <a href="{{ route('admin.language.edit', company._id) }}"
-                              class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</a>
+                            <router-link :to="{name: 'user-answer-edit', params: {id: answer._id}}"
+                              class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</router-link>
 
                             <button class="text-red-600 hover:text-red-900" type="button"
                               @click="deleteModel(answer._id)">

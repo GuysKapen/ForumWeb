@@ -56,7 +56,7 @@ exports.read = function (req, res) {
 };
 
 exports.update = function (req, res) {
-  const attrs = _.pick(req.body, "title", "body", "category")
+  const attrs = _.pick(req.body, "answer")
   Answer.findOneAndUpdate({ _id: req.params.id }, attrs, { new: true }, function (err, item) {
     if (err) return response.sendBadRequest(res, err);
     if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);

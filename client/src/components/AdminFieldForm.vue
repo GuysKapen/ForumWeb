@@ -80,7 +80,7 @@ export default {
                     })
                     .then((_) => {
                         createToast("Success add model", { type: 'success' })
-                        this.$router.push({ name: "field-index" })
+                        this.$router.push({ name: "category-index" })
                     });
             } catch (error) {
                 createToast("Error add model", { type: 'danger' })
@@ -100,7 +100,7 @@ export default {
                     })
                     .then((_) => {
                         createToast("Success update model", { type: 'success' })
-                        this.$router.push({ name: "field-index" })
+                        this.$router.push({ name: "-index" })
                     });
             } catch (error) {
                 createToast("Error update model", { type: 'danger' })

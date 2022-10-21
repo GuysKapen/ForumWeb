@@ -52,6 +52,7 @@ import RecruiterApplyView from "@/views/recruiter/apply/View.vue";
 import UserView from "@/views/user/View.vue";
 import UserPostView from "@/views/user/post/View.vue";
 import UserAnswerView from "@/views/user/answer/View.vue";
+import UserEditAnswerView from "@/views/user/answer/EditView.vue";
 import UserCommentView from "@/views/user/comment/View.vue";
 
 import { useAuthStore } from "@/stores/auth/auth";
@@ -322,6 +323,11 @@ const router = createRouter({
           path: "answers",
           name: "user-answer-index",
           component: UserAnswerView,
+        },
+        {
+          path: "answers/:id/edit",
+          name: "user-answer-edit",
+          component: UserEditAnswerView,
         },
         {
           path: "comments",
