@@ -9,15 +9,19 @@ import NewPostView from "../views/NewPostView.vue";
 import ProfileView from "../views/ProfileView.vue";
 
 import NewCategoryView from "../views/admin/category/NewView.vue";
+import EditCategoryView from "../views/admin/category/EditView.vue";
 import CategoryView from "../views/admin/category/View.vue";
 
 import NewCompanyView from "@/views/admin/company/NewView.vue";
+import EditCompanyView from "@/views/admin/company/EditView.vue";
 import CompanyView from "@/views/admin/company/View.vue";
 
 import NewFieldView from "@/views/admin/field/NewView.vue";
+import EditFieldView from "@/views/admin/field/EditView.vue";
 import FieldView from "@/views/admin/field/View.vue";
 
 import NewSkillView from "@/views/admin/skill/NewView.vue";
+import EditSkillView from "@/views/admin/skill/EditView.vue";
 import SkillView from "@/views/admin/skill/View.vue";
 
 import NewRecruitmentView from "@/views/admin/recruitment/NewView.vue";
@@ -174,6 +178,11 @@ const router = createRouter({
           component: NewCategoryView,
         },
         {
+          path: "categories/:id/edit",
+          name: "category-edit",
+          component: EditCategoryView,
+        },
+        {
           path: "companies",
           name: "company-index",
           component: CompanyView,
@@ -182,6 +191,11 @@ const router = createRouter({
           path: "companies/new",
           name: "company-new",
           component: NewCompanyView,
+        },
+        {
+          path: "companies/:id/edit",
+          name: "company-edit",
+          component: EditCompanyView,
         },
         {
           path: "fields",
@@ -194,6 +208,11 @@ const router = createRouter({
           component: NewFieldView,
         },
         {
+          path: "fields/:id/edit",
+          name: "field-edit",
+          component: EditFieldView,
+        },
+        {
           path: "skills",
           name: "skill-index",
           component: SkillView,
@@ -202,6 +221,11 @@ const router = createRouter({
           path: "skills/new",
           name: "skill-new",
           component: NewSkillView,
+        },
+        {
+          path: "skills/:id/edit",
+          name: "skill-edit",
+          component: EditSkillView,
         },
         {
           path: "recruitments",

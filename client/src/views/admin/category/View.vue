@@ -72,13 +72,16 @@ import moment from 'moment';
                                                         </span>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {{moment(new Date( parseInt( category._id.substring(0, 8), 16 ) *
+                                                        {{moment(new Date( parseInt( category._id.substring(0, 8), 16 )
+                                                        *
                                                         1000 )).format('DD/MM/YYYYY')}}
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <a href="{{ route('admin.language.edit', field._id) }}"
-                                                            class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</a>
+                                                        <router-link
+                                                            :to="{name: 'category-edit', params: {id: category._id}}"
+                                                            class="text-indigo-600 hover:text-indigo-900 mx-2">Edit
+                                                        </router-link>
 
                                                         <button class="text-red-600 hover:text-red-900" type="button"
                                                             @click="deleteModel(category._id)">
