@@ -17,6 +17,10 @@ const AnswerSchema = new Schema({
     ref: 'Post',
     required: true
   },
+  correct: {
+    type: Boolean,
+    default: false
+  }
 });
 
 AnswerSchema.plugin(mongoosePaginate);
