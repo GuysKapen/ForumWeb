@@ -76,9 +76,6 @@ export default {
         parentId: String,
         parentType: String
     },
-    data: function () {
-        return { freshData: { name: "" } }
-    },
     computed: {
         newModel() {
             return this.model ?? this.freshData
