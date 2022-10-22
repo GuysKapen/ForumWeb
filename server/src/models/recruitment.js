@@ -36,6 +36,11 @@ const RecruitmentSchema = new Schema({
     ref: 'Company',
     required: true
   },
+  status: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   fields: [{
     type: Schema.Types.ObjectId,
     ref: 'Field',
