@@ -91,7 +91,7 @@ import moment from 'moment';
                                                         1000 )).format('DD/MM/YYYYY')}}
                                                     </td>
                                                     <td
-                                                        class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-center">
+                                                        class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium my-auto h-full">
                                                         <button
                                                             class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
                                                             type="button" @click="approveModel(post._id)">

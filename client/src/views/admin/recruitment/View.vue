@@ -203,7 +203,7 @@ import moment from "moment";
                             ).format("DD/MM/YYYYY")
                             }}
                           </td>
-                          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-center">
+                          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium my-auto h-full">
                             <button class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
                               type="button" @click="approveModel(recruitment._id)">
                               <svg viewBox="0 0 512 512" style="width: 1em;">
