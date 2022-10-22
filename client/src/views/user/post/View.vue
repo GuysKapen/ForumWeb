@@ -13,19 +13,16 @@ import moment from "moment";
           <div class="card m-8 shadow-lg rounded-md px-8 pb-8">
             <div class="flex justify-between">
               <div class="flex items-center">
-                <h2
-                  class="
+                <h2 class="
                     text-xl
                     font-bold
                     leading-7
                     text-gray-900
                     sm:text-2xl sm:truncate
-                  "
-                >
+                  ">
                   All posts
                 </h2>
-                <span
-                  class="
+                <span class="
                     inline-flex
                     ml-4
                     items-center
@@ -39,14 +36,10 @@ import moment from "moment";
                     text-red-100
                     bg-indigo-600
                     rounded-full
-                  "
-                  >{{ posts.length }}</span
-                >
+                  ">{{ posts.length }}</span>
               </div>
 
-              <router-link
-                :to="{ name: 'post-new' }"
-                class="
+              <router-link :to="{ name: 'new-post' }" class="
                   inline-flex
                   justify-center
                   py-2
@@ -63,8 +56,7 @@ import moment from "moment";
                   focus:ring-2
                   focus:ring-offset-2
                   focus:ring-indigo-500
-                "
-              >
+                ">
                 New
               </router-link>
             </div>
@@ -72,30 +64,24 @@ import moment from "moment";
             <!-- This example requires Tailwind CSS v2.0+ -->
             <div class="flex flex-col mt-4">
               <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div
-                  class="
+                <div class="
                     py-2
                     align-middle
                     inline-block
                     min-w-full
                     sm:px-6
                     lg:px-8
-                  "
-                >
-                  <div
-                    class="
+                  ">
+                  <div class="
                       shadow
                       overflow-hidden
                       border-b border-gray-200
                       sm:rounded-lg
-                    "
-                  >
+                    ">
                     <table class="min-w-full divide-y divide-gray-200">
                       <thead class="bg-gray-50">
                         <tr>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-left text-xs
@@ -103,13 +89,10 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                            "
-                          >
+                            ">
                             No
                           </th>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-left text-xs
@@ -117,13 +100,10 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                            "
-                          >
+                            ">
                             Name
                           </th>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-left text-xs
@@ -131,13 +111,10 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                            "
-                          >
+                            ">
                             Status
                           </th>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-left text-xs
@@ -146,13 +123,10 @@ import moment from "moment";
                               uppercase
                               tracking-wider
                               whitespace-nowrap
-                            "
-                          >
+                            ">
                             Answers
                           </th>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-left text-xs
@@ -161,13 +135,10 @@ import moment from "moment";
                               uppercase
                               whitespace-nowrap
                               tracking-wider
-                            "
-                          >
+                            ">
                             Created At
                           </th>
-                          <th
-                            scope="col"
-                            class="
+                          <th scope="col" class="
                               px-6
                               py-3
                               text-right text-xs
@@ -175,8 +146,7 @@ import moment from "moment";
                               text-gray-500
                               uppercase
                               tracking-wider
-                            "
-                          >
+                            ">
                             Action
                           </th>
                         </tr>
@@ -190,8 +160,7 @@ import moment from "moment";
                             {{ post.title }}
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                              class="
+                            <span class="
                                 px-2
                                 inline-flex
                                 text-xs
@@ -200,65 +169,49 @@ import moment from "moment";
                                 rounded-full
                                 bg-green-100
                                 text-green-800
-                              "
-                            >
+                              ">
                               Active
                             </span>
                           </td>
-                          <td
-                            class="
+                          <td class="
                               text-sm text-center
                               font-medium
                               text-indigo-800
                               px-6
-                            "
-                          >
-                            <router-link
-                              :to="{
-                                name: 'answer-of-post',
-                                params: { postId: post._id },
-                              }"
-                              class="text-indigo-600 hover:text-indigo-800"
-                            >
+                            ">
+                            <router-link :to="{
+                              name: 'answer-of-post',
+                              params: { postId: post._id },
+                            }" class="text-indigo-600 hover:text-indigo-800">
                               {{ post.answers.length }}
                             </router-link>
                           </td>
-                          <td
-                            class="
+                          <td class="
                               px-6
                               py-4
                               whitespace-nowrap
                               text-sm text-gray-500
-                            "
-                          >
+                            ">
                             {{
-                              moment(
-                                new Date(
-                                  parseInt(post._id.substring(0, 8), 16) * 1000
-                                )
-                              ).format("DD/MM/YYYYY")
+                            moment(
+                            new Date(
+                            parseInt(post._id.substring(0, 8), 16) * 1000
+                            )
+                            ).format("DD/MM/YYYYY")
                             }}
                           </td>
-                          <td
-                            class="
+                          <td class="
                               px-6
                               py-4
                               whitespace-nowrap
                               text-right text-sm
                               font-medium
-                            "
-                          >
-                            <a
-                              href="{{ route('admin.language.edit', company._id) }}"
-                              class="text-indigo-600 hover:text-indigo-900 mx-2"
-                              >Edit</a
-                            >
+                            ">
+                            <router-link :to="{name: 'user-post-edit', params: {id: post._id}}"
+                              class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</router-link>
 
-                            <button
-                              class="text-red-600 hover:text-red-900"
-                              type="button"
-                              @click="deleteModel(post._id)"
-                            >
+                            <button class="text-red-600 hover:text-red-900" type="button"
+                              @click="deleteModel(post._id)">
                               Delete
                             </button>
                           </td>
@@ -309,7 +262,7 @@ export default {
       showConfirmPopup(function () {
         const authStore = useAuthStore();
         axios
-          .delete(`${serverUrl}/posts/${id}`, {
+          .delete(`${serverUrl}/users/${authStore.user._id}/posts/${id}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${authStore.token}`,

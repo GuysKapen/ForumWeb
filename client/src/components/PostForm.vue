@@ -1,6 +1,6 @@
 <template>
 
-    <form class="flex-grow-1 w-9/12 flex" @submit.prevent="createPost">
+    <form class="flex-grow-1 w-9/12 flex" @submit.prevent="submit">
 
         <div class="w-8/12">
             <div class="flex background-white-grey tab-view">
@@ -11,7 +11,7 @@
                             <div class="field">
                                 <div class="control">
                                     <label class="block font-semibold text-sm" for="title">Title</label>
-                                    <input id="title" name="title" v-model="title"
+                                    <input id="title" name="title" v-model="newModel.title"
                                         class="string w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                         type="text" autofocus placeholder="Title..." />
                                 </div>
@@ -21,7 +21,7 @@
                                 <div>
                                     <label class="block font-semibold mb-2 text-sm" for="body">Body</label>
 
-                                    <editor :init="init" v-model="body" />
+                                    <editor :init="init" v-model="newModel.body" />
                                 </div>
                             </div>
                         </div>
@@ -38,8 +38,9 @@
                     <div class="mt-2">
 
                         <div class="relative flex w-full">
-                            <select v-model="selectedCategoryId" id="select-category" name="category" placeholder="Select categories..."
-                                autocomplete="off" class="block w-full rounded-sm cursor-pointer focus:outline-none">
+                            <select v-model="newModel.category" id="select-category" name="category"
+                                placeholder="Select categories..." autocomplete="off"
+                                class="block w-full rounded-sm cursor-pointer focus:outline-none">
                                 <option v-for="(category, idx) in categories" :key="idx" :value="category._id">
                                     {{ category.name }}</option>
                             </select>
@@ -82,7 +83,7 @@
 
 </template>
   
-  <script>
+<script>
 // TinyMCE
 import 'tinymce/tinymce'
 import 'tinymce/icons/default/icons'
@@ -111,11 +112,18 @@ import { useAuthStore } from '../stores/auth/auth'
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export default {
+    props: {
+        model: Object,
+    },
+    emits: {
+        updated: null,
+        added: null,
+        cancel: null
+    },
     mounted() {
         axios.get(`${serverUrl}/categories`).then(res => {
             this.categories = res.data;
         })
-
     },
     components: {
         'editor': Editor
@@ -139,8 +147,82 @@ export default {
             },
         }
     },
-    data: () => ({ title: "", body: "", categories: [], selectedCategoryId: "" }),
+    data: function () {
+        return {
+            freshData: {
+                title: "",
+                body: "",
+                parentType: this.parentType,
+                parent: this.parentId,
+                category: null
+            },
+            categories: []
+        }
+    },
+    computed: {
+        newModel() {
+            return this.model ?? this.freshData
+        }
+    },
     methods: {
+        async submit() {
+            const newModel = this.newModel
+            this.error = "";
+            if (!newModel.title) {
+                this.error = "Please enter title";
+                return;
+            }
+
+            if (!newModel.body) {
+                this.error = "Please enter body";
+                return;
+            }
+
+            if (newModel._id) {
+                this.update(newModel._id, newModel)
+            } else {
+                this.add(newModel)
+            }
+
+        },
+
+        async add(newModel) {
+            const authStore = useAuthStore();
+            try {
+                axios
+                    .post(`${serverUrl}/users/${authStore.user._id}/posts`, newModel, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${authStore.token}`,
+                            "x-access-token": authStore.token,
+                        },
+                    })
+                    .then((res) => {
+                        this.$emit("added", res.data)
+                    });
+            } catch (error) {
+                console.error("create post", error);
+            }
+        },
+
+        async update(id, newModel) {
+            const authStore = useAuthStore();
+            try {
+                axios
+                    .put(`${serverUrl}/users/${authStore.user._id}/posts/${id}`, newModel, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${authStore.token}`,
+                            "x-access-token": authStore.token,
+                        },
+                    })
+                    .then((res) => {
+                        this.$emit("updated", res.data)
+                    });
+            } catch (error) {
+                console.error("create post", error);
+            }
+        },
         async createPost() {
 
             const authStore = useAuthStore();
@@ -156,28 +238,11 @@ export default {
                 category: this.selectedCategoryId,
                 owner: authStore.user._id,
             };
-
-
-            try {
-                axios
-                    .post(`${serverUrl}/users/${authStore.user._id}/posts`, newModel, {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${authStore.token}`,
-                            "x-access-token": authStore.token,
-                        },
-                    })
-                    .then((res) => {
-                        this.$router.push("/")
-                    });
-            } catch (error) {
-                console.error("create post", error);
-            }
         },
     },
 };
 </script>
 
-  <style>
-  @import 'tom-select/dist/css/tom-select.default.css';
-  </style>
+<style>
+@import 'tom-select/dist/css/tom-select.default.css';
+</style>

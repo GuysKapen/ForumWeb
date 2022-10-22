@@ -51,6 +51,7 @@ import RecruiterApplyView from "@/views/recruiter/apply/View.vue";
 
 import UserView from "@/views/user/View.vue";
 import UserPostView from "@/views/user/post/View.vue";
+import UserEditPostView from "@/views/user/post/EditView.vue";
 import UserAnswerView from "@/views/user/answer/View.vue";
 import UserEditAnswerView from "@/views/user/answer/EditView.vue";
 import UserCommentView from "@/views/user/comment/View.vue";
@@ -319,6 +320,16 @@ const router = createRouter({
           path: "posts",
           name: "user-post-index",
           component: UserPostView,
+        },
+        {
+          path: "post/new",
+          name: "user-post-new",
+          component: AdminNewPostView,
+        },
+        {
+          path: "post/:id/edit",
+          name: "user-post-edit",
+          component: UserEditPostView,
         },
         {
           path: "answers",
