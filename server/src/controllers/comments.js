@@ -73,7 +73,6 @@ exports.update = function (req, res) {
 
 exports.delete = async function (req, res) {
   Comment.findOne({ _id: req.params.id }, async function (err, item) {
-    console.log(req.currentUser.id, item.owner);
     if (err) return response.sendNotFound(res);
     if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);
     await Comment.deleteOne(item).exec()
