@@ -54,6 +54,7 @@ import UserPostView from "@/views/user/post/View.vue";
 import UserAnswerView from "@/views/user/answer/View.vue";
 import UserEditAnswerView from "@/views/user/answer/EditView.vue";
 import UserCommentView from "@/views/user/comment/View.vue";
+import UserEditCommentView from "@/views/user/comment/EditView.vue";
 
 import { useAuthStore } from "@/stores/auth/auth";
 
@@ -333,6 +334,11 @@ const router = createRouter({
           path: "comments",
           name: "user-comment-index",
           component: UserCommentView,
+        },
+        {
+          path: "comments/:id/edit",
+          name: "user-comment-edit",
+          component: UserEditCommentView,
         },
       ],
     },
