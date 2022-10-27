@@ -10,4 +10,13 @@ routes.use(auth.verifyTokenAdmin);
 routes.route('/')
   .get(users.list)
 
+routes.route('/:id/disable')
+  .put(users.disable)
+
+routes.route('/:id/activate')
+  .put(users.activate)
+
+routes.route('/:id')
+  .delete(users.delete)
+
 module.exports = routes;

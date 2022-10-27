@@ -53,7 +53,7 @@ import moment from 'moment';
                                                         Created At
                                                     </th>
                                                     <th scope="col"
-                                                        class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                         Action
                                                     </th>
                                                 </tr>
@@ -66,17 +66,18 @@ import moment from 'moment';
                                                     <td class="text-sm font-medium text-gray-900 px-6">{{ user.name
                                                     }}</td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span v-if="false"
+                                                        <span v-if="user.status"
                                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                             Active
                                                         </span>
                                                         <span v-else
                                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                            Pending
+                                                            Disabled
                                                         </span>
                                                     </td>
-                                                    <td class="text-sm text-center font-medium text-indigo-800 capitalize px-6">
-                                                       {{user.role}}
+                                                    <td
+                                                        class="text-sm text-center font-medium text-indigo-800 capitalize px-6">
+                                                        {{ user.role }}
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {{ moment(new Date(parseInt(user._id.substring(0, 8), 16) *
@@ -87,7 +88,17 @@ import moment from 'moment';
                                                         class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium my-auto h-full">
                                                         <button
                                                             class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
-                                                            type="button" @click="approveModel(user._id)">
+                                                            type="button" @click="disableModel(user._id)">
+                                                            <svg viewBox="0 0 512 512" style="width: 1em;">
+                                                                <path fill="currentColor"
+                                                                    d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z">
+                                                                </path>
+                                                            </svg>
+                                                        </button>
+
+                                                        <button
+                                                            class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
+                                                            type="button" @click="activateModel(user._id)">
                                                             <svg viewBox="0 0 512 512" style="width: 1em;">
                                                                 <path fill="currentColor"
                                                                     d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z">
@@ -152,7 +163,7 @@ export default {
             const self = this;
             showConfirmPopup(function () {
                 const authStore = useAuthStore()
-                axios.delete(`${serverUrl}/posts/${id}`, {
+                axios.delete(`${serverUrl}/admin/users/${id}`, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${authStore.token}`,
@@ -160,15 +171,15 @@ export default {
                     },
                 }).then(function () {
                     self.users = self.users.filter(item => item._id !== id);
-                    createToast('Success delete post', { type: 'success' })
+                    createToast('Success delete user', { type: 'success' })
                 })
             })
         },
-        approveModel(id) {
+        activateModel(id) {
             const self = this;
             showConfirmPopup(function () {
                 const authStore = useAuthStore()
-                axios.put(`${serverUrl}/posts/${id}/approve`, { status: true }, {
+                axios.put(`${serverUrl}/admin/users/${id}/activate`, { status: true }, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${authStore.token}`,
@@ -176,9 +187,25 @@ export default {
                     },
                 }).then(function () {
                     self.users = self.users.map(item => item._id === id ? Object.assign(item, { status: true }) : item);
-                    createToast('Success approve post', { type: 'success' })
+                    createToast('Success activate user', { type: 'success' })
                 })
-            }, "Do you really want to approve?", "Approve")
+            }, "Do you really want to activate?", "Activate")
+        },
+        disableModel(id) {
+            const self = this;
+            showConfirmPopup(function () {
+                const authStore = useAuthStore()
+                axios.put(`${serverUrl}/admin/users/${id}/disable`, { status: true }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${authStore.token}`,
+                        "x-access-token": authStore.token,
+                    },
+                }).then(function () {
+                    self.users = self.users.map(item => item._id === id ? Object.assign(item, { status: false }) : item);
+                    createToast('Success disable user', { type: 'success' })
+                })
+            }, "Do you really want to disable?", "Disable")
         }
     }
 }

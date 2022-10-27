@@ -29,6 +29,10 @@ const UserSchema = new Schema({
   },
   token: String,
   tokenExp: Number,
+  status: {
+    type: Boolean,
+    default: true
+  },
   posts: [
     {
       type: Schema.Types.ObjectId,
