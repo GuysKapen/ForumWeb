@@ -38,6 +38,8 @@ import AnswerOfView from "@/views/admin/answer/ViewOf.vue";
 import AdminView from "@/views/admin/View.vue";
 import AdminDashboardView from "@/views/admin/dashboard/View.vue";
 
+import AdminUsersView from "@/views/admin/user/View.vue";
+
 import RecruiterNewPostView from "@/views/recruiter/post/NewView.vue";
 import RecruiterPostView from "@/views/recruiter/post/View.vue";
 
@@ -169,6 +171,11 @@ const router = createRouter({
           path: "dashboard",
           name: "admin-dashboard",
           component: AdminDashboardView,
+        },
+        {
+          path: "users",
+          name: "user-index",
+          component: AdminUsersView,
         },
         {
           path: "categories",

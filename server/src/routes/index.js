@@ -9,6 +9,7 @@ import fields from './fields';
 import posts from './posts';
 import recruitments from './admin/recruitments';
 import answers from './admin/answers';
+import adminUsers from './admin/users';
 import publicRoute from './public';
 import response from '../helpers/response';
 
@@ -26,6 +27,7 @@ routes.use('/fields', fields);
 routes.use('/posts', posts);
 routes.use('/recruitments', recruitments);
 routes.use('/answers', answers);
+routes.use('/admin/users', adminUsers);
 
 routes.get('/', (req, res) => {
   res.status(200).json({ message: 'Ok' });
