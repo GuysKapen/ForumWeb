@@ -20,7 +20,7 @@ import moment from "moment";
                     text-gray-900
                     sm:text-2xl sm:truncate
                   ">
-                  All posts
+                  All questions
                 </h2>
                 <span class="
                     inline-flex
