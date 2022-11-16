@@ -6,7 +6,7 @@ import ModalLogin from "./components/ModalLogin.vue";
 </script>
 
 <template>
-  <div class="mb-16">
+  <div>
     <router-view />
     <Chatbox />
     <!-- Main modal login -->

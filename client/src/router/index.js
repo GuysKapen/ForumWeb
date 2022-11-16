@@ -59,6 +59,8 @@ import UserEditAnswerView from "@/views/user/answer/EditView.vue";
 import UserCommentView from "@/views/user/comment/View.vue";
 import UserEditCommentView from "@/views/user/comment/EditView.vue";
 
+import ChatView from "@/views/ChatView.vue";
+
 import { useAuthStore } from "@/stores/auth/auth";
 
 import { createToast } from "mosha-vue-toastify";
@@ -159,6 +161,12 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: ProfileView,
+      beforeEnter: [isAuth],
+    },
+    {
+      path: "/chat",
+      name: "chat",
+      component: ChatView,
       beforeEnter: [isAuth],
     },
     {
