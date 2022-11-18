@@ -183,7 +183,9 @@ export default {
                         conversation["events"] = response.data["events"];
                     }
 
-                    this.conversations = conversations;
+                    this.conversations = conversations.reverse();
+
+                    this.activeConversation = this.conversations[0]
                 });
         } catch (error) {
             console.log(error);
