@@ -1,101 +1,34 @@
+<script setup>
+import moment from 'moment';
+</script>
 <template>
 
     <div class="flex flex-col h-screen">
         <Nav />
         <div class="flex h-full border-t w-full">
             <div class="w-3/12 flex-shrink-0 border-r">
-                <div class="px-6 py-4 border-b bg-gray-50">
+                <div v-for="(conversation, idx) in conversations" :key="idx"
+                    class="px-6 py-4 border-b bg-white hover:bg-gray-50 cursor-pointer" @click="activate(conversation)"
+                    :class="{ 'bg-gray-50': (conversation.conversationId == senderId) }">
                     <div class="m-0 flex flex-row items-center">
                         <div class="flex flex-shrink-0 m-0">
-                            <div class="
-            w-10
-            h-10
-            text-center
-            rounded-full
-            flex
-            justify-center
-            items-center
-            text-white
-            bg-blue-400
-          ">
-                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="meh-blank"
-                                    class="svg-inline--fa fa-meh-blank fa-w-16 css-1y53wuf" role="img"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" style="width: 1em">
+                            <div
+                                class="w-10 h-10 p-[0.875rem] text-center rounded-full leading-4 justify-center items-center text-white flex bg-gray-100">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
+                                    class="svg-inline--fa fa-user fa-w-14 css-1y53wuf" role="img"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 1em;">
                                     <path fill="currentColor"
-                                        d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm-80 232c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm160 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z">
+                                        d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z">
                                     </path>
                                 </svg>
                             </div>
                         </div>
 
                         <div class="ml-2">
-                            <h3 class="text-xs font-bold text-gray-800">10:40 am, 9 Nov 2022</h3>
-                            <h3 class="text-gray-500 text-xs mt-1">Rasa</h3>
-                        </div>
-
-                    </div>
-
-                    <!-- {{ $buttons }} -->
-                </div>
-                <div class="px-6 py-4 border-b bg-gray-50">
-                    <div class="m-0 flex flex-row items-center">
-                        <div class="flex flex-shrink-0 m-0">
-                            <div class="
-            w-10
-            h-10
-            text-center
-            rounded-full
-            flex
-            justify-center
-            items-center
-            text-white
-            bg-blue-400
-          ">
-                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="meh-blank"
-                                    class="svg-inline--fa fa-meh-blank fa-w-16 css-1y53wuf" role="img"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" style="width: 1em">
-                                    <path fill="currentColor"
-                                        d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm-80 232c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm160 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z">
-                                    </path>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="ml-2">
-                            <h3 class="text-xs font-bold text-gray-800">12:30 pm, 8 Oct 2022</h3>
-                            <h3 class="text-gray-500 text-xs mt-1">Rasa</h3>
-                        </div>
-
-                    </div>
-
-                    <!-- {{ $buttons }} -->
-                </div>
-                <div class="px-6 py-4 border-b bg-gray-50">
-                    <div class="m-0 flex flex-row items-center">
-                        <div class="flex flex-shrink-0 m-0">
-                            <div class="
-            w-10
-            h-10
-            text-center
-            rounded-full
-            flex
-            justify-center
-            items-center
-            text-white
-            bg-blue-400
-          ">
-                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="meh-blank"
-                                    class="svg-inline--fa fa-meh-blank fa-w-16 css-1y53wuf" role="img"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" style="width: 1em">
-                                    <path fill="currentColor"
-                                        d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm-80 232c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm160 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z">
-                                    </path>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="ml-2">
-                            <h3 class="text-xs font-bold text-gray-800">08:12 am, 2 Sep 2022</h3>
+                            <h3 class="text-xs font-bold text-gray-800">{{ moment(new Date(parseInt(
+                                    conversation._id.substring(0, 8), 16) *
+                                    1000)).format('hh:mm a DD MMM YYYY')
+                            }}</h3>
                             <h3 class="text-gray-500 text-xs mt-1">Rasa</h3>
                         </div>
 
@@ -115,7 +48,9 @@
         overflow-hidden
         mb-4
       ">
-                <ChatBody key="chatbox-view" />
+
+                <ChatBody v-if="senderId" key="chatbox-view" :sender-id="senderId" />
+
             </div>
             <div class="w-3/12 flex-shrink-0 border-l">
                 <div class="mt-16">
@@ -147,7 +82,17 @@
                     </div>
                     <div class="mt-8 px-4 w-full border-b">
                         <h4 class="font-normal text-base text-gray-400">Actions</h4>
-                        <div class="flex justify-between py-3 mt-3 w-full">
+                        <div class="flex justify-between py-3 mt-3 w-full items-center">
+                            <p class="text-sm text-gray-700 font-normal">Start new conversation</p>
+                            <button @click="newConversation"
+                                class="hover:bg-indigo-600 text-gray-500 hover:text-white p-2 transition-all rounded-md border-none inline-block relative">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+                                    <path fill="currentColor"
+                                        d="M9.542 11.25h.916V8.792h2.459v-.917h-2.459V5.417h-.916v2.458H7.083v.917h2.459ZM2.5 16.729V3.938q0-.626.406-1.032T3.938 2.5h12.124q.626 0 1.032.406t.406 1.032v8.791q0 .625-.406 1.031-.406.407-1.032.407h-11Zm.917-2.229 1.25-1.25h11.395q.23 0 .376-.146.145-.146.145-.375V3.938q0-.23-.145-.375-.146-.146-.376-.146H3.938q-.23 0-.376.146-.145.145-.145.375Zm0-10.562v-.521V14.5Z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="flex justify-between py-3 w-full items-center">
                             <p class="text-sm text-gray-700 font-normal">Mark as reviewed</p>
                             <button
                                 class="hover:bg-indigo-600 text-gray-500 hover:text-white p-2 transition-all rounded-md border-none inline-block relative"><svg
@@ -159,7 +104,7 @@
                                     </path>
                                 </svg></button>
                         </div>
-                        <div class="flex justify-between py-3 w-full">
+                        <div class="flex justify-between py-3 w-full items-center">
                             <p class="text-sm text-gray-700 font-normal">Save for later</p>
                             <button
                                 class="hover:bg-indigo-600 text-gray-500 hover:text-white p-2 transition-all rounded-md border-none inline-block relative">
@@ -172,7 +117,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="flex justify-between py-3 w-full">
+                        <div class="flex justify-between py-3 w-full items-center">
                             <p class="text-sm text-gray-700 font-normal">Delete</p>
                             <button
                                 class="hover:bg-indigo-600 text-gray-500 hover:text-white p-2 transition-all rounded-md border-none inline-block relative">
@@ -208,9 +153,60 @@
 <script>
 import ChatBody from '../components/chatbox/ChatBody.vue'
 import Nav from '../components/Nav.vue'
-
+import { useAuthStore } from '@/stores/auth/auth'
+import { v4 as uuidv4 } from 'uuid';
+import { createToast } from 'mosha-vue-toastify';
+import axios from 'axios';
+const serverUrl = import.meta.env.VITE_SERVER_URL;
 export default {
     components: { ChatBody, Nav },
+    data: () => ({ senderId: null, conversations: [] }),
+    mounted() {
+        const authStore = useAuthStore();
+        try {
+            axios
+                .get(`${serverUrl}/users/${authStore.user._id}/conversations`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${authStore.token}`,
+                        "x-access-token": authStore.token,
+                    },
+                })
+                .then((res) => {
+                    this.conversations = res.data
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    methods: {
+        newConversation() {
+            this.senderId = uuidv4();
+            const newModel = {
+                conversationId: this.senderId,
+            };
+            const authStore = useAuthStore();
+            try {
+                axios
+                    .post(`${serverUrl}/users/${authStore.user._id}/conversations`, newModel, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${authStore.token}`,
+                            "x-access-token": authStore.token,
+                        },
+                    })
+                    .then((_) => {
+                        createToast("Success add conversation", { type: 'success' })
+                    });
+            } catch (error) {
+                console.log(error);
+                createToast("Error add model", { type: 'danger' })
+            }
+        },
+        activate(conversation) {
+            this.senderId = conversation.conversationId
+        }
+    }
 }
 
 

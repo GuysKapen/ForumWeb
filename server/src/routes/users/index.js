@@ -12,6 +12,7 @@ import userDetails from './user_details';
 import applies from './applies';
 import save from './save';
 import answers from './answers';
+import conversations from './conversations';
 
 const routes = express.Router();
 
@@ -25,6 +26,7 @@ routes.use('/:userId/details', users.loadUser, userDetails);
 routes.use('/:userId/applies', users.loadUser, applies);
 routes.use('/:userId/save', users.loadUser, save);
 routes.use('/:userId/answers', users.loadUser, answers);
+routes.use('/:userId/conversations', users.loadUser, conversations);
 
 routes.route('/:id')
   .all(auth.verifyToken)

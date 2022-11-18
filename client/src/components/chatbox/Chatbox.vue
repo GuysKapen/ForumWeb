@@ -1,7 +1,10 @@
+<script setup>
+import { v4 as uuidv4 } from 'uuid';
+</script>
 <template>
   <div id="chatbox" class="fixed bottom-4 right-4 flex flex-col justify-end items-end" style="z-index: 999">
 
-      <div id="chatbox-container" :class="show ? 'opacity-100 h-112' : 'opacity-0 h-0'" class="
+    <div id="chatbox-container" :class="show ? 'opacity-100 h-112' : 'opacity-0 h-0'" class="
         w-96
         hide-scrollbar
         transition-all
@@ -11,7 +14,7 @@
         overflow-hidden
         mb-4
       ">
-      <ChatBody />
+      <ChatBody :sender-id="uuidv4()" />
     </div>
 
     <button @click="show = !show" class="
