@@ -76,15 +76,27 @@ import ChatboxBotResponse from "@/components/chatbox/ChatboxBotResponse.vue";
 import axios from "axios";
 
 export default {
-  props: ["senderId"],
-  data: () => ({
-    events: [],
-    show: false,
-  }),
+  props: {
+    senderId: {
+      type: String,
+      required: true
+    },
+    oldEvents: {
+      type: Array
+    }
+  },
+  data() {
+    return {
+      events: this.oldEvents,
+      show: false,
+    }
+  },
   mounted() {
     const self = this;
     // Load messages
-    this.loadMessages()
+    if (!this.oldEvents) {
+      this.loadMessages()
+    }
     // Click outside to hide
     $("html").on("click", function () {
       self.show = false;

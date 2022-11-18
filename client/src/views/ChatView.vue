@@ -1,5 +1,6 @@
 <script setup>
 import moment from 'moment';
+import { truncate } from '@/utils/utils';
 </script>
 <template>
 
@@ -9,7 +10,7 @@ import moment from 'moment';
             <div class="w-3/12 flex-shrink-0 border-r">
                 <div v-for="(conversation, idx) in conversations" :key="idx"
                     class="px-6 py-4 border-b bg-white hover:bg-gray-50 cursor-pointer" @click="activate(conversation)"
-                    :class="{ 'bg-gray-50': (conversation.conversationId == senderId) }">
+                    :class="{ 'bg-gray-50': (conversation.conversationId == activeConversation?.conversationId) }">
                     <div class="m-0 flex flex-row items-center">
                         <div class="flex flex-shrink-0 m-0">
                             <div
@@ -29,7 +30,7 @@ import moment from 'moment';
                                     conversation._id.substring(0, 8), 16) *
                                     1000)).format('hh:mm a DD MMM YYYY')
                             }}</h3>
-                            <h3 class="text-gray-500 text-xs mt-1">Rasa</h3>
+                            <h3 class="text-gray-500 text-xs mt-1 ">{{ truncate(lastMessage(conversation), 48) }}</h3>
                         </div>
 
                     </div>
@@ -49,7 +50,8 @@ import moment from 'moment';
         mb-4
       ">
 
-                <ChatBody v-if="senderId" key="chatbox-view" :sender-id="senderId" />
+                <ChatBody v-if="activeConversation" key="chatbox-view" :sender-id="activeConversation.conversationId"
+                    :oldEvents="activeConversation.events" />
 
             </div>
             <div class="w-3/12 flex-shrink-0 border-l">
@@ -160,8 +162,8 @@ import axios from 'axios';
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 export default {
     components: { ChatBody, Nav },
-    data: () => ({ senderId: null, conversations: [] }),
-    mounted() {
+    data: () => ({ activeConversation: null, conversations: [] }),
+    async mounted() {
         const authStore = useAuthStore();
         try {
             axios
@@ -172,8 +174,16 @@ export default {
                         "x-access-token": authStore.token,
                     },
                 })
-                .then((res) => {
-                    this.conversations = res.data
+                .then(async (res) => {
+                    let conversations = res.data
+                    for (let index = 0; index < conversations.length; index++) {
+                        const conversation = conversations[index];
+                        const response = await axios
+                            .get(`http://localhost:5005/conversations/${conversation.conversationId}/tracker`)
+                        conversation["events"] = response.data["events"];
+                    }
+
+                    this.conversations = conversations;
                 });
         } catch (error) {
             console.log(error);
@@ -181,9 +191,10 @@ export default {
     },
     methods: {
         newConversation() {
-            this.senderId = uuidv4();
+            const senderId = uuidv4()
+            this.activeConversation = { conversationId: senderId };
             const newModel = {
-                conversationId: this.senderId,
+                conversationId: senderId,
             };
             const authStore = useAuthStore();
             try {
@@ -204,7 +215,17 @@ export default {
             }
         },
         activate(conversation) {
-            this.senderId = conversation.conversationId
+            this.activeConversation = conversation;
+        },
+        lastMessage(conversation) {
+            let messages = conversation["events"]
+            for (let index = messages.length - 1; index >= 0; index--) {
+                const message = messages[index];
+                if (message['event'] === 'user'
+                    || message['event'] === 'bot') {
+                    return message['text']
+                }
+            }
         }
     }
 }
