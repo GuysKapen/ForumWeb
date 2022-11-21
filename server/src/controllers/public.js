@@ -117,7 +117,7 @@ exports.detailFields = async function (req, res) {
 };
 
 exports.posts = async function (req, res) {
-  let query = {};
+  let query = { status: true };
   const page = req.query["page"] || 1;
   const limit = req.query["limit"] || 5;
 
@@ -216,7 +216,7 @@ exports.post = function (req, res) {
 };
 
 exports.recruitments = async function (req, res) {
-  let query = {};
+  let query = { status: true };
 
   const page = req.query["page"] || 1;
   const limit = req.query["limit"] || 5;
