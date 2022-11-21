@@ -9,8 +9,11 @@ routes.use(auth.verifyTokenAdmin);
 
 routes.route("/")
   .get(posts.list)
-  
+
 routes.route('/:id/approve')
   .put(posts.approve)
+
+routes.route('/:id')
+  .delete(posts.delete)
 
 module.exports = routes;

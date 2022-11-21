@@ -22,3 +22,9 @@ exports.approve = function (req, res) {
         res.json(item);
     });
 };
+
+exports.delete = async function (req, res) {
+  Answer.deleteOne({ _id: req.params.id }, async function (err, item) {
+    res.json({ message: 'Item successfully deleted' });
+  });
+};

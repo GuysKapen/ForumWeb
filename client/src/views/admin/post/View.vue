@@ -161,7 +161,7 @@ export default {
             const self = this;
             showConfirmPopup(function () {
                 const authStore = useAuthStore()
-                axios.delete(`${serverUrl}/posts/${id}`, {
+                axios.delete(`${serverUrl}/admin/posts/${id}`, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${authStore.token}`,
