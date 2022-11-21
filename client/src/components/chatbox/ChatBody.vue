@@ -12,7 +12,7 @@
           <template v-for="(event, idx) in events">
             <ChatboxUserMessage v-if="event['event'] === 'user'" :message="event['text']" :key="idx" />
 
-            <ChatboxBotResponse v-if="event['event'] === 'bot'" :message="event['text']" :key="idx" />
+            <ChatboxBotResponse v-if="event['event'] === 'bot'" :message="event['text']" :custom="event['data']['custom']" :key="idx" />
           </template>
         </div>
       </div>
