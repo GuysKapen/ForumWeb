@@ -19,10 +19,11 @@ import moment from 'moment';
                                 </h2>
                                 <span
                                     class="inline-flex ml-4 items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-indigo-600 rounded-full">{{
-                                    posts.length }}</span>
+                                            posts.length
+                                    }}</span>
                             </div>
 
-                            <router-link :to="{name: 'post-new'}"
+                            <router-link :to="{ name: 'post-new' }"
                                 class="inline-flex justify-center py-2 px-8 rounded-full border border-transparent shadow-sm text-sm font-black text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 New
                             </router-link>
@@ -81,14 +82,15 @@ import moment from 'moment';
                                                     </td>
                                                     <td class="text-sm text-center font-medium text-indigo-800 px-6">
                                                         <router-link
-                                                            :to="{name: 'answer-of-post', params: {'postId': post._id}}"
+                                                            :to="{ name: 'answer-of-post', params: { 'postId': post._id } }"
                                                             class="text-indigo-600 hover:text-indigo-800">
-                                                            {{post.answers.length}}
+                                                            {{ post.answers.length }}
                                                         </router-link>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {{moment(new Date( parseInt( post._id.substring(0, 8), 16 ) *
-                                                        1000 )).format('DD/MM/YYYYY')}}
+                                                        {{ moment(new Date(parseInt(post._id.substring(0, 8), 16) *
+                                                                1000)).format('DD/MM/YYYYY')
+                                                        }}
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium my-auto h-full">
@@ -140,8 +142,15 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export default {
     mounted() {
-        axios.get(`${serverUrl}/posts`).then(res => {
-            this.posts = res.data["docs"];
+        const authStore = useAuthStore()
+        axios.get(`${serverUrl}/admin/posts`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authStore.token}`,
+                "x-access-token": authStore.token,
+            },
+        }).then(res => {
+            this.posts = res.data;
         })
     },
     data: () => ({
@@ -168,7 +177,7 @@ export default {
             const self = this;
             showConfirmPopup(function () {
                 const authStore = useAuthStore()
-                axios.put(`${serverUrl}/posts/${id}/approve`, { status: true }, {
+                axios.put(`${serverUrl}/admin/posts/${id}/approve`, { status: true }, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${authStore.token}`,
