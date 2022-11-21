@@ -196,7 +196,7 @@
               </div>
 
               <div class="ml-3 text-sm">
-                <p class="text-gray-500">Posts</p>
+                <p class="text-gray-500">Questions</p>
               </div>
             </router-link>
           </div>
