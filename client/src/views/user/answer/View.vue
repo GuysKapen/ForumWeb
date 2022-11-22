@@ -82,7 +82,7 @@ import { truncate } from '@/utils/utils';
                               uppercase
                               tracking-wider
                             ">
-                            Name
+                            Answer
                           </th>
                           <th scope="col" class="
                               px-6
@@ -105,7 +105,7 @@ import { truncate } from '@/utils/utils';
                               tracking-wider
                               whitespace-nowrap
                             ">
-                            Answers
+                            Question
                           </th>
                           <th scope="col" class="
                               px-6
@@ -137,29 +137,26 @@ import { truncate } from '@/utils/utils';
                           <td class="text-sm font-medium text-gray-900 px-6">
                             {{ idx + 1 }}
                           </td>
-                          <td class="text-sm font-medium text-gray-900 px-6">
-                            {{ answer.post.title }}
+                          <td class="text-sm py-3 font-medium text-gray-900 px-6">
+                            <div v-html="truncate(answer.answer, 60)"></div>
                           </td>
                           <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="
-                                px-2
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-green-100
-                                text-green-800
-                              ">
-                              Active
+                            <span v-if="answer.correct"
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                              Verified
+                            </span>
+                            <span v-else
+                              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                              Unverified
                             </span>
                           </td>
                           <td class="
                               text-sm text-center
                               font-medium
                               px-6
+                              py-3
                             ">
-                            <div v-html="truncate(answer.answer, 60)"></div>
+                            {{ answer.post.title }}
                           </td>
                           <td class="
                               px-6
