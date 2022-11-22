@@ -14,6 +14,7 @@ routes.route('/:id/approve')
   .put(recruitments.approve)
 
 routes.route('/:id')
+  .get(recruitments.read)
   .delete(recruitments.delete)
 
 module.exports = routes;

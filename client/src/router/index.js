@@ -25,6 +25,7 @@ import EditSkillView from "@/views/admin/skill/EditView.vue";
 import SkillView from "@/views/admin/skill/View.vue";
 
 import NewRecruitmentView from "@/views/admin/recruitment/NewView.vue";
+import EditRecruitmentView from "@/views/admin/recruitment/EditView.vue";
 import RecruitmentView from "@/views/admin/recruitment/View.vue";
 import ApplyOfView from "@/views/admin/recruitment/ViewOf.vue";
 
@@ -257,6 +258,11 @@ const router = createRouter({
           path: "recruitments/new",
           name: "recruitment-new",
           component: NewRecruitmentView,
+        },
+        {
+          path: "recruitments/:id/edit",
+          name: "recruitment-edit",
+          component: EditRecruitmentView,
         },
         {
           path: "recruitment/:refId",
