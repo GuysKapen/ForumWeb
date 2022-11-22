@@ -3,7 +3,6 @@ import response from "../helpers/response";
 import request from "../helpers/request";
 import pagination from "../helpers/pagination";
 
-
 import _ from 'underscore';
 const Category = mongoose.model("Category");
 const Post = mongoose.model("Post");
@@ -404,4 +403,13 @@ exports.searchPosts = async function (req, res) {
       res.json(docs);
     }
   );
+};
+
+exports.downloadRecruitment = function (req, res) {
+  Recruitment.findById(req.params.id)
+    .exec(function (err, doc) {
+      if (err) return response.sendNotFound(res);
+      if (!doc.file) return
+      res.download(doc.file)
+    })
 };

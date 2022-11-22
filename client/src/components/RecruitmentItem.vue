@@ -5,21 +5,15 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
 <template>
   <div class="bg-white px-8 pt-8 py-16 rounded-xl relative">
-    <router-link
-      tag="div"
-      class="hover:text-indigo-600"
-      class-active="active"
-      :to="`/recruitments/${recruitment._id}`"
-      exact
-    >
+    <router-link tag="div" class="hover:text-indigo-600" class-active="active" :to="`/recruitments/${recruitment._id}`"
+      exact>
       <h3 class="text-gray-800 hover:text-indigo-600 font-black text-xl">
         {{ recruitment.name }}
       </h3>
     </router-link>
     <div class="flex items-center justify-between mt-4">
       <div class="flex items-center">
-        <div
-          class="
+        <div class="
             bg-gray-100
             rounded-lg
             flex
@@ -27,13 +21,9 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             justify-center
             flex-shrink-0
             border border-gray-100
-          "
-        >
-          <img
-            :src="imgUrlFor(serverUrl, recruitment.owner?.profile?.cover)"
-            alt="profile"
-            class="w-8 h-8 rounded-lg flex-shrink-0 object-cover"
-          />
+          ">
+          <img :src="imgUrlFor(serverUrl, recruitment.owner?.profile?.cover)" alt="profile"
+            class="w-8 h-8 rounded-lg flex-shrink-0 object-cover" />
         </div>
 
         <div class="ml-3 text-sm">
@@ -41,8 +31,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
           <span class="text-gray-300 text-sm">6 days ago</span>
         </div>
       </div>
-      <div
-        class="
+      <div class="
           bg-indigo-100
           rounded-xl
           flex
@@ -53,10 +42,9 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
           py-1
           flex-shrink-0
           border border-indigo-200
-        "
-      >
+        ">
         <span class="text-xs text-indigo-600">{{
-          recruitment.category ? recruitment.category.name : "Uncategoried"
+            recruitment.category ? recruitment.category.name : "Uncategoried"
         }}</span>
       </div>
     </div>
@@ -66,10 +54,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
     <div class="flex justify-between mt-4">
       <div class="flex">
         <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
-          <button
-            @click="addToSave"
-            type="button"
-            class="
+          <button @click="addToSave" type="button" class="
               flex
               items-center
               text-gray-400
@@ -78,10 +63,8 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
               h-8
               justify-center
               relative
-            "
-          >
-            <span
-              class="
+            ">
+            <span class="
                 w-[6px]
                 h-[6px]
                 rounded-full
@@ -89,16 +72,13 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
                 absolute
                 top-[-0.125rem]
                 right-[-0.125rem]
-              "
-            ></span>
+              "></span>
             <span class="material-icons text-base relative"> bookmark </span>
           </button>
         </div>
 
         <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
-          <button
-            type="button"
-            class="
+          <button type="button" class="
               px-4
               flex
               items-center
@@ -107,17 +87,14 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
               h-8
               justify-center
               relative
-            "
-          >
+            ">
             <span class="material-icons text-base relative mt-1"> chat </span>
             <span class="text-sm ml-4"> Comment </span>
           </button>
         </div>
 
         <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
-          <button
-            type="button"
-            class="
+          <button @click="download" type="button" class="
               px-4
               flex
               items-center
@@ -126,8 +103,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
               h-8
               justify-center
               relative
-            "
-          >
+            ">
             <span class="material-icons text-base relative mt-1">
               download
             </span>
@@ -136,8 +112,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
         </div>
       </div>
       <div class="absolute right-0 w-32 ">
-        <div
-          class="
+        <div class="
             bg-white
             p-[0.125rem]
             absolute
@@ -146,17 +121,12 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             w-10
             h-10
             rounded-lg
-          "
-        >
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQopEztCTlDuKPFkQVgFBKsJuxp8Ogd-RI1nA&usqp=CAU"
-            alt="profile"
-            class="w-full h-full rounded-lg flex-shrink-0 object-cover"
-          />
+          ">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQopEztCTlDuKPFkQVgFBKsJuxp8Ogd-RI1nA&usqp=CAU"
+            alt="profile" class="w-full h-full rounded-lg flex-shrink-0 object-cover" />
         </div>
 
-        <div
-          class="
+        <div class="
             bg-white
             p-[0.125rem]
             absolute
@@ -165,17 +135,13 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             w-10
             h-10
             rounded-lg
-          "
-        >
+          ">
           <img
             src="https://www.worldphoto.org/sites/default/files/139813_158163_0_%20%C2%A9%20Noel%20Guevara%2C%20Philippines%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg"
-            alt="profile"
-            class="w-full h-full rounded-lg flex-shrink-0 object-cover"
-          />
+            alt="profile" class="w-full h-full rounded-lg flex-shrink-0 object-cover" />
         </div>
 
-        <div
-          class="
+        <div class="
             bg-white
             p-[0.125rem]
             absolute
@@ -185,17 +151,13 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             h-10
             rounded-lg
             z-20
-          "
-        >
+          ">
           <img
             src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fHBvcnRyYWl0fGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-            alt="profile"
-            class="w-full h-full rounded-lg flex-shrink-0 object-cover"
-          />
+            alt="profile" class="w-full h-full rounded-lg flex-shrink-0 object-cover" />
         </div>
 
-        <div
-          class="
+        <div class="
             bg-white
             p-[0.125rem]
             absolute
@@ -208,8 +170,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             h-10
             rounded-lg
             z-10
-          "
-        >
+          ">
           <span class="text-gray-300 text-sm">12+</span>
         </div>
       </div>
@@ -267,6 +228,9 @@ export default {
         console.error("Add to save", error);
       }
     },
+    download() {
+      window.open(`${serverUrl}/recruitments/${this.recruitment._id}/download`)
+    }
   },
   computed: {
     strippedContent() {
@@ -281,4 +245,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>
