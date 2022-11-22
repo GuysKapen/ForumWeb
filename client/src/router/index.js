@@ -41,9 +41,11 @@ import AdminDashboardView from "@/views/admin/dashboard/View.vue";
 import AdminUsersView from "@/views/admin/user/View.vue";
 
 import RecruiterNewPostView from "@/views/recruiter/post/NewView.vue";
+import RecruiterEditPostView from "@/views/recruiter/post/EditView.vue";
 import RecruiterPostView from "@/views/recruiter/post/View.vue";
 
 import RecruiterNewRecruitmentView from "@/views/recruiter/recruitment/NewView.vue";
+import EditRecruitmentView from "@/views/recruiter/recruitment/EditView.vue";
 import RecruiterRecruitmentView from "@/views/recruiter/recruitment/View.vue";
 
 import RecruiterView from "@/views/recruiter/View.vue";
@@ -256,6 +258,11 @@ const router = createRouter({
           component: NewRecruitmentView,
         },
         {
+          path: "recruitments/:id/edit",
+          name: "recruitment-edit",
+          component: EditRecruitmentView,
+        },
+        {
           path: "recruitment/:refId",
           name: "applies-of-recruitment",
           component: ApplyOfView,
@@ -307,6 +314,11 @@ const router = createRouter({
           path: "posts/new",
           name: "recruiter-post-new",
           component: RecruiterNewPostView,
+        },
+        {
+          path: "posts/:id/edit",
+          name: "recruiter-post-edit",
+          component: RecruiterEditPostView,
         },
         {
           path: "recruitments",
