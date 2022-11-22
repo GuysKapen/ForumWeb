@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 <template>
   <div id="chatbox" class="fixed bottom-4 right-4 flex flex-col justify-end items-end" style="z-index: 999">
 
-    <div id="chatbox-container" :class="show ? 'opacity-100 h-112' : 'opacity-0 h-0'" class="
+    <div id="chatbox-container" :class="show ? 'opacity-100 h-112 w-full' : 'opacity-0 h-0 w-0'" class="
         w-96
         hide-scrollbar
         transition-all
