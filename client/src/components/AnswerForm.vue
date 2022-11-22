@@ -11,7 +11,7 @@
 
                             <div class="field mt-5">
                                 <div>
-                                    <label class="block font-semibold mb-2 text-sm" for="body">Add an answer</label>
+                                    <label class="block font-semibold mb-2 text-sm" for="body">{{ label ?? "Add an answer" }}</label>
                                     <editor :init="init" v-model="newModel.answer" />
                                 </div>
                             </div>
@@ -72,6 +72,9 @@ export default {
         cancelAnswer: null
     },
     props: {
+        label: {
+            default: "Add an answer"
+        },
         model: Object,
         parentId: String,
         parentType: String

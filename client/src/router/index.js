@@ -34,6 +34,7 @@ import EditPostView from "@/views/admin/post/EditView.vue";
 import PostView from "@/views/admin/post/View.vue";
 
 import AdminNewAnswerView from "@/views/admin/answer/NewView.vue";
+import AdminEditAnswerView from "@/views/admin/answer/EditView.vue";
 import AnswerView from "@/views/admin/answer/View.vue";
 import AnswerOfView from "@/views/admin/answer/ViewOf.vue";
 
@@ -293,6 +294,11 @@ const router = createRouter({
           path: "answers/new",
           name: "answer-new",
           component: AdminNewAnswerView,
+        },
+        {
+          path: "answers/:id/edit",
+          name: "answer-edit",
+          component: AdminEditAnswerView,
         },
         {
           path: "answers/:postId",

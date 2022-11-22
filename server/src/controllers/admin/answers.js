@@ -28,3 +28,10 @@ exports.delete = async function (req, res) {
     res.json({ message: 'Item successfully deleted' });
   });
 };
+
+exports.read = function (req, res) {
+  Answer.findById(req.params.id, function (err, item) {
+    if (err) return response.sendNotFound(res);
+    res.json(item);
+  });
+};
