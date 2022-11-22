@@ -19,10 +19,11 @@ import moment from 'moment';
                                 </h2>
                                 <span
                                     class="inline-flex ml-4 items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-indigo-600 rounded-full">{{
-                                    fields.length }}</span>
+                                            fields.length
+                                    }}</span>
                             </div>
 
-                            <router-link :to="{name: 'field-new'}"
+                            <router-link :to="{ name: 'field-new' }"
                                 class="inline-flex justify-center py-2 px-8 rounded-full border border-transparent shadow-sm text-sm font-black text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 New
                             </router-link>
@@ -53,7 +54,7 @@ import moment from 'moment';
                                                         Created At
                                                     </th>
                                                     <th scope="col"
-                                                        class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                                        class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                                                         Action
                                                     </th>
                                                 </tr>
@@ -72,18 +73,39 @@ import moment from 'moment';
                                                         </span>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {{moment(new Date( parseInt( field._id.substring(0, 8), 16 ) *
-                                                        1000 )).format('DD/MM/YYYYY')}}
+                                                        {{ moment(new Date(parseInt(field._id.substring(0, 8), 16) *
+                                                                1000)).format('DD/MM/YYYYY')
+                                                        }}
                                                     </td>
                                                     <td
-                                                        class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <router-link :to="{name: 'field-edit', params: {id: field._id}}"
-                                                            class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</router-link>
+                                                        class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                                        <router-link
+                                                            :to="{ name: 'field-edit', params: { id: field._id } }">
 
-                                                        <button class="text-red-600 hover:text-red-900" type="button"
-                                                            @click="deleteModel(field._id)">
-                                                            Delete
+                                                            <button
+                                                                class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
+                                                                type="button">
+
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    viewBox="0 0 24 24" style="width: 1rem;">
+                                                                    <path fill="none" d="M0 0h24v24H0z" />
+                                                                    <path fill="currentColor"
+                                                                        d="M15.728 9.686l-1.414-1.414L5 17.586V19h1.414l9.314-9.314zm1.414-1.414l1.414-1.414-1.414-1.414-1.414 1.414 1.414 1.414zM7.242 21H3v-4.243L16.435 3.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 21z" />
+                                                                </svg>
+
+                                                            </button>
+                                                        </router-link>
+
+                                                        <button
+                                                            class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
+                                                            type="button" @click="deleteModel(field._id)">
+                                                            <svg viewBox="0 0 448 512" style="width: 1em;">
+                                                                <path fill="currentColor"
+                                                                    d="M296 432h16a8 8 0 0 0 8-8V152a8 8 0 0 0-8-8h-16a8 8 0 0 0-8 8v272a8 8 0 0 0 8 8zm-160 0h16a8 8 0 0 0 8-8V152a8 8 0 0 0-8-8h-16a8 8 0 0 0-8 8v272a8 8 0 0 0 8 8zM440 64H336l-33.6-44.8A48 48 0 0 0 264 0h-80a48 48 0 0 0-38.4 19.2L112 64H8a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h24v368a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V96h24a8 8 0 0 0 8-8V72a8 8 0 0 0-8-8zM171.2 38.4A16.1 16.1 0 0 1 184 32h80a16.1 16.1 0 0 1 12.8 6.4L296 64H152zM384 464a16 16 0 0 1-16 16H80a16 16 0 0 1-16-16V96h320zm-168-32h16a8 8 0 0 0 8-8V152a8 8 0 0 0-8-8h-16a8 8 0 0 0-8 8v272a8 8 0 0 0 8 8z">
+                                                                </path>
+                                                            </svg>
                                                         </button>
+
                                                     </td>
                                                 </tr>
                                                 <!-- More people... -->
