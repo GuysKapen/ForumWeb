@@ -1,5 +1,5 @@
 <template>
-  <div class="w-3/12 pr-8">
+  <div class="w-1/5 flex-shrink-0 pr-8">
     <div
       class="
         overflow-hidden
