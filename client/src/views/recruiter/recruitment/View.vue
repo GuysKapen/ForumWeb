@@ -256,10 +256,13 @@ import moment from "moment";
                               font-medium
                             "
                           >
-                            <a
-                              href="{{ route('admin.language.edit', company._id) }}"
+                          <router-link
+                              :to="{
+                                name: 'recruiter-recruitment-edit',
+                                params: { id: recruitment._id },
+                              }"
                               class="text-indigo-600 hover:text-indigo-900 mx-2"
-                              >Edit</a
+                              >Edit</router-link
                             >
 
                             <button

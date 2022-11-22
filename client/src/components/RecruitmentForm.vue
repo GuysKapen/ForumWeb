@@ -10,13 +10,13 @@
         <div class="mt-8">
 
             <div>
-                <form enctype="multipart/form-data" @submit.prevent="add()">
+                <form enctype="multipart/form-data" @submit.prevent="submit">
 
                     <div class="mb-4 px-2 w-full">
                         <div class="field">
                             <div class="control">
                                 <label class="block font-semibold text-sm" for="name">Recruitment name</label>
-                                <input id="name" name="name" v-model="name"
+                                <input id="name" name="name" v-model="newModel.name"
                                     class="string w-full px-4 py-3 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
                                     type="text" autofocus placeholder="Recruitment name..." />
                             </div>
@@ -28,14 +28,14 @@
                             <div class="field">
                                 <div class="control">
                                     <label class="block font-semibold text-sm" for="name">Start date</label>
-                                    <datepicker v-model="startDate" name="start-date" class="my-2"></datepicker>
+                                    <datepicker v-model="newModel.startDate" name="start-date" class="my-2"></datepicker>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <div class="control">
                                     <label class="block font-semibold text-sm" for="name">End date</label>
-                                    <datepicker v-model="endDate" name="end-date" class="my-2"></datepicker>
+                                    <datepicker v-model="newModel.endDate" name="end-date" class="my-2"></datepicker>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                                 <div class="my-2">
 
                                     <div class="relative flex w-full">
-                                        <select v-model="selectedCompanyId" id="select-company" name="company"
+                                        <select v-model="newModel.company" id="select-company" name="company"
                                             placeholder="Select company..." autocomplete="off"
                                             class="block w-full rounded-sm cursor-pointer focus:outline-none">
                                             <option v-for="(model, idx) in companies" :key="idx" :value="model._id">
@@ -68,7 +68,7 @@
                                 <div class="my-2">
 
                                     <div class="relative flex w-full">
-                                        <select v-model="selectedFieldIds" id="select-field" name="field" multiple
+                                        <select v-model="newModel.fields" id="select-field" name="field" multiple
                                             placeholder="Select fields..." autocomplete="off"
                                             class="block w-full rounded-sm cursor-pointer focus:outline-none">
                                             <option v-for="(model, idx) in fields" :key="idx" :value="model._id">
@@ -88,7 +88,7 @@
                                 <div class="my-2">
 
                                     <div class="relative flex w-full">
-                                        <select v-model="selectedSkillIds" id="select-skills" name="skill"
+                                        <select v-model="newModel.skills" id="select-skills" name="skill"
                                             placeholder="Select skills..." autocomplete="off" multiple
                                             class="block w-full rounded-sm cursor-pointer focus:outline-none">
                                             <option v-for="(model, idx) in skills" :key="idx" :value="model._id">
@@ -106,7 +106,7 @@
                             <div>
                                 <label class="block font-semibold mb-2 text-sm" for="body">Content</label>
 
-                                <editor :init="init" v-model="content" />
+                                <editor :init="init" v-model="newModel.content" />
                             </div>
                         </div>
 
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="flex items-center mt-4" v-if="selectedFile != null">
                                     <span class="material-icons text-sm">description</span>
-                                    <p class="text-xs text-gray-500 ml-3">{{this.selectedFile.name}}</p>
+                                    <p class="text-xs text-gray-500 ml-3">{{ this.selectedFile.name }}</p>
                                 </div>
                             </div>
                         </div>
@@ -191,11 +191,20 @@ import TomSelect from 'tom-select'
 
 import axios from 'axios'
 import { useAuthStore } from '../stores/auth/auth'
+import { createToast } from 'mosha-vue-toastify'
 
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export default {
+    props: {
+        model: Object,
+    },
+    emits: {
+        updated: null,
+        added: null,
+        cancel: null
+    },
     mounted() {
         axios.get(`${serverUrl}/companies`).then(res => {
             this.companies = res.data;
@@ -217,9 +226,29 @@ export default {
             },
         }
     },
-    data: () => ({
-        name: "", content: "", startDate: new Date(), endDate: new Date(), companies: [], selectedCompanyId: null, fields: [], selectedFieldIds: [], skills: [], selectedSkillIds: [], selectedFile: null, file: null
-    }),
+    data: function () {
+        return {
+            freshData: {
+                name: "",
+                content: "",
+                startDate: new Date(),
+                endDate: new Date(),
+                company: null,
+                fields: [],
+                skills: [],
+                file: null
+            },
+            companies: [],
+            fields: [],
+            skills: [],
+            selectedFile: null,
+        }
+    },
+    computed: {
+        newModel() {
+            return this.model ?? this.freshData
+        }
+    },
     components: {
         Datepicker, Editor
     },
@@ -247,26 +276,19 @@ export default {
         }
     },
     methods: {
-        async add() {
-            const authStore = useAuthStore();
-
-            this.error = "";
-            if (!this.name) {
-                this.error = "Please enter name";
-                return;
+        async submit() {
+            const newModel = this.newModel
+            if (newModel._id) {
+                this.update(newModel._id, newModel)
+            } else {
+                this.add(newModel)
             }
-            const newModel = {
-                name: this.name,
-                content: this.content,
-                startDate: this.startDate,
-                endDate: this.endDate,
-                company: this.selectedCompanyId,
-                fields: this.selectedFieldIds,
-                skills: this.selectedSkillIds
-            };
 
+        },
+
+        async add(newModel) {
+            const authStore = useAuthStore();
             try {
-
                 let res;
                 if (this.selectedFile != null) {
                     const form = new FormData();
@@ -278,10 +300,9 @@ export default {
                             'x-access-token': authStore.token,
                         }
                     })
-                    this.file = res.data.data.name
+                    newModel.file = res.data.data.name
                 }
 
-                newModel.file = this.file;
                 axios
                     .post(`${serverUrl}/users/${authStore.user._id}/recruitments`, newModel, {
                         headers: {
@@ -291,7 +312,40 @@ export default {
                         },
                     })
                     .then((res) => {
-                          this.$router.push({name: "recruitment-index"})
+                        this.$emit("added", res.data)
+                    });
+            } catch (error) {
+                console.error("Add recruitment", error);
+            }
+        },
+
+        async update(id, newModel) {
+            const authStore = useAuthStore();
+            try {
+                let res;
+                if (this.selectedFile != null) {
+                    const form = new FormData();
+                    form.append('file', this.selectedFile);
+                    res = await axios.post(`${serverUrl}/users/${authStore.user._id}/uploads/file`, form, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${authStore.token}`,
+                            'x-access-token': authStore.token,
+                        }
+                    })
+                    newModel.file = res.data.data.name
+                }
+
+                axios
+                    .put(`${serverUrl}/users/${authStore.user._id}/recruitments/${id}`, newModel, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${authStore.token}`,
+                            "x-access-token": authStore.token,
+                        },
+                    })
+                    .then((res) => {
+                        this.$emit("updated", res.data)
                     });
             } catch (error) {
                 console.error("Add recruitment", error);

@@ -45,7 +45,7 @@ import RecruiterEditPostView from "@/views/recruiter/post/EditView.vue";
 import RecruiterPostView from "@/views/recruiter/post/View.vue";
 
 import RecruiterNewRecruitmentView from "@/views/recruiter/recruitment/NewView.vue";
-import EditRecruitmentView from "@/views/recruiter/recruitment/EditView.vue";
+import RecruiterEditRecruitmentView from "@/views/recruiter/recruitment/EditView.vue";
 import RecruiterRecruitmentView from "@/views/recruiter/recruitment/View.vue";
 
 import RecruiterView from "@/views/recruiter/View.vue";
@@ -258,11 +258,6 @@ const router = createRouter({
           component: NewRecruitmentView,
         },
         {
-          path: "recruitments/:id/edit",
-          name: "recruitment-edit",
-          component: EditRecruitmentView,
-        },
-        {
           path: "recruitment/:refId",
           name: "applies-of-recruitment",
           component: ApplyOfView,
@@ -329,6 +324,11 @@ const router = createRouter({
           path: "recruitments/new",
           name: "recruiter-recruitment-new",
           component: RecruiterNewRecruitmentView,
+        },
+        {
+          path: "recruitments/:id/edit",
+          name: "recruiter-recruitment-edit",
+          component: RecruiterEditRecruitmentView,
         },
         {
           path: "applies",
