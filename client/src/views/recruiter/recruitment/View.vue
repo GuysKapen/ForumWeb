@@ -320,7 +320,7 @@ export default {
       showConfirmPopup(function () {
         const authStore = useAuthStore();
         axios
-          .delete(`${serverUrl}/recruitments/${id}`, {
+          .delete(`${serverUrl}/users/${authStore.user._id}/recruitments/${id}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${authStore.token}`,
