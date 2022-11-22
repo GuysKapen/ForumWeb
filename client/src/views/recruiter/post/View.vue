@@ -5,12 +5,12 @@ import moment from "moment";
 </script>
     
 <template>
-  <div class="flex-grow w-8/12 p-4 space-y-4">
+  <div class="flex-grow p-4 space-y-4">
     <div class="container-fluid">
       <!-- Exportable Table -->
       <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="card m-8 shadow-lg rounded-md px-8 pb-8">
+          <div class="card mt-8 shadow-lg rounded-md p-8">
             <div class="flex justify-between">
               <div class="flex items-center">
                 <h2 class="
