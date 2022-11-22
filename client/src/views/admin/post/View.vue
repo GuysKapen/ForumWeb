@@ -5,13 +5,13 @@ import moment from 'moment';
 </script>
     
 <template>
-    <div class="flex-grow w-8/12 p-4 space-y-4">
+    <div class="flex-grow p-4 space-y-4">
 
         <div class="container-fluid">
             <!-- Exportable Table -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card m-8 shadow-lg rounded-md px-8 pb-8">
+                    <div class="card mt-8 shadow-lg rounded-md p-8">
                         <div class="flex justify-between">
                             <div class="flex items-center">
                                 <h2 class="text-xl font-bold leading-7 text-gray-900 sm:text-2xl sm:truncate">
@@ -94,6 +94,23 @@ import moment from 'moment';
                                                     </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium my-auto h-full">
+                                                        <router-link
+                                                            :to="{ name: 'post-edit', params: { id: post._id } }">
+
+                                                            <button
+                                                                class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
+                                                                type="button">
+                                                            
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                    viewBox="0 0 24 24" style="width: 1rem;">
+                                                                    <path fill="none" d="M0 0h24v24H0z" />
+                                                                    <path fill="currentColor"
+                                                                        d="M15.728 9.686l-1.414-1.414L5 17.586V19h1.414l9.314-9.314zm1.414-1.414l1.414-1.414-1.414-1.414-1.414 1.414 1.414 1.414zM7.242 21H3v-4.243L16.435 3.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 21z" />
+                                                                </svg>
+
+                                                            </button>
+                                                        </router-link>
+
                                                         <button
                                                             class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
                                                             type="button" @click="approveModel(post._id)">

@@ -14,6 +14,7 @@ routes.route('/:id/approve')
   .put(posts.approve)
 
 routes.route('/:id')
+  .get(posts.read)
   .delete(posts.delete)
 
 module.exports = routes;

@@ -29,6 +29,7 @@ import RecruitmentView from "@/views/admin/recruitment/View.vue";
 import ApplyOfView from "@/views/admin/recruitment/ViewOf.vue";
 
 import AdminNewPostView from "@/views/admin/post/NewView.vue";
+import EditPostView from "@/views/admin/post/EditView.vue";
 import PostView from "@/views/admin/post/View.vue";
 
 import AdminNewAnswerView from "@/views/admin/answer/NewView.vue";
@@ -271,6 +272,11 @@ const router = createRouter({
           path: "posts/new",
           name: "post-new",
           component: AdminNewPostView,
+        },
+        {
+          path: "posts/:id/edit",
+          name: "post-edit",
+          component: EditPostView,
         },
         {
           path: "answers",

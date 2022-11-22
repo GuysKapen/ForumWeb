@@ -41,7 +41,7 @@
                             <select v-model="newModel.category" id="select-category" name="category"
                                 placeholder="Select categories..." autocomplete="off"
                                 class="block w-full rounded-sm cursor-pointer focus:outline-none">
-                                <option v-for="(category, idx) in categories" :key="idx" :value="category._id">
+                                <option selected v-for="(category, idx) in categories" :key="idx" :value="category._id">
                                     {{ category.name }}</option>
                             </select>
                         </div>
