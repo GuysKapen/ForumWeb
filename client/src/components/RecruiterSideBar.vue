@@ -1,5 +1,5 @@
 <template>
-  <div class="w-3/12 pr-8">
+  <div class="w-1/5 flex-shrink-0 pr-8">
     <div
       class="
         overflow-hidden
@@ -134,7 +134,7 @@
               </div>
 
               <div class="ml-3 text-sm">
-                <p class="text-gray-500">Posts</p>
+                <p class="text-gray-500">Questions</p>
               </div>
             </router-link>
           </div>
