@@ -80,7 +80,7 @@
           >
             <div class="flex-shrink-0 flex items-center w-1/6">
               <div class="relative font-black text-xl w-1/4 mr-auto">
-                <a href="" class="text-gray-800">Forum</a>
+                <router-link to="/" class="text-gray-800">Forum</router-link>
               </div>
             </div>
             <div
@@ -153,9 +153,9 @@
                 <router-link
                   :class="{
                     'border-b-2 border-indigo-600':
-                      routePath === '/',
+                      routePath === '/chat',
                   }"
-                  to="/"
+                  to="/chat"
                   class="
                     inline-block
                     py-4
@@ -166,7 +166,7 @@
                     rounded-t-lg
                   "
                   aria-current="page"
-                  >Home</router-link
+                  >Chat</router-link
                 >
 
                 <router-link
