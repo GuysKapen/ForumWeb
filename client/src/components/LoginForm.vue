@@ -132,6 +132,7 @@ import { images } from "../constants";
 <script>
 import { mapActions, mapState } from "pinia";
 import { useAuthStore } from "@/stores/auth/auth";
+import { createToast } from 'mosha-vue-toastify';
 export default {
     data: () => ({
         email: "",
@@ -153,8 +154,10 @@ export default {
                     email: this.email,
                     password: this.password,
                 });
+                createToast(`Welcome back ${this.user.name}`, { type: "success" })
                 this.$router.push("/");
             } catch (error) {
+                createToast("Error when trying to login. Please try again", { type: "danger" })
                 this.error = error;
             }
         },
