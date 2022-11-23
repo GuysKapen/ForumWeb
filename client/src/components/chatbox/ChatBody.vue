@@ -12,7 +12,8 @@
           <template v-for="(event, idx) in events">
             <ChatboxUserMessage v-if="event['event'] === 'user'" :message="event['text']" :key="idx" />
 
-            <ChatboxBotResponse v-if="event['event'] === 'bot'" :message="event['text']" :custom="event?.['data']?.['custom']" :key="idx" />
+            <ChatboxBotResponse v-if="event['event'] === 'bot'" :message="event['text']"
+              :custom="event['data'] && event['data']['custom']" :key="idx" />
           </template>
         </div>
       </div>
@@ -165,11 +166,10 @@ export default {
         url: "http://localhost:5005/webhooks/rest/webhook",
         data: data,
         success: function (response) {
-          console.log("res", response);
           for (const utter of response) {
             self.events = [
               ...self.events,
-              { event: "bot", text: utter["text"] },
+              { event: "bot", text: utter["text"], data: { custom: utter['custom'] } },
             ];
           }
         },
