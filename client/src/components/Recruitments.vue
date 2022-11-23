@@ -1,17 +1,9 @@
 <template>
   <div class="w-6/12 py-8 px-6">
-    <div
-      class="bg-white flex justify-between items-center px-4 py-2 rounded-xl"
-    >
+    <div class="bg-white flex justify-between items-center px-4 py-2 rounded-xl">
       <p class="text-gray-400 text-sm">Add new</p>
-      <router-link
-        tag="div"
-        class-active="active"
-        to="/admin/recruitment/new"
-        exact
-      >
-        <button
-          class="
+      <router-link tag="div" class-active="active" :to="{ name: 'recruiter-recruitment-new' }" exact>
+        <button class="
             bg-indigo-600
             flex
             items-center
@@ -20,18 +12,13 @@
             justify-center
             p-1
             rounded-xl
-          "
-        >
+          ">
           <span class="material-icons text-white text-sm">add</span>
         </button>
       </router-link>
     </div>
     <div class="space-y-6 mt-6">
-      <RecruitmentItem
-        v-for="(recruitment, idx) in recruitments"
-        :key="idx"
-        :recruitment="recruitment"
-      />
+      <RecruitmentItem v-for="(recruitment, idx) in recruitments" :key="idx" :recruitment="recruitment" />
     </div>
     <div v-if="pagesInfo" class="flex justify-end">
       <Pagination :options="pagesInfo" @onPageChanged="update" />
@@ -111,4 +98,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>
