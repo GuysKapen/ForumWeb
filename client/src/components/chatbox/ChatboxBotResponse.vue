@@ -1,8 +1,7 @@
 <template>
-  <div role="button" tabindex="0" data-e2e="EventContainer-user-1657235215.777" id=""
-    class="mt-4 px-6 py-2 border-transparent border-2">
-    <div class="m-0 flex flex-row items-center">
-      <div class="flex flex-shrink-0 m-0">
+  <div class="mt-4 px-6 py-2 border-transparent border-2">
+    <div class="m-0 flex flex-row items-end">
+      <div class="flex flex-shrink-0 m-0 max-w-[75%]">
         <div class="
             w-8
             h-8
@@ -25,22 +24,42 @@
       </div>
 
       <div>
-        <div class="css-463jce"></div>
         <div class="mx-2 flex justify-end">
-          <div style="max-width: 240px" class="m-0 flex flex-col" aria-describedby="tooltip-2">
-            <div data-qa="conversation-message-bubbles_div" class="
+          <div class="m-0 flex flex-col">
+            <div class="
                 m-0
-                bg-slate-100
                 text-gray-800
                 px-4
                 py-2
+                bg-slate-100
                 align-self-end
                 text-sm
                 rounded-tl-md rounded-bl-2xl rounded-br-2xl rounded-tr-2xl
                 relative
               " style="min-height: 2rem; min-width: 3rem">
               <div class="text-xs" :class="elClass" style="font-family: Noto Sans; top: 50%">
-                <template v-if="custom">
+                <template v-if="custom && custom['table']">
+                  <p class="text-sm my-3" v-if="custom['text']">{{ custom['text'] }}</p>
+                  <table class="min-w-full divide-y divide-gray-200 shadow-md rounded-lg">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th scope="col" v-for="(header, idx) in custom['table']['headers']" :key="idx"
+                          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          {{ header['data'] }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                      <tr v-for="(cells, idx) in custom['table']['rows']" :key="idx">
+                        <td class="text-sm text-gray-900 px-6 py-4" v-for="(data, idx) in cells" :key="idx">{{
+                            data.value
+                        }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </template>
+                <template v-else-if="custom && custom['html']">
                   <div class="prose text-xs" v-html="custom['html']">
                   </div>
                 </template>
