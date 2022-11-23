@@ -105,7 +105,7 @@
               <div class="block space-x-4 w-max mx-auto">
                 <router-link :class="{
                   'border-b-2 border-indigo-600':
-                    routePath === '/chat',
+                    routePath === '/',
                 }" to="/" class="
                     inline-block
                     py-4
