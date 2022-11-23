@@ -80,7 +80,7 @@ import { truncate } from '@/utils/utils';
                     </div>
                     <div class="mt-4">
                         <p class="text-gray-800 text-sm font-semibold text-center">Conversation between</p>
-                        <p class="text-gray-800 text-sm font-semibold text-center">Demobot and Anonymous user</p>
+                        <p class="text-gray-800 text-sm font-semibold text-center">Demobot and {{ user.name }} user</p>
                     </div>
                     <div class="mt-8 px-4 w-full border-b">
                         <h4 class="font-normal text-base text-gray-400">Actions</h4>
@@ -158,6 +158,7 @@ import Nav from '../components/Nav.vue'
 import { useAuthStore } from '@/stores/auth/auth'
 import { v4 as uuidv4 } from 'uuid';
 import { createToast } from 'mosha-vue-toastify';
+import { mapState } from "pinia";
 import axios from 'axios';
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 export default {
@@ -229,6 +230,9 @@ export default {
                 }
             }
         }
+    },
+    computed: {
+        ...mapState(useAuthStore, ['user']),
     }
 }
 
