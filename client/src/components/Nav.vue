@@ -303,8 +303,22 @@
             </div>
           </div>
           <div v-else>
+            <router-link :to="{ name: 'register' }">
+              <button class="
+                  px-8
+                  py-3
+                  bg-indigo-600
+                  hover:bg-indigo-800
+                  rounded-full
+                  text-xs text-white
+                  font-black
+                ">
+                Register
+              </button>
+            </router-link>
             <router-link :to="{ name: 'login' }">
               <button class="
+                  ml-4
                   px-8
                   py-3
                   bg-indigo-600
