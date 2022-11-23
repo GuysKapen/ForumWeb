@@ -2,7 +2,7 @@
   <div class="w-6/12 py-8 px-6">
     <div class="bg-white flex justify-between items-center px-4 py-2 rounded-xl">
       <p class="text-gray-400 text-sm">Add new</p>
-      <router-link tag="div" class-active="active" :to="{ name: 'recruiter-recruitment-new' }" exact>
+      <router-link v-if="isRecruiter" tag="div" class-active="active" :to="{ name: 'recruiter-recruitment-new' }" exact>
         <button class="
             bg-indigo-600
             flex
@@ -29,7 +29,7 @@
 <script>
 import { usePostStore } from "@/stores/posts/posts";
 import { mapState, mapActions } from "pinia";
-
+import { useAuthStore } from "@/stores/auth/auth";
 import RecruitmentItem from "@/components/RecruitmentItem.vue";
 import axios from "axios";
 import Pagination from "./Pagination.vue";
@@ -91,6 +91,19 @@ export default {
         this.recruitments = docs;
         this.pagesInfo = pagesInfo;
       }
+    },
+  },
+  computed: {
+    isRecruiter() {
+      const authStore = useAuthStore();
+      if (
+        authStore.token == null ||
+        authStore.user == null ||
+        (authStore.user.role !== "recruiter" && authStore.user.role !== "admin")
+      ) {
+        return false;
+      }
+      return true;
     },
   },
   components: { RecruitmentItem, Pagination },
