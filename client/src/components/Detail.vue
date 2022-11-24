@@ -104,6 +104,7 @@ export default {
     },
     addedAnswer(answer) {
       this.post.answers.push(answer);
+      this.addingAnswer = false;
     },
   },
 };
