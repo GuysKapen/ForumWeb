@@ -14,7 +14,25 @@ const CompanySchema = new Schema({
     slug: {
         type: String,
         required: true
-    }
+    },
+    status: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+    },
+    country: {
+        type: String,
+    },
+    zipcode: {
+        type: String,
+    },
 });
 
 CompanySchema.pre('validate', function (next) {

@@ -3,6 +3,8 @@ import response from '../helpers/response';
 import request from '../helpers/request';
 import pagination from '../helpers/pagination';
 
+import _ from "underscore";
+
 const Company = mongoose.model('Company');
 
 exports.list = function (req, res) {
@@ -16,7 +18,7 @@ exports.list = function (req, res) {
 };
 
 exports.create = function (req, res) {
-  const item = new Company(req.body);
+  const item = new Company(company(req, true));
   item.save(function (err, item) {
     if (err) return response.sendBadRequest(res, err);
     response.sendCreated(res, item);
@@ -31,7 +33,7 @@ exports.read = function (req, res) {
 };
 
 exports.update = function (req, res) {
-  Company.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, function (err, item) {
+  Company.findOneAndUpdate({ _id: req.params.id }, company(req), { new: true }, function (err, item) {
     if (err) return response.sendBadRequest(res, err);
     res.json(item);
   });
@@ -45,3 +47,15 @@ exports.delete = function (req, res) {
     res.json({ message: 'Item successfully deleted' });
   });
 };
+
+exports.request = function (req, res) {
+  const item = new Company(company(req));
+  item.save(function (err, item) {
+    if (err) return response.sendBadRequest(res, err);
+    response.sendCreated(res, item);
+  });
+};
+
+function company(req, status = false) {
+  return Object.assign(_.pick(req.body, "name", "address", "city", "zipcode", "state", "country"), { status: status });
+}
