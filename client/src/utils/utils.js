@@ -1,5 +1,6 @@
 import jBox from 'jbox';
-export const imgUrlFor = (url, imagePath) => {
+export const imgUrlFor = function (url, imagePath, holder = null) {
+    if (!url || !imagePath) return holder;
     return `${url}/${imagePath}`
 }
 

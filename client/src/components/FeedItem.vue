@@ -1,5 +1,6 @@
 <script setup>
 import { imgUrlFor } from "../utils/utils";
+import { images } from '../constants';
 </script>
 <template>
   <div class="bg-white px-8 pt-8 py-16 rounded-xl relative">
@@ -113,7 +114,8 @@ import { imgUrlFor } from "../utils/utils";
         </div>
       </div>
       <div class="absolute right-0 w-32">
-        <div
+
+        <div v-for="(comment, idx) in post.comments" :key="idx"
           class="
             bg-white
             p-[0.125rem]
@@ -126,52 +128,13 @@ import { imgUrlFor } from "../utils/utils";
           "
         >
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQopEztCTlDuKPFkQVgFBKsJuxp8Ogd-RI1nA&usqp=CAU"
+            :src="imgUrlFor(serverUrl, comment.owner?.profile?.cover, images.avatar)"
             alt="profile"
             class="w-full h-full rounded-lg flex-shrink-0 object-cover"
           />
         </div>
-
-        <div
-          class="
-            bg-white
-            p-[0.125rem]
-            absolute
-            top-4
-            left-6
-            w-10
-            h-10
-            rounded-lg
-          "
-        >
-          <img
-            src="https://www.worldphoto.org/sites/default/files/139813_158163_0_%20%C2%A9%20Noel%20Guevara%2C%20Philippines%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg"
-            alt="profile"
-            class="w-full h-full rounded-lg flex-shrink-0 object-cover"
-          />
-        </div>
-
-        <div
-          class="
-            bg-white
-            p-[0.125rem]
-            absolute
-            -top-2
-            left-12
-            w-10
-            h-10
-            rounded-lg
-            z-20
-          "
-        >
-          <img
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fHBvcnRyYWl0fGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-            alt="profile"
-            class="w-full h-full rounded-lg flex-shrink-0 object-cover"
-          />
-        </div>
-
-        <div
+   
+        <div v-if="post.comments.length > 3"
           class="
             bg-white
             p-[0.125rem]
