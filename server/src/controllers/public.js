@@ -149,6 +149,15 @@ exports.posts = async function (req, res) {
           },
         },
         {
+          path: "answers",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
+        },
+        {
           path: "owner",
           populate: {
             path: "profile",

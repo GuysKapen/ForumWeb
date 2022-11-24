@@ -98,7 +98,7 @@ import moment from "moment";
       </div>
       <div class="absolute right-0 w-32">
 
-        <div v-for="(comment, idx) in post.comments" :key="idx" class="
+        <div v-for="(comment, idx) in post.answers" :key="idx" class="
             bg-white
             p-[0.125rem]
             absolute
@@ -112,7 +112,7 @@ import moment from "moment";
             class="w-full h-full rounded-lg flex-shrink-0 object-cover" />
         </div>
 
-        <div v-if="post.comments.length > 3" class="
+        <div v-if="post.answers.length > 3" class="
             bg-white
             p-[0.125rem]
             absolute
