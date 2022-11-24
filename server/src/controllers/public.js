@@ -248,6 +248,15 @@ exports.recruitments = async function (req, res) {
             path: "profile",
           },
         },
+        {
+          path: "applies",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
+        },
       ],
     },
     function (err, docs) {
