@@ -1,6 +1,7 @@
 <script setup>
 import { imgUrlFor } from "../utils/utils";
 import CommentItem from "@/components/CommentItem.vue";
+import moment from "moment";
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
 <template>
@@ -27,8 +28,12 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
         </div>
 
         <div class="ml-3 text-sm">
-          <p class="text-gray-500">Elisabeth May</p>
-          <span class="text-gray-300 text-sm">6 days ago</span>
+          <p class="text-gray-500">{{ recruitment.owner.name }}</p>
+          <span class="text-gray-300 text-sm">{{
+              moment(
+                new Date(parseInt(recruitment._id.substring(0, 8), 16) * 1000)
+              ).fromNow()
+          }}</span>
         </div>
       </div>
       <div class="

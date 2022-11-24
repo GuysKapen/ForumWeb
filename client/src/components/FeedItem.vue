@@ -1,24 +1,18 @@
 <script setup>
 import { imgUrlFor } from "../utils/utils";
 import { images } from '../constants';
+import moment from "moment";
 </script>
 <template>
   <div class="bg-white px-8 pt-8 py-16 rounded-xl relative">
-    <router-link
-      tag="div"
-      class="hover:text-indigo-600"
-      class-active="active"
-      :to="`/posts/${post._id}`"
-      exact
-    >
+    <router-link tag="div" class="hover:text-indigo-600" class-active="active" :to="`/posts/${post._id}`" exact>
       <h3 class="text-gray-800 hover:text-indigo-600 font-black text-xl">
         {{ post.title }}
       </h3>
     </router-link>
     <div class="flex items-center justify-between mt-4">
       <div class="flex items-center">
-        <div
-          class="
+        <div class="
             bg-gray-100
             rounded-lg
             flex
@@ -26,22 +20,21 @@ import { images } from '../constants';
             justify-center
             flex-shrink-0
             border border-gray-100
-          "
-        >
-          <img
-            :src="imgUrlFor(serverUrl, post.owner?.profile?.cover)"
-            alt="profile"
-            class="w-8 h-8 rounded-lg flex-shrink-0 object-cover"
-          />
+          ">
+          <img :src="imgUrlFor(serverUrl, post.owner?.profile?.cover)" alt="profile"
+            class="w-8 h-8 rounded-lg flex-shrink-0 object-cover" />
         </div>
 
         <div class="ml-3 text-sm">
-          <p class="text-gray-500">Elisabeth May</p>
-          <span class="text-gray-300 text-sm">6 days ago</span>
+          <p class="text-gray-500">{{ post.owner.name }}</p>
+          <span class="text-gray-300 text-sm">{{
+              moment(
+                new Date(parseInt(post._id.substring(0, 8), 16) * 1000)
+              ).fromNow()
+          }}</span>
         </div>
       </div>
-      <div
-        class="
+      <div class="
           bg-indigo-100
           rounded-xl
           flex
@@ -52,10 +45,9 @@ import { images } from '../constants';
           py-1
           flex-shrink-0
           border border-indigo-200
-        "
-      >
+        ">
         <span class="text-xs text-indigo-600">{{
-          post.category ? post.category.name : "Uncategoried"
+            post.category ? post.category.name : "Uncategoried"
         }}</span>
       </div>
     </div>
@@ -65,10 +57,7 @@ import { images } from '../constants';
     <div class="flex justify-between mt-4">
       <div class="flex">
         <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
-          <button
-            @click="addToSave"
-            type="button"
-            class="
+          <button @click="addToSave" type="button" class="
               flex
               items-center
               text-gray-400
@@ -77,10 +66,8 @@ import { images } from '../constants';
               h-8
               justify-center
               relative
-            "
-          >
-            <span
-              class="
+            ">
+            <span class="
                 w-[6px]
                 h-[6px]
                 rounded-full
@@ -88,16 +75,13 @@ import { images } from '../constants';
                 absolute
                 top-[-0.125rem]
                 right-[-0.125rem]
-              "
-            ></span>
+              "></span>
             <span class="material-icons text-base relative"> bookmark </span>
           </button>
         </div>
 
         <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
-          <button
-            type="button"
-            class="
+          <button type="button" class="
               px-4
               flex
               items-center
@@ -106,8 +90,7 @@ import { images } from '../constants';
               h-8
               justify-center
               relative
-            "
-          >
+            ">
             <span class="material-icons text-base relative mt-1"> chat </span>
             <span class="text-sm ml-4"> Comment </span>
           </button>
@@ -115,8 +98,7 @@ import { images } from '../constants';
       </div>
       <div class="absolute right-0 w-32">
 
-        <div v-for="(comment, idx) in post.comments" :key="idx"
-          class="
+        <div v-for="(comment, idx) in post.comments" :key="idx" class="
             bg-white
             p-[0.125rem]
             absolute
@@ -125,17 +107,12 @@ import { images } from '../constants';
             w-10
             h-10
             rounded-lg
-          "
-        >
-          <img
-            :src="imgUrlFor(serverUrl, comment.owner?.profile?.cover, images.avatar)"
-            alt="profile"
-            class="w-full h-full rounded-lg flex-shrink-0 object-cover"
-          />
+          ">
+          <img :src="imgUrlFor(serverUrl, comment.owner?.profile?.cover, images.avatar)" alt="profile"
+            class="w-full h-full rounded-lg flex-shrink-0 object-cover" />
         </div>
-   
-        <div v-if="post.comments.length > 3"
-          class="
+
+        <div v-if="post.comments.length > 3" class="
             bg-white
             p-[0.125rem]
             absolute
@@ -148,8 +125,7 @@ import { images } from '../constants';
             h-10
             rounded-lg
             z-10
-          "
-        >
+          ">
           <span class="text-gray-300 text-sm">12+</span>
         </div>
       </div>
@@ -203,4 +179,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>
