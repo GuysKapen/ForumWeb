@@ -44,7 +44,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
       </div>
     </div>
     <div class="mt-4">
-      <div class="text-gray-700 text-sm" v-html="post.body"></div>
+      <div class="text-gray-700 text-sm prose" v-html="post.body"></div>
     </div>
     <div class="flex justify-between mt-4">
       <div class="flex">
