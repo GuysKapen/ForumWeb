@@ -71,6 +71,10 @@ const UserSchema = new Schema({
       ref: "Apply",
     },
   ],
+  company: {
+    type: Schema.Types.ObjectId,
+    ref: "Company",
+  },
 });
 
 UserSchema.set("toJSON", {

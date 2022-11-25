@@ -67,9 +67,13 @@ import moment from 'moment';
                                                     <td class="text-sm font-medium text-gray-900 px-6">{{ company.name
                                                     }}</td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span
+                                                        <span v-if="company.status"
                                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                             Active
+                                                        </span>
+                                                        <span v-else
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                            Pending
                                                         </span>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -95,6 +99,16 @@ import moment from 'moment';
 
                                                             </button>
                                                         </router-link>
+
+                                                        <button
+                                                            class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
+                                                            type="button" @click="approveModel(company._id)">
+                                                            <svg viewBox="0 0 512 512" style="width: 1em;">
+                                                                <path fill="currentColor"
+                                                                    d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z">
+                                                                </path>
+                                                            </svg>
+                                                        </button>
 
                                                         <button
                                                             class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
@@ -158,6 +172,22 @@ export default {
                     createToast('Success delete company', { type: 'success' })
                 })
             })
+        },
+        approveModel(id) {
+            const self = this;
+            showConfirmPopup(function () {
+                const authStore = useAuthStore()
+                axios.put(`${serverUrl}/companies/${id}/approve`, { status: true }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${authStore.token}`,
+                        "x-access-token": authStore.token,
+                    },
+                }).then(function () {
+                    self.companies = self.companies.map(item => item._id === id ? Object.assign(item, { status: true }) : item);
+                    createToast('Success approve company', { type: 'success' })
+                })
+            }, "Do you really want to approve?", "Approve")
         }
     }
 }

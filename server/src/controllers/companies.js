@@ -6,6 +6,7 @@ import pagination from '../helpers/pagination';
 import _ from "underscore";
 
 const Company = mongoose.model('Company');
+const User = mongoose.model('User');
 
 exports.list = function (req, res) {
   if (!req.currentUser.canRead(req.locals.user)) return response.sendForbidden(res);
@@ -49,10 +50,27 @@ exports.delete = function (req, res) {
 };
 
 exports.request = function (req, res) {
+  const user = req.locals.user;
   const item = new Company(company(req));
   item.save(function (err, item) {
     if (err) return response.sendBadRequest(res, err);
-    response.sendCreated(res, item);
+    user.company = item._id;
+    user.save(function (err, _) {
+      if (err) return response.sendBadRequest(res, err);
+      response.sendCreated(res, item);
+    });
+  });
+};
+
+exports.approve = function (req, res) {
+  const attrs = { status: true }
+  Company.findOneAndUpdate({ _id: req.params.id }, attrs, function (err, item) {
+    if (err) return response.sendBadRequest(res, err);
+    if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);
+    User.updateMany({ company: new mongoose.mongo.ObjectId(item._id) }, { "role": "recruiter" }, {}, function (err) {
+      if (err) return response.sendBadRequest(res, err);
+      res.json(item);
+    })
   });
 };
 
