@@ -40,7 +40,7 @@ import { truncate } from '@/utils/utils';
                                                     </th>
                                                     <th scope="col"
                                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                        Name
+                                                        Answer
                                                     </th>
                                                     <th scope="col"
                                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -48,7 +48,7 @@ import { truncate } from '@/utils/utils';
                                                     </th>
                                                     <th scope="col"
                                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                        Answer
+                                                        Question
                                                     </th>
                                                     <th scope="col"
                                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap tracking-wider">
@@ -65,9 +65,9 @@ import { truncate } from '@/utils/utils';
                                                 <tr v-for="(answer, idx) in answers" :key="idx">
                                                     <td class="text-sm font-medium text-gray-900 px-6">{{ idx + 1 }}
                                                     </td>
-                                                    <td class="text-sm py-4 font-medium text-gray-900 px-6">{{
-                                                            answer.post.title
-                                                    }}</td>
+                                                    <td class="text-sm py-4 font-medium text-gray-900 px-6">
+                                                        <div v-html="truncate(answer.answer, 160)"></div>
+                                                    </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
                                                         <span v-if="answer.correct"
                                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -78,8 +78,9 @@ import { truncate } from '@/utils/utils';
                                                             Unverified
                                                         </span>
                                                     </td>
-                                                    <td class="text-sm font-medium text-gray-500 px-6 py-4"
-                                                        v-html="truncate(answer.answer, 60)"></td>
+                                                    <td class="text-sm font-medium text-gray-500 px-6 py-4">
+                                                        {{ answer.post.title }}
+                                                    </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {{ moment(new Date(parseInt(answer._id.substring(0, 8), 16) *
                                                                 1000)).format('DD/MM/YYYYY')
@@ -170,7 +171,7 @@ export default {
             const self = this;
             showConfirmPopup(function () {
                 const authStore = useAuthStore()
-                axios.delete(`${serverUrl}/admin/posts/${id}`, {
+                axios.delete(`${serverUrl}/admin/answers/${id}`, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${authStore.token}`,
@@ -186,7 +187,7 @@ export default {
             const self = this;
             showConfirmPopup(function () {
                 const authStore = useAuthStore()
-                axios.put(`${serverUrl}/answers/${id}/approve`, { status: true }, {
+                axios.put(`${serverUrl}/admin/answers/${id}/approve`, { status: true }, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${authStore.token}`,
