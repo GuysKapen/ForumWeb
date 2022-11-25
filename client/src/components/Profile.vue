@@ -672,7 +672,7 @@ export default {
       image: null,
       imgUrlFor: imgUrlFor,
       serverUrl: serverUrl,
-      company: authStore.user?.company
+      company: authStore.user?.company ?? {}
     };
   },
   computed: {
