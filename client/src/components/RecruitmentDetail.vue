@@ -15,9 +15,9 @@ import ModalLogin from "./ModalLogin.vue";
             <p class="text-sm text-gray-600 mr-4">
               <span class="text-gray-800 font-bold"> Job updated: </span>
               {{
-                moment(
-                  new Date(parseInt(recruitment._id.substring(0, 8), 16) * 1000)
-                ).fromNow()
+                  moment(
+                    new Date(parseInt(recruitment._id.substring(0, 8), 16) * 1000)
+                  ).fromNow()
               }}
             </p>
             <p class="text-sm text-gray-600">
@@ -32,8 +32,7 @@ import ModalLogin from "./ModalLogin.vue";
           </h2>
         </div>
         <div class="my-4 flex">
-          <div
-            class="
+          <div class="
               bg-gray-100
               text-gray-800
               font-bold
@@ -44,13 +43,11 @@ import ModalLogin from "./ModalLogin.vue";
               py-0.5
               rounded-lg
               mr-2
-            "
-          >
+            ">
             <span class="material-icons text-xs">category</span>
             <span class="text-[0.65rem] ml-2"> Design </span>
           </div>
-          <div
-            class="
+          <div class="
               bg-gray-100
               text-gray-800
               font-bold
@@ -61,13 +58,11 @@ import ModalLogin from "./ModalLogin.vue";
               py-0.5
               rounded-lg
               mr-2
-            "
-          >
+            ">
             <span class="material-icons text-xs">calendar_today</span>
             <span class="text-[0.65rem] ml-2"> Fulltime </span>
           </div>
-          <div
-            class="
+          <div class="
               bg-gray-100
               text-gray-800
               font-bold
@@ -78,8 +73,7 @@ import ModalLogin from "./ModalLogin.vue";
               py-0.5
               rounded-lg
               mr-2
-            "
-          >
+            ">
             <span class="material-icons text-xs">public</span>
             <span class="text-[0.65rem] ml-2"> Remote </span>
           </div>
@@ -90,8 +84,7 @@ import ModalLogin from "./ModalLogin.vue";
       </div>
 
       <div class="w-4/12 flex-shrink-0 px-4">
-        <div
-          class="
+        <div class="
             bg-gray-100
             rounded-md
             flex-col
@@ -99,13 +92,9 @@ import ModalLogin from "./ModalLogin.vue";
             items-center
             text-center
             p-6
-          "
-          v-if="isAuth"
-        >
+          " v-if="isAuth">
           <p class="text-sm">Sounds like a match?</p>
-          <div
-            @click="toggleApplyForm(true)"
-            class="
+          <div @click="toggleApplyForm(true)" class="
               bg-indigo-700
               hover:bg-indigo-800
               cursor-pointer
@@ -117,12 +106,10 @@ import ModalLogin from "./ModalLogin.vue";
               text-center
               rounded-md
               mt-4
-            "
-          >
+            ">
             Apply Now
           </div>
-          <div
-            class="
+          <div class="
               bg-indigo-200
               text-gray-800
               font-black
@@ -132,15 +119,13 @@ import ModalLogin from "./ModalLogin.vue";
               text-center
               rounded-md
               mt-4
-            "
-          >
+            ">
             Subcribe for updates
           </div>
           <p class="text-sm mt-4">Already applied?</p>
         </div>
 
-        <div
-          class="
+        <div class="
             bg-gray-100
             rounded-md
             flex-col
@@ -148,13 +133,9 @@ import ModalLogin from "./ModalLogin.vue";
             items-center
             text-center
             p-6
-          "
-          v-else
-        >
+          " v-else>
           <p class="text-sm">Sounds like a match?</p>
-          <div
-            @click="this.$emit('authorize')"
-            class="
+          <div @click="this.$emit('authorize')" class="
               bg-indigo-700
               hover:bg-indigo-800
               cursor-pointer
@@ -166,12 +147,10 @@ import ModalLogin from "./ModalLogin.vue";
               text-center
               rounded-md
               mt-4
-            "
-          >
+            ">
             Login to Apply
           </div>
-          <div
-            class="
+          <div class="
               bg-indigo-200
               text-gray-800
               font-black
@@ -181,22 +160,16 @@ import ModalLogin from "./ModalLogin.vue";
               text-center
               rounded-md
               mt-4
-            "
-          >
+            ">
             Subcribe for updates
           </div>
           <p class="text-sm mt-4">
             Don't have an account?
-            <router-link
-              :to="{ name: 'register' }"
-              class="text-indigo-600 hover:text-indigo-800"
-              >Register</router-link
-            >
+            <router-link :to="{ name: 'register' }" class="text-indigo-600 hover:text-indigo-800">Register</router-link>
           </p>
         </div>
 
-        <div
-          class="
+        <div class="
             bg-gray-100
             rounded-md
             flex-col
@@ -205,11 +178,9 @@ import ModalLogin from "./ModalLogin.vue";
             text-center
             p-6
             mt-4
-          "
-        >
+          ">
           <div class="flex items-center">
-            <div
-              class="
+            <div class="
                 bg-gray-100
                 rounded-lg
                 flex
@@ -217,29 +188,22 @@ import ModalLogin from "./ModalLogin.vue";
                 justify-center
                 flex-shrink-0
                 border border-gray-100
-              "
-            >
-              <img
-                :src="imgUrlFor(serverUrl, recruitment.owner.profile.cover)"
-                alt="profile"
-                class="w-8 h-8 rounded-lg flex-shrink-0 object-cover"
-              />
+              ">
+              <img :src="imgUrlFor(serverUrl, recruitment.owner.profile.cover)" alt="profile"
+                class="w-8 h-8 rounded-lg flex-shrink-0 object-cover" />
             </div>
 
             <div class="ml-3 text-sm">
-              <p class="text-gray-800 font-bold">Elisabeth May</p>
+              <p class="text-gray-800 text-left font-bold">{{ user.name }}</p>
               <span class="text-gray-300 text-sm">Contact Person</span>
             </div>
           </div>
           <div class="bg-white rounded-md p-4 text-left mt-4">
             <p class="text-sm">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum quam
-              dignissimos illum iusto praesentium explicabo vitae? Illum in,
-              distinctio, porro quisquam dolores ea quia
+              {{ user.profile?.about }}
             </p>
           </div>
-          <div
-            class="
+          <div class="
               bg-indigo-200
               text-gray-800
               font-black
@@ -249,8 +213,7 @@ import ModalLogin from "./ModalLogin.vue";
               text-center
               rounded-md
               mt-4
-            "
-          >
+            ">
             Drop us a line
           </div>
         </div>
@@ -260,12 +223,7 @@ import ModalLogin from "./ModalLogin.vue";
       </div>
 
       <!-- Main modal Apply -->
-      <div
-        id="authentication-modal"
-        tabindex="-1"
-        aria-hidden="true"
-        v-if="showApplyForm"
-        class="
+      <div id="authentication-modal" tabindex="-1" aria-hidden="true" v-if="showApplyForm" class="
           backdrop-blur-sm
           overflow-y-auto overflow-x-hidden
           fixed
@@ -279,10 +237,8 @@ import ModalLogin from "./ModalLogin.vue";
           md:h-full
           justify-center
           items-center
-        "
-      >
-        <div
-          class="
+        ">
+        <div class="
             absolute
             top-1/2
             left-1/2
@@ -292,14 +248,10 @@ import ModalLogin from "./ModalLogin.vue";
             max-w-md
             h-full
             md:h-auto
-          "
-        >
+          ">
           <!-- Modal content -->
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <button
-              type="button"
-              @click="toggleApplyForm(false)"
-              class="
+            <button type="button" @click="toggleApplyForm(false)" class="
                 absolute
                 top-3
                 right-2.5
@@ -313,52 +265,31 @@ import ModalLogin from "./ModalLogin.vue";
                 inline-flex
                 items-center
                 dark:hover:bg-gray-800 dark:hover:text-white
-              "
-              data-modal-toggle="authentication-modal"
-            >
-              <svg
-                aria-hidden="true"
-                class="w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-                data-darkreader-inline-fill=""
-                style="--darkreader-inline-fill: currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
+              " data-modal-toggle="authentication-modal">
+              <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg" data-darkreader-inline-fill=""
+                style="--darkreader-inline-fill: currentColor">
+                <path fill-rule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                ></path>
+                  clip-rule="evenodd"></path>
               </svg>
               <span class="sr-only">Close modal</span>
             </button>
             <div class="py-6 px-6 lg:px-8">
-              <h3
-                class="mb-4 text-base font-black text-gray-900 dark:text-white"
-              >
+              <h3 class="mb-4 text-base font-black text-gray-900 dark:text-white">
                 Apply to {{ recruitment.name }}
               </h3>
               <form class="space-y-6" @submit.prevent="add()">
                 <div>
-                  <label
-                    for="email"
-                    class="
+                  <label for="email" class="
                       block
                       mb-2
                       text-sm
                       font-medium
                       text-gray-900
                       dark:text-gray-300
-                    "
-                    >Your phone</label
-                  >
-                  <input
-                    type="phone"
-                    name="phone"
-                    id="phone"
-                    v-model="phone"
-                    class="
+                    ">Your phone</label>
+                  <input type="phone" name="phone" id="phone" v-model="phone" class="
                       bg-gray-50
                       border border-gray-300
                       text-gray-900 text-sm
@@ -371,15 +302,11 @@ import ModalLogin from "./ModalLogin.vue";
                       dark:border-gray-500
                       dark:placeholder-gray-400
                       dark:text-white
-                    "
-                    placeholder="+09 ..."
-                    required=""
-                  />
+                    " placeholder="+09 ..." required="" />
                 </div>
                 <div class="mt-8">
                   <label class="block text-sm font-semibold"> File </label>
-                  <div
-                    class="
+                  <div class="
                       mt-1
                       flex-col
                       justify-center
@@ -388,27 +315,16 @@ import ModalLogin from "./ModalLogin.vue";
                       pb-6
                       border-2 border-gray-300 border-dashed
                       rounded-md
-                    "
-                  >
+                    ">
                     <div class="space-y-1 text-center">
-                      <svg
-                        class="mx-auto h-12 w-12 text-gray-400"
-                        stroke="currentColor"
-                        fill="none"
-                        viewBox="0 0 48 48"
-                        aria-hidden="true"
-                      >
+                      <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48"
+                        aria-hidden="true">
                         <path
                           d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
+                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                       </svg>
                       <div class="flex text-sm text-gray-600 justify-center">
-                        <label
-                          for="cover"
-                          class="
+                        <label for="cover" class="
                             relative
                             cursor-pointer
                             bg-white
@@ -420,25 +336,16 @@ import ModalLogin from "./ModalLogin.vue";
                             focus-within:ring-2
                             focus-within:ring-offset-2
                             focus-within:ring-indigo-500
-                          "
-                        >
+                          ">
                           <span>Upload a file</span>
-                          <input
-                            id="cover"
-                            name="cover"
-                            type="file"
-                            class="sr-only"
-                            v-on:change="onFileSelected($event)"
-                          />
+                          <input id="cover" name="cover" type="file" class="sr-only"
+                            v-on:change="onFileSelected($event)" />
                         </label>
                         <p class="pl-1">or drag and drop</p>
                       </div>
                       <p class="text-xs text-gray-500">DOC, PDF up to 10MB</p>
                     </div>
-                    <div
-                      class="flex items-center mt-4"
-                      v-if="selectedFile != null"
-                    >
+                    <div class="flex items-center mt-4" v-if="selectedFile != null">
                       <span class="material-icons text-sm">description</span>
                       <p class="text-xs text-gray-500 ml-3">
                         {{ this.selectedFile.name }}
@@ -447,9 +354,7 @@ import ModalLogin from "./ModalLogin.vue";
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  class="
+                <button type="submit" class="
                     w-full
                     text-white
                     bg-indigo-700
@@ -464,8 +369,7 @@ import ModalLogin from "./ModalLogin.vue";
                     dark:bg-blue-600
                     dark:hover:bg-blue-700
                     dark:focus:ring-blue-800
-                  "
-                >
+                  ">
                   Apply
                 </button>
               </form>
@@ -486,7 +390,7 @@ import { createToast } from "mosha-vue-toastify";
 import { usePostStore } from "@/stores/posts/posts";
 import AnswerForm from "@/components/AnswerForm.vue";
 import { imgUrlFor } from "../utils/utils";
-
+import { mapState } from 'pinia'
 import { useAuthStore } from "../stores/auth/auth";
 import axios from "axios";
 
@@ -533,7 +437,7 @@ export default {
         selectedFile.type === "application/pdf" ||
         selectedFile.type === "application/msword" ||
         selectedFile.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       ) {
         this.selectedFile = selectedFile;
       } else {
@@ -595,8 +499,12 @@ export default {
       }
     },
   },
+  computed: {
+    ...mapState(useAuthStore, ["user"]),
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+
 </style>
