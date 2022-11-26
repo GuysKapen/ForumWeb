@@ -15,10 +15,7 @@
         </p>
 
         <div class="rounded-lg">
-          <img :src="
-            user.profile?.cover
-              ? imgUrlFor(serverUrl, user.profile.cover)
-              : 'https://learn.zoner.com/wp-content/uploads/2015/06/040mm.jpg?fidl=2019-06-mag-en'
+          <img :src="imgUrlFor(serverUrl, user.profile?.cover, images.user)
           " alt="profile" class="w-24 h-24 mx-auto rounded-lg flex-shrink-0 object-cover" />
         </div>
 
@@ -140,6 +137,7 @@ import { usePostStore } from "@/stores/posts/posts";
 import { useAuthStore } from "@/stores/auth/auth";
 import { mapState, mapActions } from "pinia";
 import { imgUrlFor } from '../utils/utils';
+import { images } from '../constants';
 
 const serverUrl = import.meta.env.VITE_SERVER_URL
 
@@ -148,6 +146,7 @@ export default {
     return {
       imgUrlFor: imgUrlFor,
       serverUrl: serverUrl,
+      images
     };
   },
   data: () => ({

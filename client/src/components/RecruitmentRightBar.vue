@@ -1,5 +1,6 @@
 <script setup>
 import { imgUrlFor } from "../utils/utils";
+import { images } from "../constants";
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
 <template>
@@ -19,11 +20,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
         </p>
 
         <div class="rounded-lg">
-          <img :src="
-            user.profile?.cover
-              ? imgUrlFor(serverUrl, user.profile.cover)
-              : 'https://learn.zoner.com/wp-content/uploads/2015/06/040mm.jpg?fidl=2019-06-mag-en'
-          " alt="profile" class="w-24 h-24 mx-auto rounded-lg flex-shrink-0 object-cover" />
+          <img :src="imgUrlFor(serverUrl, user.profile?.cover, images.user)" alt="profile" class="w-24 h-24 mx-auto rounded-lg flex-shrink-0 object-cover" />
         </div>
 
         <p class="text-base text-gray-600 text-center">{{ user.name }}</p>
