@@ -143,6 +143,7 @@ const router = createRouter({
       path: "/new",
       name: "new-post",
       component: NewPostView,
+      beforeEnter: [isAuth]
     },
     {
       path: "/recruitments/:id",
