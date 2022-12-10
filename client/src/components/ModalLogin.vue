@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="authentication-modal"
-    tabindex="-1"
-    aria-hidden="true"
-    class="
+  <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="
       backdrop-blur-sm
       overflow-y-auto overflow-x-hidden
       fixed
@@ -17,10 +13,8 @@
       md:h-full
       justify-center
       items-center
-    "
-  >
-    <div
-      class="
+    ">
+    <div class="
         absolute
         top-1/2
         left-1/2
@@ -30,14 +24,10 @@
         max-w-md
         h-full
         md:h-auto
-      "
-    >
+      ">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <button
-          type="button"
-          @click="hideLoginForm"
-          class="
+        <button type="button" @click="hideLoginForm" class="
             absolute
             top-3
             right-2.5
@@ -51,23 +41,13 @@
             inline-flex
             items-center
             dark:hover:bg-gray-800 dark:hover:text-white
-          "
-          data-modal-toggle="authentication-modal"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-5 h-5"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-            data-darkreader-inline-fill=""
-            style="--darkreader-inline-fill: currentColor"
-          >
-            <path
-              fill-rule="evenodd"
+          " data-modal-toggle="authentication-modal">
+          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg" data-darkreader-inline-fill=""
+            style="--darkreader-inline-fill: currentColor">
+            <path fill-rule="evenodd"
               d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            ></path>
+              clip-rule="evenodd"></path>
           </svg>
           <span class="sr-only">Close modal</span>
         </button>
@@ -77,24 +57,15 @@
           </h3>
           <form class="space-y-6" @submit.prevent="login">
             <div>
-              <label
-                for="email"
-                class="
+              <label for="email" class="
                   block
                   mb-2
                   text-sm
                   font-medium
                   text-gray-900
                   dark:text-gray-300
-                "
-                >Email</label
-              >
-              <input
-                type="email"
-                name="email"
-                id="email"
-                v-model="email"
-                class="
+                ">Email</label>
+              <input type="email" name="email" id="email" v-model="email" class="
                   bg-gray-50
                   border border-gray-300
                   text-gray-900 text-sm
@@ -107,31 +78,19 @@
                   dark:border-gray-500
                   dark:placeholder-gray-400
                   dark:text-white
-                "
-                placeholder="email@example.com"
-                required="true"
-              />
+                " placeholder="email@example.com" required="true" />
             </div>
 
             <div>
-              <label
-                for="email"
-                class="
+              <label for="email" class="
                   block
                   mb-2
                   text-sm
                   font-medium
                   text-gray-900
                   dark:text-gray-300
-                "
-                >Password</label
-              >
-              <input
-                type="password"
-                name="password"
-                id="password"
-                v-model="password"
-                class="
+                ">Password</label>
+              <input type="password" name="password" id="password" v-model="password" class="
                   bg-gray-50
                   border border-gray-300
                   text-gray-900 text-sm
@@ -144,15 +103,10 @@
                   dark:border-gray-500
                   dark:placeholder-gray-400
                   dark:text-white
-                "
-                placeholder="password"
-                required="true"
-              />
+                " placeholder="password" required="true" />
             </div>
 
-            <button
-              type="submit"
-              class="
+            <button type="submit" class="
                 w-full
                 text-white
                 bg-indigo-700
@@ -165,8 +119,7 @@
                 py-2.5
                 text-center
                 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
-              "
-            >
+              ">
               Login
             </button>
           </form>
@@ -179,6 +132,7 @@
 <script>
 import { useAuthStore } from "@/stores/auth/auth";
 import { mapActions, mapState } from "pinia";
+import { createToast } from 'mosha-vue-toastify';
 export default {
   data: () => ({
     email: null,
@@ -186,6 +140,7 @@ export default {
   }),
   computed: {
     ...mapState(useAuthStore, ["showLoginForm"]),
+    ...mapState(useAuthStore, ["user"]),
   },
   methods: {
     ...mapActions(useAuthStore, { loginVue: "login" }),
@@ -196,6 +151,9 @@ export default {
           email: this.email,
           password: this.password,
         });
+
+        createToast(`Welcome back ${this.user.name}`, { type: "success" })
+        this.hideLoginForm()
       } catch (error) {
         this.error = error;
       }
@@ -205,4 +163,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>
