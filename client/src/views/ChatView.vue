@@ -7,7 +7,7 @@ import { truncate } from '@/utils/utils';
     <div class="flex flex-col h-screen">
         <Nav />
         <div class="flex h-full border-t w-full">
-            <div class="w-3/12 flex-shrink-0 border-r">
+            <div class="w-3/12 flex-shrink-0 border-r overflow-scroll">
                 <div v-for="(conversation, idx) in conversations" :key="idx"
                     class="px-6 py-4 border-b bg-white hover:bg-gray-50 cursor-pointer" @click="activate(conversation)"
                     :class="{ 'bg-gray-50': (conversation.conversationId == activeConversation?.conversationId) }">
