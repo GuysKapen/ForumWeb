@@ -209,8 +209,9 @@ export default {
                             "x-access-token": authStore.token,
                         },
                     })
-                    .then((_) => {
+                    .then((res) => {
                         createToast("Success add conversation", { type: 'success' })
+                        this.conversations = [res.data, ...this.conversations]
                     });
             } catch (error) {
                 console.log(error);
@@ -222,6 +223,7 @@ export default {
         },
         lastMessage(conversation) {
             let messages = conversation["events"]
+            if (!messages) return ""
             for (let index = messages.length - 1; index >= 0; index--) {
                 const message = messages[index];
                 if (message['event'] === 'user'
