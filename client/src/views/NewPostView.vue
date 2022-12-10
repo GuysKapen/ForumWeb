@@ -22,7 +22,7 @@ import { createToast } from 'mosha-vue-toastify';
 export default {
   methods: {
     onAdded() {
-      createToast("Success add post", { type: 'success' })
+      createToast("Success add question", { type: 'success' })
       this.$router.push({ name: 'home' })
     }
   }
