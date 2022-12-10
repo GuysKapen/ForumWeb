@@ -2,7 +2,7 @@
   <div class="w-6/12 py-8 px-6">
     <div class="bg-white flex justify-between items-center px-4 py-2 rounded-xl">
       <p class="text-gray-400 text-sm">Add new</p>
-      <router-link v-if="isRecruiter" tag="div" class-active="active" :to="{ name: 'recruiter-recruitment-new' }" exact>
+      <router-link tag="div" class-active="active" :to="{ name: 'recruiter-recruitment-new' }" exact>
         <button class="
             bg-indigo-600
             flex
