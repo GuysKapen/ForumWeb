@@ -296,6 +296,8 @@ exports.topRecruitments = async function (req, res) {
 exports.recruitment = function (req, res) {
   Recruitment.findById(req.params.id)
     .populate("company")
+    .populate("fields")
+    .populate("skills")
     .populate({
       path: "owner",
       populate: {

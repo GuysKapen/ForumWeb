@@ -10,7 +10,7 @@ import ModalLogin from "./ModalLogin.vue";
     <div class="flex-grow flex px-8 py-12" v-if="recruitment != null">
       <div class="flex-grow pr-8">
         <div class="flex justify-between items-center">
-          <h3 class="text-xl font-bold text-gray-800">teamzo</h3>
+          <h3 class="text-xl font-bold text-gray-800">{{ recruitment.company.name }}</h3>
           <div class="flex">
             <p class="text-sm text-gray-600 mr-4">
               <span class="text-gray-800 font-bold"> Job updated: </span>
@@ -30,9 +30,23 @@ import ModalLogin from "./ModalLogin.vue";
           <h2 class="text-2xl text-gray-800 font-black">
             {{ recruitment.name }}
           </h2>
+          <div v-if="(recruitment.fields.length > 0)" class="
+              bg-gray-100
+              text-gray-800
+              font-bold
+              text-xs
+              inline-flex
+              items-center
+              px-2.5
+              py-0.5
+              rounded-lg
+              mr-2
+            ">
+            <span class="text-[0.65rem] ml-2"> {{ recruitment.fields[0].name }} </span>
+          </div>
         </div>
         <div class="my-4 flex">
-          <div class="
+          <div v-for="(skill, idx) in recruitment.skills" :key="idx" class="
               bg-gray-100
               text-gray-800
               font-bold
@@ -44,39 +58,9 @@ import ModalLogin from "./ModalLogin.vue";
               rounded-lg
               mr-2
             ">
-            <span class="material-icons text-xs">category</span>
-            <span class="text-[0.65rem] ml-2"> Design </span>
+            <span class="text-[0.65rem] ml-2"> {{ skill.name }} </span>
           </div>
-          <div class="
-              bg-gray-100
-              text-gray-800
-              font-bold
-              text-xs
-              inline-flex
-              items-center
-              px-2.5
-              py-0.5
-              rounded-lg
-              mr-2
-            ">
-            <span class="material-icons text-xs">calendar_today</span>
-            <span class="text-[0.65rem] ml-2"> Fulltime </span>
-          </div>
-          <div class="
-              bg-gray-100
-              text-gray-800
-              font-bold
-              text-xs
-              inline-flex
-              items-center
-              px-2.5
-              py-0.5
-              rounded-lg
-              mr-2
-            ">
-            <span class="material-icons text-xs">public</span>
-            <span class="text-[0.65rem] ml-2"> Remote </span>
-          </div>
+      
         </div>
         <div class="text-sm">
           <div v-html="recruitment.content"></div>
