@@ -30,7 +30,7 @@ import ModalLogin from "./ModalLogin.vue";
           <h2 class="text-2xl text-gray-800 font-black">
             {{ recruitment.name }}
           </h2>
-          <div v-if="(recruitment.fields.length > 0)" class="
+          <div v-for="(field, idx) in recruitment.fields" :key="idx" class="
               bg-gray-100
               text-gray-800
               font-bold
@@ -42,7 +42,7 @@ import ModalLogin from "./ModalLogin.vue";
               rounded-lg
               mr-2
             ">
-            <span class="text-[0.65rem] ml-2"> {{ recruitment.fields[0].name }} </span>
+            <span class="text-[0.65rem] ml-2"> {{ field.name }} </span>
           </div>
         </div>
         <div class="my-4 flex">
