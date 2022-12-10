@@ -76,7 +76,7 @@ import ModalLogin from "./ModalLogin.vue";
             items-center
             text-center
             p-6
-          " v-if="isAuth">
+          " v-if="isAuth()">
           <p class="text-sm">Sounds like a match?</p>
           <div @click="toggleApplyForm(true)" class="
               bg-indigo-700
@@ -389,19 +389,17 @@ export default {
     phone: null,
     cv: null,
   }),
-  computed: {
-    isAuth() {
-      const authStore = useAuthStore();
-      return !(authStore.user == null || authStore.token == null);
-    },
-  },
   async mounted() {
     const postStore = usePostStore();
     this.recruitment = await postStore.getRecruitment(this.$route.params.id);
   },
   components: { DetailItem, HashLoader, AnswerForm },
-
+  
   methods: {
+    isAuth() {
+      const authStore = useAuthStore();
+      return !(authStore.user == null || authStore.token == null);
+    },
     toggleAddAnswer() {
       this.addingAnswer = !this.addingAnswer;
     },
