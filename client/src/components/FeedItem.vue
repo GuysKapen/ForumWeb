@@ -55,7 +55,7 @@ import moment from "moment";
       <div class="text-gray-700 text-sm" v-html="post.body"></div>
     </div>
     <div class="flex justify-between mt-4">
-      <div class="flex">
+      <div v-if="isAuth()" class="flex">
         <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
           <button @click="addToSave" type="button" class="
               flex
@@ -142,6 +142,10 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 export default {
   props: ["post"],
   methods: {
+    isAuth() {
+      const authStore = useAuthStore()
+      return authStore.token != null && authStore.user != null
+    },
     addToSave() {
       const authStore = useAuthStore();
       if (authStore.user == null) {

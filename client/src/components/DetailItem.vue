@@ -4,6 +4,7 @@ import CommentItem from "@/components/CommentItem.vue";
 import CommentForm from '@/components/CommentForm.vue';
 import moment from 'moment';
 import { images } from '../constants';
+import { useAuthStore } from '../stores/auth/auth';
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
@@ -53,7 +54,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
       <div class="text-gray-700 text-sm prose" v-html="post.body"></div>
     </div>
     <div class="flex justify-between mt-4">
-      <div class="flex">
+      <div v-if="isAuth()" class="flex">
         <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
           <button type="button" class="
               flex
@@ -138,12 +139,17 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 </template>
 
 <script>
+
 export default {
   props: ['post'],
   data: () => ({
     addingComment: false,
   }),
   methods: {
+    isAuth() {
+      const authStore = useAuthStore()
+      return authStore.token != null && authStore.user != null
+    },
     toggleAddComment() {
       this.addingComment = !this.addingComment
     },
