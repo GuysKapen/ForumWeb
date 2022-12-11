@@ -204,12 +204,23 @@ exports.post = function (req, res) {
     })
     .populate({
       path: "answers",
-      populate: {
-        path: "owner",
-        populate: {
-          path: "profile",
+      populate: [
+        {
+          path: "owner",
+          populate: {
+            path: "profile",
+          },
         },
-      },
+        {
+          path: "comments",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
+        }
+      ],
     })
     .populate({
       path: "owner",
@@ -318,7 +329,7 @@ exports.recruitment = function (req, res) {
 
 exports.searchRecruitments = async function (req, res) {
   let query = {};
-  
+
   const page = req.query["page"] || 1;
   const limit = req.query["limit"] || 5;
   const queryRefs = [
@@ -341,7 +352,7 @@ exports.searchRecruitments = async function (req, res) {
     query["name"] = { $regex: req.query["name"], $options: "i" };
   }
 
-   Recruitment.paginate(
+  Recruitment.paginate(
     query,
     {
       limit: limit,

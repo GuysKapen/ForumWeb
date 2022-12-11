@@ -22,10 +22,12 @@ exports.create = function (req, res) {
   const user = req.locals.user;
   if (!req.currentUser.canEdit(user)) return response.sendForbidden(res);
   const { comment, parent, parentType } = _.pick(req.body, "comment", "parent", "parentType")
-
   let parentModel
   let commentableType
-  if (parentType === 'post') {
+  if (parentType === 'answer') {
+    parentModel = mongoose.model("Answer")
+    commentableType = "Answer"
+  } else if (parentType === 'post') {
     parentModel = mongoose.model("Post")
     commentableType = "Post"
   } else {

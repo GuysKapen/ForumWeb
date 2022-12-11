@@ -20,7 +20,11 @@ const AnswerSchema = new Schema({
   correct: {
     type: Boolean,
     default: false
-  }
+  },
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comment',
+  }],
 });
 
 AnswerSchema.plugin(mongoosePaginate);
