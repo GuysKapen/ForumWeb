@@ -119,7 +119,7 @@ import ModalLogin from "./ModalLogin.vue";
             p-6
           " v-else>
           <p class="text-sm">Sounds like a match?</p>
-          <div @click="this.$emit('authorize')" class="
+          <div @click="toggleLoginForm()" class="
               bg-indigo-700
               hover:bg-indigo-800
               cursor-pointer
@@ -173,18 +173,18 @@ import ModalLogin from "./ModalLogin.vue";
                 flex-shrink-0
                 border border-gray-100
               ">
-              <img :src="imgUrlFor(serverUrl, recruitment.owner.profile.cover)" alt="profile"
+              <img :src="imgUrlFor(serverUrl, recruitment.owner.profile?.cover)" alt="profile"
                 class="w-8 h-8 rounded-lg flex-shrink-0 object-cover" />
             </div>
 
             <div class="ml-3 text-sm">
-              <p class="text-gray-800 text-left font-bold">{{ user.name }}</p>
+              <p class="text-gray-800 text-left font-bold">{{ recruitment.owner.name }}</p>
               <span class="text-gray-300 text-sm">Contact Person</span>
             </div>
           </div>
           <div class="bg-white rounded-md p-4 text-left mt-4">
             <p class="text-sm">
-              {{ user.profile?.about }}
+              {{ recruitment.owner.profile?.about }}
             </p>
           </div>
           <div class="
@@ -410,7 +410,9 @@ export default {
       this.showApplyForm = show;
     },
     toggleLoginForm(show) {
-      this.showLoginForm = show;
+      useAuthStore().showLoginForm(function() {
+        
+      })
     },
     onFileSelected(e) {
       const selectedFile = e.target.files[0];
