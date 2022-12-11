@@ -318,7 +318,9 @@ exports.recruitment = function (req, res) {
 
 exports.searchRecruitments = async function (req, res) {
   let query = {};
-
+  
+  const page = req.query["page"] || 1;
+  const limit = req.query["limit"] || 5;
   const queryRefs = [
     { name: "company", model: "Company" },
     { name: "skills", model: "Skill" },
@@ -339,14 +341,30 @@ exports.searchRecruitments = async function (req, res) {
     query["name"] = { $regex: req.query["name"], $options: "i" };
   }
 
-  Recruitment.find(query)
-    .populate({
-      path: "owner",
-      populate: {
-        path: "profile",
-      },
-    })
-    .exec(function (err, docs) {
+   Recruitment.paginate(
+    query,
+    {
+      limit: limit,
+      page: page,
+      populate: [
+        {
+          path: "owner",
+          populate: {
+            path: "profile",
+          },
+        },
+        {
+          path: "applies",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
+        },
+      ],
+    },
+    function (err, docs) {
       if (err) return response.sendNotFound(res);
       res.json(docs);
     });
