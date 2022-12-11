@@ -3,6 +3,7 @@ import { imgUrlFor } from '../utils/utils';
 import CommentItem from "@/components/CommentItem.vue";
 import CommentForm from '@/components/CommentForm.vue';
 import moment from 'moment';
+import { images } from '../constants';
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>

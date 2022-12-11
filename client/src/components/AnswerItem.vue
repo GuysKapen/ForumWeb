@@ -2,6 +2,7 @@
 import { imgUrlFor } from '../utils/utils';
 import CommentItem from "@/components/CommentItem.vue";
 import CommentForm from '@/components/CommentForm.vue';
+import moment from 'moment';
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
@@ -25,7 +26,11 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
           <div class="ml-3 text-sm">
             <p class="text-gray-500 capitalize">{{ post.owner.name }}</p>
-            <span class="text-gray-300 text-sm">6 days ago</span>
+            <span class="text-gray-300 text-sm">{{
+                moment(
+                  new Date(parseInt(post._id.substring(0, 8), 16) * 1000)
+                ).fromNow()
+            }}</span>
           </div>
         </div>
         <div v-if="post.correct" class="
