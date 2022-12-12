@@ -89,9 +89,13 @@ import moment from 'moment';
                                                         <button
                                                             class="p-3 mx-1 rounded-lg hover:bg-indigo-600 hover:text-white text-gray-400"
                                                             type="button" @click="disableModel(user._id)">
-                                                            <span class="material-symbols-outlined text-base inline cursor-pointer">
-                                                                do_not_disturb_on
-                                                            </span>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.12em"
+                                                                height="1.12em" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="1"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <circle cx="12" cy="12" r="10"></circle>
+                                                                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                                                            </svg>
                                                         </button>
 
                                                         <button
