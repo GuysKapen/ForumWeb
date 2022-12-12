@@ -20,7 +20,8 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
         </p>
 
         <div class="rounded-lg">
-          <img :src="imgUrlFor(serverUrl, user.profile?.cover, images.user)" alt="profile" class="w-24 h-24 mx-auto rounded-lg flex-shrink-0 object-cover" />
+          <img :src="imgUrlFor(serverUrl, user.profile?.cover, images.user)" alt="profile"
+            class="w-24 h-24 mx-auto rounded-lg flex-shrink-0 object-cover" />
         </div>
 
         <p class="text-base text-gray-600 text-center">{{ user.name }}</p>
@@ -132,7 +133,9 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
               class="w-8 h-8 rounded-lg flex-shrink-0 object-cover" />
           </div>
           <div>
-            <p class="text-sm text-gray-800 ml-4 capitalize">{{ recruitment.owner.name }}</p>
+            <router-link :to="{ name: 'recruitment-detail', params: { id: recruitment._id } }">
+              <p class="text-sm text-gray-800 ml-4 capitalize">{{ recruitment.owner.name }}</p>
+            </router-link>
             <p class="text-xs ml-4 capitalize">
               {{ truncate(recruitment.name, 24) }}
             </p>
