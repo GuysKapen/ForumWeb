@@ -20,7 +20,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
         </p>
 
         <div class="rounded-lg">
-          <img :src="imgUrlFor(serverUrl, user.profile?.cover, images.user)" alt="profile"
+          <img :src="imgUrlFor(serverUrl, user.profile?.cover, images.avatar)" alt="profile"
             class="w-24 h-24 mx-auto rounded-lg flex-shrink-0 object-cover" />
         </div>
 
