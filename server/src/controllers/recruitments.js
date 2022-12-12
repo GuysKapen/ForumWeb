@@ -54,9 +54,10 @@ exports.update = function (req, res) {
 };
 
 exports.delete = function (req, res) {
-  Recruitment.remove({ _id: req.params.id }, function (err, item) {
+  Recruitment.findOne({ _id: req.params.id }, async function (err, item) {
     if (err) return response.sendNotFound(res);
     if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);
+    await Recruitment.deleteOne(item).exec()
     res.json({ message: 'Item successfully deleted' });
   });
 };

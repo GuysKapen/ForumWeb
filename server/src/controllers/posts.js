@@ -54,10 +54,11 @@ exports.update = function (req, res) {
   });
 };
 
-exports.delete = function (req, res) {
-  Post.remove({ _id: req.params.id }, function (err, item) {
+exports.delete = async function (req, res) {
+  Post.findOne({ _id: req.params.id }, async function (err, item) {
     if (err) return response.sendNotFound(res);
     if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);
+    await Post.deleteOne(item).exec()
     res.json({ message: 'Item successfully deleted' });
   });
 };
@@ -113,4 +114,13 @@ exports.answer = function (req, res) {
       });
     });
   })
+};
+
+exports.approve = function (req, res) {
+  const attrs = { status: true }
+  Post.findOneAndUpdate({ _id: req.params.id }, attrs, function (err, item) {
+    if (err) return response.sendBadRequest(res, err);
+    if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);
+    res.json(item);
+  });
 };

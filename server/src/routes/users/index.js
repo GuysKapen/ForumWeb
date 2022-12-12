@@ -11,6 +11,9 @@ import profiles from './profiles';
 import userDetails from './user_details';
 import applies from './applies';
 import save from './save';
+import answers from './answers';
+import conversations from './conversations';
+import companies from './companies';
 
 const routes = express.Router();
 
@@ -23,6 +26,9 @@ routes.use('/:userId/profiles', users.loadUser, profiles);
 routes.use('/:userId/details', users.loadUser, userDetails);
 routes.use('/:userId/applies', users.loadUser, applies);
 routes.use('/:userId/save', users.loadUser, save);
+routes.use('/:userId/answers', users.loadUser, answers);
+routes.use('/:userId/conversations', users.loadUser, conversations);
+routes.use('/:userId/companies', users.loadUser, companies);
 
 routes.route('/:id')
   .all(auth.verifyToken)

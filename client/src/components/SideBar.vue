@@ -62,35 +62,13 @@
               </div>
             </router-link>
           </div>
-          <div class="flex items-start tab-panel">
-            <div
-              class="
-                bg-white
-                rounded-lg
-                flex
-                items-center
-                justify-center
-                ml-4
-                w-6
-                h-6
-                flex-shrink-0
-                border border-gray-100
-              "
-            >
-              <span class="material-icons text-gray-300 text-sm">save</span>
-            </div>
-
-            <div class="ml-3 text-sm">
-              <p class="text-gray-500">Saved</p>
-            </div>
-          </div>
         </div>
       </div>
       <div class="px-4 py-5 space-y-6 sm:p-6">
         <h3 class="text-base font-medium text-gray-900">Trending topics</h3>
         <div class="mt-4 space-y-6">
           <div class="tab-panel group" v-for="(obj, idx) in categories" :key="idx">
-            <router-link :to="{ name: 'home', query: {'category': obj.category.slug} }">
+            <router-link :to="{ name: 'home', query: {'category': (obj.category?.slug ?? 'uncategorized')} }">
               <div class="flex items-center justify-between">
                 <div class="flex items-center">
                   <div class="
@@ -115,7 +93,7 @@
                   </div>
 
                   <div class="ml-3 text-sm">
-                    <p class="text-gray-500 group-hover:text-indigo-600">{{obj.category.name}}</p>
+                    <p class="text-gray-500 group-hover:text-indigo-600">{{obj.category?.name ?? "Uncategorized"}}</p>
                   </div>
                 </div>
                 <div class="
@@ -163,28 +141,31 @@
               <p class="text-gray-500">Your trends</p>
             </div>
           </div>
-          <div class="flex items-start tab-panel">
-            <div
-              class="
-                bg-white
-                rounded-lg
-                flex
-                items-center
-                justify-center
-                ml-4
-                w-6
-                h-6
-                flex-shrink-0
-                border border-gray-100
-              "
-            >
-              <span class="material-icons text-gray-300 text-sm">save</span>
-            </div>
+             <div class="flex items-start tab-panel active">
+            <router-link :to="{name: 'saved'}" class="flex items-start">
+              <div
+                class="
+                  bg-white
+                  rounded-lg
+                  flex
+                  items-center
+                  justify-center
+                  ml-4
+                  w-6
+                  h-6
+                  flex-shrink-0
+                  border border-gray-100
+                "
+              >
+                <span class="material-icons text-gray-300 text-sm">save</span>
+              </div>
 
-            <div class="ml-3 text-sm">
-              <p class="text-gray-500">Saved</p>
-            </div>
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Saved</p>
+              </div>
+            </router-link>
           </div>
+        
         </div>
       </div>
       <div class="px-4 py-3 sm:px-6 text-center w-full">

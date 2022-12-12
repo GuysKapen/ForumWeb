@@ -1,10 +1,17 @@
 <script setup>
 import Nav from "@/components/Nav.vue";
 import SideBar from "@/components/AdminSideBar.vue";
-import Form from "@/components/AdminSkillForm.vue";
+import MyForm from "@/components/AdminSkillForm.vue";
 </script>
     
 <template>
-    <Form />
+    <div class="my-8 w-1/2 mx-auto py-16 px-8">
+        <div class="header">
+            <h2 class="text-4xl font-black leading-7 text-gray-900 sm:text-3xl sm:truncate text-center">
+                Add skill
+            </h2>
+        </div>
+        <MyForm />
+    </div>
 </template>
     

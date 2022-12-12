@@ -23,6 +23,7 @@ exports.authenticate = function (req, res) {
   User.findOne({ email: req.body.email })
     .populate("profile")
     .populate("detail")
+    .populate("company")
     .exec(function (err, user) {
       if (err) throw err;
 
@@ -35,13 +36,13 @@ exports.authenticate = function (req, res) {
               expiresIn: tokenExpireInSeconds
             });
 
-            const { _id, name, email, profile, detail, role, firstName, lastName } = user;
+            const { _id, name, email, profile, detail, role, firstName, lastName, company } = user;
 
             res.json({
               success: true,
               message: 'Token created.',
               token: token,
-              user: { _id, name, email, profile, detail, role, firstName, lastName }
+              user: { _id, name, email, profile, detail, role, firstName, lastName, company }
             });
 
           } else {
@@ -90,6 +91,28 @@ exports.verifyTokenAdmin = function (req, res, next) {
     });
   } else {
     response.sendUnauthorized(res, 'No token provided.');
+  }
+};
+
+exports.verifyTokenRecruiter = function (req, res, next) {
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+  if (token) {
+    jwt.verify(token, privateKey, function (err, decoded) {
+      if (err) {
+       return response.sendUnauthorized(res, 'Failed to authenticate token.');
+      } else {
+        User.findById(decoded.id, function (err, user) {
+          if (err) res.send(err);
+          if (user.role !== "admin" && user.role !== "recruiter")
+            return response.sendUnauthorized(res, 'Failed to authenticate token.');
+          req.currentUser = user;
+          next();
+        });
+      }
+    });
+  } else {
+    return response.sendUnauthorized(res, 'No token provided.');
   }
 };
 

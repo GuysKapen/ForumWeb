@@ -3,6 +3,7 @@ import response from "../helpers/response";
 import request from "../helpers/request";
 import pagination from "../helpers/pagination";
 
+import _ from 'underscore';
 const Category = mongoose.model("Category");
 const Post = mongoose.model("Post");
 const Company = mongoose.model("Company");
@@ -115,11 +116,11 @@ exports.detailFields = async function (req, res) {
 };
 
 exports.posts = async function (req, res) {
-  let query = {};
+  let query = { status: true };
+  const page = req.query["page"] || 1;
+  const limit = req.query["limit"] || 5;
 
-  const queryRefs = [
-    { name: "category", model: "Category" },
-  ];
+  const queryRefs = [{ name: "category", model: "Category" }];
   for (const ref of queryRefs) {
     if (ref["name"] in req.query) {
       query = await Recruitment.findByRef(
@@ -130,23 +131,59 @@ exports.posts = async function (req, res) {
       );
     }
   }
-  Post.find(query)
-    .populate("category")
-    .populate({
-      path: "comments",
-      populate: {
-        path: "owner",
-        populate: {
-          path: "profile",
+
+  Post.paginate(
+    query,
+    {
+      limit: limit,
+      page: page,
+      populate: [
+        { path: "category" },
+        {
+          path: "comments",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
         },
-      },
-    })
+        {
+          path: "answers",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
+        },
+        {
+          path: "owner",
+          populate: {
+            path: "profile",
+          },
+        },
+      ],
+    },
+    function (err, docs) {
+      if (err) return response.sendNotFound(res);
+      res.json(docs);
+    }
+  );
+};
+
+exports.topPosts = async function (req, res) {
+  let query = {};
+
+  Post.find(query)
     .populate({
       path: "owner",
       populate: {
         path: "profile",
       },
     })
+    .sort({ _id: "asc" })
+    .limit(6)
     .exec(function (err, docs) {
       if (err) return response.sendNotFound(res);
       res.json(docs);
@@ -167,12 +204,23 @@ exports.post = function (req, res) {
     })
     .populate({
       path: "answers",
-      populate: {
-        path: "owner",
-        populate: {
-          path: "profile",
+      populate: [
+        {
+          path: "owner",
+          populate: {
+            path: "profile",
+          },
         },
-      },
+        {
+          path: "comments",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
+        }
+      ],
     })
     .populate({
       path: "owner",
@@ -187,7 +235,10 @@ exports.post = function (req, res) {
 };
 
 exports.recruitments = async function (req, res) {
-  let query = {};
+  let query = { status: true };
+
+  const page = req.query["page"] || 1;
+  const limit = req.query["limit"] || 5;
 
   const queryRefs = [
     { name: "company", model: "Company" },
@@ -205,17 +256,34 @@ exports.recruitments = async function (req, res) {
     }
   }
 
-  Recruitment.find(query)
-    .populate({
-      path: "owner",
-      populate: {
-        path: "profile",
-      },
-    })
-    .exec(function (err, docs) {
+  Recruitment.paginate(
+    query,
+    {
+      limit: limit,
+      page: page,
+      populate: [
+        {
+          path: "owner",
+          populate: {
+            path: "profile",
+          },
+        },
+        {
+          path: "applies",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
+        },
+      ],
+    },
+    function (err, docs) {
       if (err) return response.sendNotFound(res);
       res.json(docs);
-    });
+    }
+  );
 };
 
 exports.topRecruitments = async function (req, res) {
@@ -232,7 +300,6 @@ exports.topRecruitments = async function (req, res) {
     .limit(6)
     .exec(function (err, docs) {
       if (err) return response.sendNotFound(res);
-      console.log("docs", docs);
       res.json(docs);
     });
 };
@@ -240,6 +307,8 @@ exports.topRecruitments = async function (req, res) {
 exports.recruitment = function (req, res) {
   Recruitment.findById(req.params.id)
     .populate("company")
+    .populate("fields")
+    .populate("skills")
     .populate({
       path: "owner",
       populate: {
@@ -256,4 +325,140 @@ exports.recruitment = function (req, res) {
       if (err) return response.sendNotFound(res);
       res.json(docs);
     });
+};
+
+exports.searchRecruitments = async function (req, res) {
+  let query = {};
+
+  const page = req.query["page"] || 1;
+  const limit = req.query["limit"] || 5;
+  const queryRefs = [
+    { name: "company", model: "Company" },
+    { name: "skills", model: "Skill" },
+    { name: "fields", model: "Field" },
+  ];
+  for (const ref of queryRefs) {
+    if (ref["name"] in req.query) {
+      query = await Recruitment.findByRef(
+        ref["model"],
+        ref["name"],
+        query,
+        req.query[ref["name"]]
+      );
+    }
+  }
+
+  if (req.query["name"]) {
+    query["name"] = { $regex: req.query["name"], $options: "i" };
+  }
+
+  Recruitment.paginate(
+    query,
+    {
+      limit: limit,
+      page: page,
+      populate: [
+        {
+          path: "owner",
+          populate: {
+            path: "profile",
+          },
+        },
+        {
+          path: "applies",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
+        },
+      ],
+    },
+    function (err, docs) {
+      if (err) return response.sendNotFound(res);
+      res.json(docs);
+    });
+};
+
+exports.searchPosts = async function (req, res) {
+  let query = {};
+  const page = req.query["page"] || 1;
+  const limit = req.query["limit"] || 5;
+
+  const queryRefs = [{ name: "category", model: "Category" }];
+  for (const ref of queryRefs) {
+    if (ref["name"] in req.query) {
+      query = await Recruitment.findByRef(
+        ref["model"],
+        ref["name"],
+        query,
+        req.query[ref["name"]]
+      );
+    }
+  }
+
+  if (req.query["name"]) {
+    query["title"] = { $regex: req.query["name"], $options: "i" };
+  }
+
+  // Post.find(query)
+  //   .populate("category")
+  //   .populate({
+  //     path: "comments",
+  //     populate: {
+  //       path: "owner",
+  //       populate: {
+  //         path: "profile",
+  //       },
+  //     },
+  //   })
+  //   .populate({
+  //     path: "owner",
+  //     populate: {
+  //       path: "profile",
+  //     },
+  //   })
+  //   .exec(function (err, docs) {
+  //     if (err) return response.sendNotFound(res);
+  //     res.json(docs);
+  //   });
+  Post.paginate(
+    query,
+    {
+      limit: limit,
+      page: page,
+      populate: [
+        { path: "category" },
+        {
+          path: "comments",
+          populate: {
+            path: "owner",
+            populate: {
+              path: "profile",
+            },
+          },
+        },
+        {
+          path: "owner",
+          populate: {
+            path: "profile",
+          },
+        },
+      ],
+    },
+    function (err, docs) {
+      if (err) return response.sendNotFound(res);
+      res.json(docs);
+    }
+  );
+};
+
+exports.downloadRecruitment = function (req, res) {
+  Recruitment.findById(req.params.id)
+    .exec(function (err, doc) {
+      if (err) return response.sendNotFound(res);
+      if (!doc.file) return
+      res.download(doc.file)
+    })
 };

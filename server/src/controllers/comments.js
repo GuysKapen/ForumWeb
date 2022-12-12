@@ -10,21 +10,26 @@ const Comment = mongoose.model('Comment');
 exports.list = function (req, res) {
   if (!req.currentUser.canRead(req.locals.user)) return response.sendForbidden(res);
   const query = Object.assign({ owner: req.params.userId }, request.getFilteringOptions(req, ['name']));
-  Comment.paginate(query, request.getRequestOptions(req), function (err, result) {
-    if (err) return response.sendNotFound(res);
-    pagination.setPaginationHeaders(res, result);
-    res.json(result.docs);
-  });
+  Comment.find(query)
+    .populate('commentable')
+    .exec(function (err, result) {
+      if (err) return response.sendNotFound(res);
+      res.json(result);
+    })
 };
 
 exports.create = function (req, res) {
   const user = req.locals.user;
   if (!req.currentUser.canEdit(user)) return response.sendForbidden(res);
   const { comment, parent, parentType } = _.pick(req.body, "comment", "parent", "parentType")
-
   let parentModel
-  if (parentType === 'post') {
+  let commentableType
+  if (parentType === 'answer') {
+    parentModel = mongoose.model("Answer")
+    commentableType = "Answer"
+  } else if (parentType === 'post') {
     parentModel = mongoose.model("Post")
+    commentableType = "Post"
   } else {
     return response.sendBadRequest(res, "Invalid request")
   }
@@ -32,7 +37,7 @@ exports.create = function (req, res) {
   parentModel.findById(parent, function (err, commentable) {
     if (err) res.send(err)
 
-    const item = new Comment({ comment: comment, commentableType: parentType, commentableId: parent });
+    const item = new Comment({ comment: comment, commentableType: commentableType, commentable: parent });
     item.owner = user._id;
     item.save(function (err, item) {
       if (err) return response.sendBadRequest(res, err);
@@ -60,7 +65,7 @@ exports.read = function (req, res) {
 };
 
 exports.update = function (req, res) {
-  const attrs = _.pick(req.body, "title", "body", "category")
+  const attrs = _.pick(req.body, "comment")
   Comment.findOneAndUpdate({ _id: req.params.id }, attrs, { new: true }, function (err, item) {
     if (err) return response.sendBadRequest(res, err);
     if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);
@@ -68,10 +73,11 @@ exports.update = function (req, res) {
   });
 };
 
-exports.delete = function (req, res) {
-  Comment.remove({ _id: req.params.id }, function (err, item) {
+exports.delete = async function (req, res) {
+  Comment.findOne({ _id: req.params.id }, async function (err, item) {
     if (err) return response.sendNotFound(res);
     if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);
+    await Comment.deleteOne(item).exec()
     res.json({ message: 'Item successfully deleted' });
   });
 };

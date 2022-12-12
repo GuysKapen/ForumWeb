@@ -2,14 +2,16 @@
 import { imgUrlFor } from '../utils/utils';
 import CommentItem from "@/components/CommentItem.vue";
 import CommentForm from '@/components/CommentForm.vue';
+import moment from 'moment';
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
 <template>
   <div class="bg-white px-8 pt-8 py-16 relative">
     <div class="flex items-center justify-between mt-4">
-      <div class="flex items-center">
-        <div class="
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center">
+          <div class="
             bg-gray-100
             rounded-lg
             flex
@@ -18,21 +20,40 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             flex-shrink-0
             border border-gray-100
           ">
-          <img :src="imgUrlFor(serverUrl, post.owner?.profile?.cover)" alt="profile"
-            class="w-8 h-8 rounded-lg flex-shrink-0 object-cover" />
-        </div>
+            <img :src="imgUrlFor(serverUrl, post.owner?.profile?.cover)" alt="profile"
+              class="w-8 h-8 rounded-lg flex-shrink-0 object-cover" />
+          </div>
 
-        <div class="ml-3 text-sm">
-          <p class="text-gray-500 capitalize">{{ post.owner.name }}</p>
-          <span class="text-gray-300 text-sm">6 days ago</span>
+          <div class="ml-3 text-sm">
+            <p class="text-gray-500 capitalize">{{ post.owner.name }}</p>
+            <span class="text-gray-300 text-sm">{{
+                moment(
+                  new Date(parseInt(post._id.substring(0, 8), 16) * 1000)
+                ).fromNow()
+            }}</span>
+          </div>
+        </div>
+        <div v-if="post.correct" class="
+          bg-green-400
+          rounded-xl
+          flex
+          items-center
+          justify-center
+          ml-4
+          px-4
+          py-1
+          flex-shrink-0
+          border border-green-600
+        ">
+          <span class="text-xs text-green-100">Correct</span>
         </div>
       </div>
     </div>
     <div class="mt-4">
-      <div class="text-gray-700 text-sm" v-html="post.comment"></div>
+      <div class="text-gray-700 text-sm prose" v-html="post.answer"></div>
     </div>
     <div class="flex justify-between mt-4">
-      <div class="flex">
+      <div v-if="isAuth()" class="flex">
         <div class="bg-gray-50 rounded-xl border border-gray-200 mr-8">
           <button type="button" class="
               flex
@@ -140,19 +161,25 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
     </div>
     <div class="mt-12">
-      <CommentForm v-if="addingComment" @addedComment="addedComment" :parent-id="post._id" :parent-type="'post'" />
+      <CommentForm v-if="addingComment" @addedComment="addedComment" @cancelComment="toggleAddComment"
+        :parent-id="post._id" :parent-type="'answer'" />
       <CommentItem v-for="(comment, idx) in post.comments" :key="idx" :comment="comment" />
     </div>
   </div>
 </template>
 
 <script>
+import { useAuthStore } from "@/stores/auth/auth";
 export default {
   props: ['post'],
   data: () => ({
     addingComment: false,
   }),
   methods: {
+    isAuth() {
+      const authStore = useAuthStore()
+      return authStore.token != null && authStore.user != null
+    },
     toggleAddComment() {
       this.addingComment = !this.addingComment
     },
@@ -166,4 +193,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>

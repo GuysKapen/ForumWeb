@@ -1,5 +1,5 @@
 <template>
-  <div class="w-3/12 pr-8">
+  <div class="w-1/5 flex-shrink-0 pr-8">
     <div
       class="
         overflow-hidden
@@ -79,6 +79,41 @@
             </router-link>
           </div>
 
+
+
+          <div class="flex items-start tab-panel active">
+            <router-link
+              tag="div"
+              class-active="active"
+              class="flex item-starts"
+              :to="{ name: 'recruiter-apply-index' }"
+              exact
+            >
+              <div
+                class="
+                  bg-white
+                  rounded-lg
+                  flex
+                  items-center
+                  justify-center
+                  ml-2
+                  w-6
+                  h-6
+                  flex-shrink-0
+                  border border-gray-100
+                "
+              >
+                <span class="material-icons text-gray-300 text-sm"
+                  >person</span
+                >
+              </div>
+
+              <div class="ml-3 text-sm">
+                <p class="text-gray-500">Applies</p>
+              </div>
+            </router-link>
+          </div>
+
           <div class="flex items-start tab-panel">
             <router-link :to="{ name: 'recruiter-post-index' }" class="flex items-start">
               <div
@@ -99,60 +134,11 @@
               </div>
 
               <div class="ml-3 text-sm">
-                <p class="text-gray-500">Posts</p>
+                <p class="text-gray-500">Questions</p>
               </div>
             </router-link>
           </div>
-
-          <div class="flex items-start tab-panel">
-            <router-link to="/admin/" class="flex items-start">
-              <div
-                class="
-                  bg-white
-                  rounded-lg
-                  flex
-                  items-center
-                  justify-center
-                  ml-2
-                  w-6
-                  h-6
-                  flex-shrink-0
-                  border border-gray-100
-                "
-              >
-                <span class="material-icons text-gray-300 text-sm">feed</span>
-              </div>
-
-              <div class="ml-3 text-sm">
-                <p class="text-gray-500">Your trends</p>
-              </div>
-            </router-link>
-          </div>
-
-          <div class="flex items-start tab-panel">
-            <router-link to="/admin/" class="flex items-start">
-              <div
-                class="
-                  bg-white
-                  rounded-lg
-                  flex
-                  items-center
-                  justify-center
-                  ml-2
-                  w-6
-                  h-6
-                  flex-shrink-0
-                  border border-gray-100
-                "
-              >
-                <span class="material-icons text-gray-300 text-sm">save</span>
-              </div>
-
-              <div class="ml-3 text-sm">
-                <p class="text-gray-500">Saved</p>
-              </div>
-            </router-link>
-          </div>
+        
         </div>
       </div>
     </div>

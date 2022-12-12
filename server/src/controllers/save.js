@@ -14,11 +14,31 @@ exports.list = function (req, res) {
     { owner: req.params.userId },
     request.getFilteringOptions(req, ["name"])
   );
-  Save.paginate(query, request.getRequestOptions(req), function (err, result) {
-    if (err) return response.sendNotFound(res);
-    pagination.setPaginationHeaders(res, result);
-    res.json(result.docs);
-  });
+
+  Save.findOne(query)
+    .populate({
+      path: "posts",
+      populate: {
+        path: "owner",
+        populate: {
+          path: "profile",
+        },
+      },
+    })
+    .populate({
+      path: "recruitments",
+      populate: {
+        path: "owner",
+        populate: {
+          path: "profile",
+        },
+      },
+    })
+    .exec(function (err, item) {
+      if (err) return response.sendNotFound(res);
+      if (!req.currentUser.canRead(item)) return response.sendForbidden(res);
+      res.json(item);
+    });
 };
 
 exports.create = function (req, res) {
@@ -26,7 +46,7 @@ exports.create = function (req, res) {
   if (!req.currentUser.canEdit(user)) return response.sendForbidden(res);
 
   // If not have saved create one
-  Save.findOne({'owner': user._id}, function (err, save) {
+  Save.findOne({ owner: user._id }, function (err, save) {
     let item = save;
     if (item == null) {
       item = new Save();
@@ -71,9 +91,10 @@ exports.update = function (req, res) {
 };
 
 exports.delete = function (req, res) {
-  Save.remove({ _id: req.params.id }, function (err, item) {
+  Save.findOne({ _id: req.params.id }, async function (err, item) {
     if (err) return response.sendNotFound(res);
     if (!req.currentUser.canEdit(item)) return response.sendForbidden(res);
-    res.json({ message: "Item successfully deleted" });
+    await Save.deleteOne(item).exec()
+    res.json({ message: 'Item successfully deleted' });
   });
 };

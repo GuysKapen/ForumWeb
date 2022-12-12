@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 const Schema = mongoose.Schema;
 const CommentSchema = new Schema({
@@ -12,14 +12,15 @@ const CommentSchema = new Schema({
     ref: 'User',
     required: true
   },
-  commentableId: {
+  commentable: {
     type: Schema.Types.ObjectId,
-    required: true
+    required: true,
+    refPath: 'commentableType'
   },
   commentableType: {
     type: String,
     required: true
-  }
+  },
 });
 
 CommentSchema.plugin(mongoosePaginate);

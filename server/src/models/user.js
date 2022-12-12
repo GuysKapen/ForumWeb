@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import mongoosePaginate from "mongoose-paginate";
+import mongoosePaginate from "mongoose-paginate-v2";
 import bcrypt from "bcrypt";
 
 const Schema = mongoose.Schema;
@@ -29,6 +29,10 @@ const UserSchema = new Schema({
   },
   token: String,
   tokenExp: Number,
+  status: {
+    type: Boolean,
+    default: true
+  },
   posts: [
     {
       type: Schema.Types.ObjectId,
@@ -67,6 +71,10 @@ const UserSchema = new Schema({
       ref: "Apply",
     },
   ],
+  company: {
+    type: Schema.Types.ObjectId,
+    ref: "Company",
+  },
 });
 
 UserSchema.set("toJSON", {

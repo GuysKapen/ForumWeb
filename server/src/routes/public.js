@@ -21,7 +21,11 @@ routes.route("/detail-categories").get(publicC.detailCategories);
 routes.route("/posts/:id").get(publicC.post);
 
 routes.route("/recruitments/:id").get(publicC.recruitment);
+routes.route("/recruitments/:id/download").get(publicC.downloadRecruitment);
 
 routes.route("/top-recruitments").get(publicC.topRecruitments);
+routes.route("/top-posts").get(publicC.topPosts);
+routes.route("/search/recruitments").get(publicC.searchRecruitments);
+routes.route("/search/posts").get(publicC.searchPosts);
 
 module.exports = routes;

@@ -1,12 +1,13 @@
 import jBox from 'jbox';
-export const imgUrlFor = (url, imagePath) => {
+export const imgUrlFor = function (url, imagePath, holder = null) {
+    if (!url || !imagePath) return holder;
     return `${url}/${imagePath}`
 }
 
-export const showConfirmPopup = (callback, message = 'Do you really want to delete? You wont be able to revert it.') => {
+export const showConfirmPopup = (callback, message = 'Do you really want to delete? You wont be able to revert it.', confirmText = "Delete", cancelText = "Cancel") => {
     return new jBox('Confirm', {
-        confirmButton: 'Delete', // Text for the submit button
-        cancelButton: 'Cancel', // Text for the cancel button
+        confirmButton: confirmText, // Text for the submit button
+        cancelButton: cancelText, // Text for the cancel button
         confirm: callback, // Function to execute when clicking the submit button. By default jBox will use the onclick or href attribute in that order if found
         cancel: null, // Function to execute when clicking the cancel button
         closeOnConfirm: true, // Close jBox when the user clicks the confirm button
@@ -31,3 +32,13 @@ export const showConfirmPopup = (callback, message = 'Do you really want to dele
 //     return console.log("ksjfksjfskf");
 
 // }
+
+export const truncate = (value, length) => {
+    if (!value) return "";
+    value = value.toString();
+    if (value.length > length) {
+        return value.substring(0, length) + " ...";
+    } else {
+        return value;
+    }
+}

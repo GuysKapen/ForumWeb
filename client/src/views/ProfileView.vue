@@ -1,7 +1,7 @@
 <script setup>
 import Nav from "@/components/Nav.vue";
 import RegisterForm from "@/components/RegisterForm.vue";
-import SideBar from "@/components/SideBar.vue";
+import SideBar from "@/components/UserSideBar.vue";
 import Profile from "@/components/Profile.vue";
 
 </script>

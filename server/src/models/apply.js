@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 const Schema = mongoose.Schema;
 const ApplySchema = new Schema({
@@ -21,6 +21,10 @@ const ApplySchema = new Schema({
     type: String,
     required: true
   },
+  status: {
+    type: Boolean,
+    default: false
+  }
 });
 
 ApplySchema.plugin(mongoosePaginate);

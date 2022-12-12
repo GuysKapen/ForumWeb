@@ -1,6 +1,6 @@
 <template>
 
-    <form class="flex-grow-1 w-full bg-white rounded-xl py-4 flex" @submit.prevent="addAnswer">
+    <form class="flex-grow-1 w-full bg-white rounded-xl py-4 flex" @submit.prevent="submit">
 
         <div class="w-full">
             <div class="flex background-white-grey tab-view">
@@ -11,8 +11,8 @@
 
                             <div class="field mt-5">
                                 <div>
-                                    <label class="block font-semibold mb-2 text-sm" for="body">Add an answer</label>
-                                    <editor :init="init" v-model="answer" />
+                                    <label class="block font-semibold mb-2 text-sm" for="body">{{ label ?? "Add an answer" }}</label>
+                                    <editor :init="init" v-model="newModel.answer" />
                                 </div>
                             </div>
 
@@ -39,7 +39,7 @@
 
 </template>
   
-  <script>
+<script>
 // TinyMCE
 import 'tinymce/tinymce'
 import 'tinymce/icons/default/icons'
@@ -66,7 +66,24 @@ import { useAuthStore } from '../stores/auth/auth'
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 export default {
-    props: ['parentId', 'parentType'],
+    emits: {
+        updatedAnswer: null,
+        addedAnswer: null,
+        cancelAnswer: null
+    },
+    props: {
+        label: {
+            default: "Add an answer"
+        },
+        model: Object,
+        parentId: String,
+        parentType: String
+    },
+    computed: {
+        newModel() {
+            return this.model ?? this.freshData
+        }
+    },
     components: {
         'editor': Editor
     },
@@ -80,48 +97,74 @@ export default {
             },
         }
     },
-    data: () => ({ answer: "" }),
+    data: function () {
+        return {
+            freshData: {
+                answer: "",
+                post: this.parentId,
+                parentType: this.parentType,
+                parent: this.parentId
+            }
+        }
+    },
     methods: {
-        async addAnswer() {
-
-            const authStore = useAuthStore();
-            try {
-                if (this.answer.length === 0) {
-                    error = "Please enter answer"
-                    return
-                }
-
-                const newModel = {
-                    comment: this.answer,
-                    parentType: this.parentType,
-                    parent: this.parentId
-                }
-
-                try {
-                    axios
-                        .post(`${serverUrl}/users/${authStore.user._id}/posts/${this.parentId}/answer`, newModel, {
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: `Bearer ${authStore.token}`,
-                                "x-access-token": authStore.token,
-                            },
-                        })
-                        .then((res) => {
-                            this.$emit("addedAnswer", res.data)
-                        });
-                } catch (error) {
-                    console.error("Add answer", error);
-                }
-
-            } catch (error) {
-                this.error = error;
+        async submit() {
+            const newModel = this.newModel
+            this.error = "";
+            if (!newModel.answer) {
+                this.error = "Please enter answer";
+                return;
             }
 
+            if (newModel._id) {
+                this.update(newModel._id, newModel)
+            } else {
+                this.add(newModel)
+            }
+
+        },
+
+        async add(newModel) {
+            const authStore = useAuthStore();
+            try {
+                axios
+                    .post(`${serverUrl}/users/${authStore.user._id}/answers`, newModel, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${authStore.token}`,
+                            "x-access-token": authStore.token,
+                        },
+                    })
+                    .then((res) => {
+                        this.$emit("addedAnswer", res.data)
+                    });
+            } catch (error) {
+                console.error("Add answer", error);
+            }
+        },
+
+        async update(id, newModel) {
+            const authStore = useAuthStore();
+            try {
+                axios
+                    .put(`${serverUrl}/users/${authStore.user._id}/answers/${id}`, newModel, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${authStore.token}`,
+                            "x-access-token": authStore.token,
+                        },
+                    })
+                    .then((res) => {
+                        this.$emit("updatedAnswer", res.data)
+                    });
+            } catch (error) {
+                console.error("Add answer", error);
+            }
         },
     },
 };
 </script>
 
-  <style>
-  @import 'tom-select/dist/css/tom-select.default.css';
-  </style>
+<style>
+@import 'tom-select/dist/css/tom-select.default.css';
+</style>

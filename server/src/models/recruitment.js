@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import mongoosePaginate from 'mongoose-paginate-v2';
 var slugify = require('slugify')
 const Schema = mongoose.Schema;
 const RecruitmentSchema = new Schema({
@@ -35,6 +35,11 @@ const RecruitmentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Company',
     required: true
+  },
+  status: {
+    type: Boolean,
+    required: true,
+    default: false
   },
   fields: [{
     type: Schema.Types.ObjectId,
