@@ -94,6 +94,28 @@ exports.verifyTokenAdmin = function (req, res, next) {
   }
 };
 
+exports.verifyTokenRecruiter = function (req, res, next) {
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+  if (token) {
+    jwt.verify(token, privateKey, function (err, decoded) {
+      if (err) {
+       return response.sendUnauthorized(res, 'Failed to authenticate token.');
+      } else {
+        User.findById(decoded.id, function (err, user) {
+          if (err) res.send(err);
+          if (user.role !== "admin" && user.role !== "recruiter")
+            return response.sendUnauthorized(res, 'Failed to authenticate token.');
+          req.currentUser = user;
+          next();
+        });
+      }
+    });
+  } else {
+    return response.sendUnauthorized(res, 'No token provided.');
+  }
+};
+
 // Mine
 
 exports.registerController = async (req, res) => {

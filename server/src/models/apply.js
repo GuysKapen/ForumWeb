@@ -21,6 +21,10 @@ const ApplySchema = new Schema({
     type: String,
     required: true
   },
+  status: {
+    type: Boolean,
+    default: false
+  }
 });
 
 ApplySchema.plugin(mongoosePaginate);
