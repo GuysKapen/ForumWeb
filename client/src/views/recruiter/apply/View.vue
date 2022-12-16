@@ -226,7 +226,7 @@ export default {
   mounted() {
     const authStore = useAuthStore();
     axios
-      .get(`${serverUrl}/users/${authStore.user._id}/applies`, {
+      .get(`${serverUrl}/users/${authStore.user._id}/recruitments`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authStore.token}`,
@@ -234,7 +234,7 @@ export default {
         },
       })
       .then((res) => {
-        this.applies = res.data;
+        this.applies = res.data.map(el => el.applies).flat();
       });
   },
   data: () => ({

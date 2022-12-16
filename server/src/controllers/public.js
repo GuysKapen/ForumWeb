@@ -137,6 +137,9 @@ exports.posts = async function (req, res) {
     {
       limit: limit,
       page: page,
+      sort: {
+        _id: -1
+      },
       populate: [
         { path: "category" },
         {
@@ -164,6 +167,7 @@ exports.posts = async function (req, res) {
           },
         },
       ],
+
     },
     function (err, docs) {
       if (err) return response.sendNotFound(res);
@@ -261,6 +265,9 @@ exports.recruitments = async function (req, res) {
     {
       limit: limit,
       page: page,
+      sort: {
+        _id: -1
+      },
       populate: [
         {
           path: "owner",

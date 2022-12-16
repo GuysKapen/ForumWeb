@@ -15,7 +15,7 @@
         </p>
 
         <div class="rounded-lg">
-          <img :src="imgUrlFor(serverUrl, user.profile?.cover, images.user)
+          <img :src="imgUrlFor(serverUrl, user.profile?.cover, images.avatar)
           " alt="profile" class="w-24 h-24 mx-auto rounded-lg flex-shrink-0 object-cover" />
         </div>
 
@@ -121,7 +121,9 @@
               class="w-8 h-8 rounded-lg flex-shrink-0 object-cover" />
           </div>
           <div>
-            <p class="text-sm text-gray-800 ml-4 capitalize">{{ post.owner.name }}</p>
+            <router-link :to="{ name: 'post-detail', params: { id: post._id } }">
+              <p class="text-sm text-gray-800 ml-4 capitalize">{{ post.owner.name }}</p>
+            </router-link>
             <p class="text-xs ml-4 capitalize">
               {{ truncate(post.title, 24) }}
             </p>

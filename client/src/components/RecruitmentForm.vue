@@ -28,7 +28,8 @@
                             <div class="field">
                                 <div class="control">
                                     <label class="block font-semibold text-sm" for="name">Start date</label>
-                                    <datepicker v-model="newModel.startDate" name="start-date" class="my-2"></datepicker>
+                                    <datepicker v-model="newModel.startDate" name="start-date" class="my-2">
+                                    </datepicker>
                                 </div>
                             </div>
 
@@ -47,7 +48,11 @@
                                 <label class="block font-semibold text-sm mt-2 w-4/12" for="input1">Company</label>
                                 <div class="my-2">
 
-                                    <div class="relative flex w-full">
+                                    <input v-if="user.role === 'recruiter'" id="name" name="name" disabled v-model="user.company.name"
+                                        class="string w-full px-4 py-2 rounded-lg font-medium bg-gray-100 border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:shadow-md focus:border-gray-400 focus:bg-white my-2"
+                                        type="text" autofocus placeholder="Company" />
+                          
+                                    <div v-else class="relative flex w-full">
                                         <select v-model="newModel.company" id="select-company" name="company"
                                             placeholder="Select company..." autocomplete="off"
                                             class="block w-full rounded-sm cursor-pointer focus:outline-none">
@@ -192,6 +197,7 @@ import TomSelect from 'tom-select'
 import axios from 'axios'
 import { useAuthStore } from '../stores/auth/auth'
 import { createToast } from 'mosha-vue-toastify'
+import { mapState } from "pinia";
 
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
@@ -227,13 +233,14 @@ export default {
         }
     },
     data: function () {
+        const authStore = useAuthStore()
         return {
             freshData: {
                 name: "",
                 content: "",
                 startDate: new Date(),
                 endDate: new Date(),
-                company: null,
+                company: authStore.user?.company?._id,
                 fields: [],
                 skills: [],
                 file: null
@@ -245,9 +252,10 @@ export default {
         }
     },
     computed: {
+        ...mapState(useAuthStore, ["user"]),
         newModel() {
             return this.model ?? this.freshData
-        }
+        },
     },
     components: {
         Datepicker, Editor

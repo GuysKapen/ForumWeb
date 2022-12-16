@@ -11,7 +11,17 @@ const Answer = mongoose.model('Comment');
 exports.list = function (req, res) {
   if (!req.currentUser.canRead(req.locals.user)) return response.sendForbidden(res);
   const query = Object.assign({ owner: req.params.userId }, request.getFilteringOptions(req, ['name']));
-  Recruitment.paginate(query, request.getRequestOptions(req), function (err, result) {
+  Recruitment.paginate(query, Object.assign(request.getRequestOptions(req), {
+    populate: [{
+      path: "applies",
+      populate: {
+        path: "owner",
+        populate: {
+          path: "profile",
+        },
+      },
+    },]
+  }), function (err, result) {
     if (err) return response.sendNotFound(res);
     pagination.setPaginationHeaders(res, result);
     res.json(result.docs);

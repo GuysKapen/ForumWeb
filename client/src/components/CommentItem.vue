@@ -1,4 +1,5 @@
 <script setup>
+import { images } from '../constants';
 import { imgUrlFor } from '../utils/utils';
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 </script>
@@ -15,7 +16,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
             flex-shrink-0
             border border-gray-100
           ">
-          <img :src="imgUrlFor(serverUrl, comment.owner?.profile?.cover)" alt="profile"
+          <img :src="imgUrlFor(serverUrl, comment.owner?.profile?.cover, images.avatar)" alt="profile"
             class="w-6 h-6 rounded-full flex-shrink-0 object-cover" />
         </div>
 
