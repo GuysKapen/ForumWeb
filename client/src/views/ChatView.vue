@@ -161,6 +161,7 @@ import { createToast } from 'mosha-vue-toastify';
 import { mapState } from "pinia";
 import axios from 'axios';
 const serverUrl = import.meta.env.VITE_SERVER_URL;
+const chatbotUrl = import.meta.env.VITE_CHATBOT_URL
 export default {
     components: { ChatBody, Nav },
     data: () => ({ activeConversation: null, conversations: [] }),
@@ -180,7 +181,7 @@ export default {
                     for (let index = 0; index < conversations.length; index++) {
                         const conversation = conversations[index];
                         const response = await axios
-                            .get(`http://localhost:5005/conversations/${conversation.conversationId}/tracker`)
+                            .get(`${chatbotUrl}/conversations/${conversation.conversationId}/tracker`)
                         conversation["events"] = response.data["events"];
                     }
 

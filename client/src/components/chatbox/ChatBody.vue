@@ -75,6 +75,7 @@ import { createVNode, render } from "vue";
 import ChatboxUserMessage from "@/components/chatbox/ChatboxUserMessage.vue";
 import ChatboxBotResponse from "@/components/chatbox/ChatboxBotResponse.vue";
 import axios from "axios";
+const chatbotUrl = import.meta.env.VITE_CHATBOT_URL
 
 export default {
   props: {
@@ -144,7 +145,7 @@ export default {
   methods: {
     loadMessages() {
       axios
-        .get(`http://localhost:5005/conversations/${this.senderId}/tracker`)
+        .get(`${chatbotUrl}/conversations/${this.senderId}/tracker`)
         .then((response) => {
           this.events = response.data["events"];
         });
@@ -163,7 +164,7 @@ export default {
       const self = this;
       $.ajax({
         type: "POST",
-        url: "http://localhost:5005/webhooks/rest/webhook",
+        url: `${chatbotUrl}/webhooks/rest/webhook`,
         data: data,
         success: function (response) {
           for (const utter of response) {
