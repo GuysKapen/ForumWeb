@@ -47,6 +47,10 @@ const UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "UserDetail",
   },
+  doctorDetail: {
+    type: Schema.Types.ObjectId,
+    ref: "DoctorDetail",
+  },
   comments: [
     {
       type: Schema.Types.ObjectId,
