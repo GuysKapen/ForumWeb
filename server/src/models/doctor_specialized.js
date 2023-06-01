@@ -11,10 +11,6 @@ const DoctorSpecializedSchema = new Schema({
     type: String,
     required: true
   },
-  phone: {
-    type: String,
-    required: true
-  }
 });
 
 DoctorSpecializedSchema.pre('validate', function (next) {
