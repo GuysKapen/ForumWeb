@@ -24,6 +24,7 @@ import Recruitment from './models/recruitment';
 import RecruitmentDetail from './models/recruiment_detail';
 import Apply from './models/apply';
 import Conversation from './models/conversation';
+import DoctorSpecialized from './models/doctor_specialized';
 
 import config from 'config';
 import db from './db/db';
